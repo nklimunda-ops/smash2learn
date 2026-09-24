@@ -6,268 +6,365 @@
 <title>Smash2Learn</title>
 
 <style>
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+*{box-sizing:border-box;margin:0;padding:0}
 
-body {
-  font-family: Arial, Helvetica, sans-serif;
-  min-height: 100vh;
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  min-height:100vh;
   background:
-    radial-gradient(circle at 20% 20%, #27305c 0%, transparent 30%),
-    radial-gradient(circle at 80% 70%, #4b175f 0%, transparent 35%),
+    radial-gradient(circle at 20% 20%,#27305c 0%,transparent 30%),
+    radial-gradient(circle at 80% 70%,#4b175f 0%,transparent 35%),
     #101426;
-  color: white;
+  color:white;
 }
 
-nav {
-  width: 100%;
-  padding: 25px 7%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+nav{
+  width:100%;
+  padding:25px 7%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
 }
 
-.logo {
-  font-size: 30px;
-  font-weight: 900;
+.logo{font-size:30px;font-weight:900}
+.logo span{color:#ffcc00}
+
+.badge{
+  background:rgba(255,255,255,.1);
+  padding:9px 15px;
+  border-radius:20px;
+  font-size:14px;
 }
 
-.logo span {
-  color: #ffcc00;
+main{
+  min-height:75vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:40px 20px;
 }
 
-.badge {
-  background: rgba(255,255,255,0.1);
-  padding: 9px 15px;
-  border-radius: 20px;
-  font-size: 14px;
+.hero{
+  max-width:850px;
+  text-align:center;
 }
 
-main {
-  min-height: 75vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 40px 20px;
+.small-title{
+  color:#ffcc00;
+  font-weight:bold;
+  letter-spacing:3px;
+  margin-bottom:18px;
+  font-size:14px;
 }
 
-.hero {
-  max-width: 850px;
-  text-align: center;
+h1{
+  font-size:clamp(55px,9vw,105px);
+  line-height:.95;
+  margin-bottom:25px;
+  font-weight:900;
 }
 
-.small-title {
-  color: #ffcc00;
-  font-weight: bold;
-  letter-spacing: 3px;
-  margin-bottom: 18px;
-  font-size: 14px;
+h1 span{color:#ffcc00}
+
+h2{
+  font-size:clamp(22px,4vw,36px);
+  margin-bottom:20px;
 }
 
-h1 {
-  font-size: clamp(55px, 9vw, 105px);
-  line-height: .95;
-  margin-bottom: 25px;
-  font-weight: 900;
+.description{
+  color:#c8cbe0;
+  font-size:18px;
+  line-height:1.6;
+  max-width:650px;
+  margin:0 auto 40px;
 }
 
-h1 span {
-  color: #ffcc00;
+.buttons{
+  display:flex;
+  justify-content:center;
+  gap:18px;
+  flex-wrap:wrap;
 }
 
-h2 {
-  font-size: clamp(22px,4vw,36px);
-  margin-bottom: 20px;
+button{
+  border:none;
+  padding:18px 32px;
+  border-radius:14px;
+  font-size:17px;
+  font-weight:bold;
+  cursor:pointer;
+  transition:.2s;
 }
 
-.description {
-  color: #c8cbe0;
-  font-size: 18px;
-  line-height: 1.6;
-  max-width: 650px;
-  margin: 0 auto 40px;
+button:hover{transform:translateY(-3px)}
+
+.create{
+  background:#ffcc00;
+  color:#101426;
 }
 
-.buttons {
-  display: flex;
-  justify-content: center;
-  gap: 18px;
-  flex-wrap: wrap;
+.play{
+  background:white;
+  color:#101426;
 }
 
-button {
-  border: none;
-  padding: 18px 32px;
-  border-radius: 14px;
-  font-size: 17px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: .2s;
+.smash-zone{
+  margin:55px auto 0;
+  display:flex;
+  justify-content:center;
+  gap:25px;
+  flex-wrap:wrap;
 }
 
-button:hover {
-  transform: translateY(-3px);
+.card{
+  width:180px;
+  padding:20px;
+  border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.06);
+  border-radius:18px;
 }
 
-.create {
-  background: #ffcc00;
-  color: #101426;
+.card-icon{
+  font-size:32px;
+  margin-bottom:10px;
 }
 
-.play {
-  background: white;
-  color: #101426;
+.card h3{margin-bottom:6px}
+
+.card p{
+  color:#aeb2ca;
+  font-size:13px;
+  line-height:1.4;
 }
 
-.smash-zone {
-  margin: 55px auto 0;
-  display: flex;
-  justify-content: center;
-  gap: 25px;
-  flex-wrap: wrap;
+/* SHARED APP */
+
+.app-screen{
+  display:none;
+  width:100%;
+  max-width:850px;
 }
 
-.card {
-  width: 180px;
-  padding: 20px;
-  border: 1px solid rgba(255,255,255,.12);
-  background: rgba(255,255,255,.06);
-  border-radius: 18px;
+.screen-header{
+  margin-bottom:30px;
 }
 
-.card-icon {
-  font-size: 32px;
-  margin-bottom: 10px;
+.screen-header h1{
+  font-size:48px;
+  margin-bottom:10px;
 }
 
-.card h3 {
-  margin-bottom: 6px;
+.screen-header p{color:#bfc3d8}
+
+.box{
+  background:rgba(255,255,255,.07);
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:22px;
+  padding:30px;
+  margin-bottom:25px;
 }
 
-.card p {
-  color: #aeb2ca;
-  font-size: 13px;
-  line-height: 1.4;
+label{
+  display:block;
+  font-weight:bold;
+  margin-bottom:8px;
 }
 
-/* GAME CREATOR */
-
-#creator {
-  display: none;
-  width: 100%;
-  max-width: 850px;
+input,select{
+  width:100%;
+  padding:15px;
+  border-radius:10px;
+  border:1px solid rgba(255,255,255,.15);
+  background:#181d34;
+  color:white;
+  font-size:16px;
+  margin-bottom:16px;
 }
 
-.creator-header {
-  margin-bottom: 30px;
+input:focus,select:focus{
+  outline:2px solid #ffcc00;
 }
 
-.creator-header h1 {
-  font-size: 48px;
-  margin-bottom: 10px;
+.question-number{
+  color:#ffcc00;
+  margin-bottom:15px;
+  font-weight:bold;
 }
 
-.creator-header p {
-  color: #bfc3d8;
+.option-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
 }
 
-.creator-box {
-  background: rgba(255,255,255,.07);
-  border: 1px solid rgba(255,255,255,.12);
-  border-radius: 22px;
-  padding: 30px;
-  margin-bottom: 25px;
+.add-question{
+  width:100%;
+  background:#282e4a;
+  color:white;
+  margin-bottom:15px;
 }
 
-label {
-  display: block;
-  font-weight: bold;
-  margin-bottom: 8px;
+.primary{
+  width:100%;
+  background:#ffcc00;
+  color:#101426;
 }
 
-input, select {
-  width: 100%;
-  padding: 15px;
-  border-radius: 10px;
-  border: 1px solid rgba(255,255,255,.15);
-  background: #181d34;
-  color: white;
-  font-size: 16px;
-  margin-bottom: 16px;
+.back{
+  background:transparent;
+  color:#c8cbe0;
+  padding-left:0;
+  margin-bottom:15px;
 }
 
-input:focus, select:focus {
-  outline: 2px solid #ffcc00;
+.saved-message{
+  display:none;
+  text-align:center;
+  padding:25px;
+  background:rgba(67,214,137,.12);
+  border:1px solid rgba(67,214,137,.4);
+  border-radius:15px;
+  margin-top:20px;
 }
 
-.question-number {
-  color: #ffcc00;
-  margin-bottom: 15px;
-  font-weight: bold;
+.game-code{
+  color:#ffcc00;
+  font-size:35px;
+  font-weight:900;
+  letter-spacing:5px;
+  margin:12px 0;
 }
 
-.option-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
+/* PLAY MODE */
+
+.join-box{
+  max-width:550px;
+  margin:auto;
+  text-align:center;
 }
 
-.add-question {
-  width: 100%;
-  background: #282e4a;
-  color: white;
-  margin-bottom: 15px;
+.code-input{
+  text-align:center;
+  text-transform:uppercase;
+  font-size:28px;
+  letter-spacing:5px;
+  font-weight:bold;
 }
 
-.save-game {
-  width: 100%;
-  background: #ffcc00;
-  color: #101426;
+.energy-wrap{
+  margin-bottom:25px;
 }
 
-.back {
-  background: transparent;
-  color: #c8cbe0;
-  padding-left: 0;
-  margin-bottom: 15px;
+.energy-top{
+  display:flex;
+  justify-content:space-between;
+  margin-bottom:8px;
+  font-weight:bold;
 }
 
-.saved-message {
-  display: none;
-  text-align: center;
-  padding: 25px;
-  background: rgba(67, 214, 137, .12);
-  border: 1px solid rgba(67, 214, 137, .4);
-  border-radius: 15px;
-  margin-top: 20px;
+.energy-bar{
+  width:100%;
+  height:16px;
+  background:#252a43;
+  border-radius:20px;
+  overflow:hidden;
 }
 
-.game-code {
-  color: #ffcc00;
-  font-size: 35px;
-  font-weight: 900;
-  letter-spacing: 5px;
-  margin: 12px 0;
+.energy-fill{
+  width:0%;
+  height:100%;
+  background:#ffcc00;
+  transition:.4s;
 }
 
-footer {
-  text-align: center;
-  padding: 25px;
-  color: #747990;
-  font-size: 13px;
+.quiz-question{
+  font-size:30px;
+  line-height:1.3;
+  margin:20px 0 30px;
 }
 
-@media(max-width:600px) {
-  .option-grid {
-    grid-template-columns: 1fr;
+.answer-buttons{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:15px;
+}
+
+.answer-btn{
+  background:#252b49;
+  color:white;
+  text-align:left;
+  min-height:75px;
+}
+
+.answer-btn:hover{
+  background:#333a61;
+}
+
+.answer-btn.correct{
+  background:#2cb67d;
+}
+
+.answer-btn.wrong{
+  background:#e05263;
+}
+
+.feedback{
+  min-height:40px;
+  font-size:22px;
+  font-weight:bold;
+  margin-top:25px;
+}
+
+.next-btn{
+  display:none;
+  width:100%;
+  background:#ffcc00;
+  color:#101426;
+  margin-top:20px;
+}
+
+.results{
+  text-align:center;
+}
+
+.results .big-energy{
+  font-size:70px;
+  margin:20px 0;
+}
+
+.results-score{
+  font-size:25px;
+  color:#c8cbe0;
+  margin-bottom:25px;
+}
+
+.smash-ready{
+  background:#ffcc00;
+  color:#101426;
+  width:100%;
+  font-size:22px;
+}
+
+.error{
+  color:#ff7587;
+  margin-top:15px;
+  font-weight:bold;
+}
+
+footer{
+  text-align:center;
+  padding:25px;
+  color:#747990;
+  font-size:13px;
+}
+
+@media(max-width:600px){
+  .option-grid,
+  .answer-buttons{
+    grid-template-columns:1fr;
   }
 
-  .badge {
-    display: none;
-  }
+  .badge{display:none}
 }
 </style>
 </head>
@@ -280,6 +377,8 @@ footer {
 </nav>
 
 <main>
+
+<!-- HOME -->
 
 <section class="hero" id="home">
 
@@ -299,7 +398,7 @@ footer {
 
   <div class="buttons">
     <button class="create" onclick="openCreator()">⚡ Create a Game</button>
-    <button class="play">🎮 Play a Game</button>
+    <button class="play" onclick="openJoin()">🎮 Play a Game</button>
   </div>
 
   <div class="smash-zone">
@@ -326,18 +425,19 @@ footer {
 
 </section>
 
+<!-- CREATOR -->
 
-<section id="creator">
+<section id="creator" class="app-screen">
 
   <button class="back" onclick="goHome()">← Back to home</button>
 
-  <div class="creator-header">
+  <div class="screen-header">
     <div class="small-title">GAME CREATOR</div>
     <h1>Create your game.</h1>
     <p>Add your questions and choose the correct answers.</p>
   </div>
 
-  <div class="creator-box">
+  <div class="box">
 
     <label>Game title</label>
 
@@ -355,7 +455,7 @@ footer {
     + Add another question
   </button>
 
-  <button class="save-game" onclick="saveGame()">
+  <button class="primary" onclick="saveGame()">
     ⚡ Save Game
   </button>
 
@@ -373,48 +473,173 @@ footer {
 
 </section>
 
+<!-- JOIN GAME -->
+
+<section id="join" class="app-screen">
+
+  <button class="back" onclick="goHome()">← Back to home</button>
+
+  <div class="join-box">
+
+    <div class="small-title">PLAYER MODE</div>
+
+    <div class="screen-header">
+      <h1>Ready to play?</h1>
+      <p>Enter the game code from your teacher.</p>
+    </div>
+
+    <div class="box">
+
+      <label>Game code</label>
+
+      <input
+        id="joinCode"
+        class="code-input"
+        maxlength="6"
+        placeholder="ABC123"
+      >
+
+      <button class="primary" onclick="joinGame()">
+        🎮 Start Game
+      </button>
+
+      <div id="joinError" class="error"></div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- QUIZ -->
+
+<section id="quiz" class="app-screen">
+
+  <div class="energy-wrap">
+
+    <div class="energy-top">
+      <span>⚡ Smash Energy</span>
+      <span id="energyText">0</span>
+    </div>
+
+    <div class="energy-bar">
+      <div class="energy-fill" id="energyFill"></div>
+    </div>
+
+  </div>
+
+  <div class="box">
+
+    <div class="question-number" id="quizProgress"></div>
+
+    <h2 id="quizTitle"></h2>
+
+    <div class="quiz-question" id="quizQuestion"></div>
+
+    <div class="answer-buttons" id="answerButtons"></div>
+
+    <div class="feedback" id="feedback"></div>
+
+    <button class="next-btn" id="nextButton" onclick="nextQuestion()">
+      Next Question →
+    </button>
+
+  </div>
+
+</section>
+
+<!-- RESULTS -->
+
+<section id="results" class="app-screen">
+
+  <div class="box results">
+
+    <div class="small-title">CHALLENGE COMPLETE</div>
+
+    <h2>Nice work!</h2>
+
+    <div class="big-energy">⚡</div>
+
+    <h1 id="finalEnergy">0</h1>
+
+    <div class="results-score" id="finalScore"></div>
+
+    <button class="smash-ready" onclick="smashComingSoon()">
+      💥 ENTER SMASH ZONE
+    </button>
+
+    <button class="back" onclick="goHome()">
+      ← Back to home
+    </button>
+
+  </div>
+
+</section>
+
 </main>
 
 <footer>
 Smash2Learn • Learning hits different.
 </footer>
 
-
 <script>
 
 let questionCount = 0;
 
-function openCreator() {
+let currentGame = null;
+let currentQuestion = 0;
+let score = 0;
+let energy = 0;
+let answered = false;
 
-  document.getElementById("home").style.display = "none";
+function hideScreens(){
+  document.getElementById("home").style.display="none";
+  document.getElementById("creator").style.display="none";
+  document.getElementById("join").style.display="none";
+  document.getElementById("quiz").style.display="none";
+  document.getElementById("results").style.display="none";
+}
 
-  document.getElementById("creator").style.display = "block";
+function goHome(){
+  hideScreens();
+  document.getElementById("home").style.display="block";
+}
 
-  if (questionCount === 0) {
+function openCreator(){
+
+  hideScreens();
+
+  document.getElementById("creator").style.display="block";
+
+  if(questionCount===0){
     addQuestion();
   }
 
 }
 
-function goHome() {
+function openJoin(){
 
-  document.getElementById("creator").style.display = "none";
+  hideScreens();
 
-  document.getElementById("home").style.display = "block";
+  document.getElementById("join").style.display="block";
+
+  document.getElementById("joinError").textContent="";
+
+  document.getElementById("joinCode").value="";
 
 }
 
-function addQuestion() {
+function addQuestion(){
 
   questionCount++;
 
-  const questions = document.getElementById("questions");
+  const questions=document.getElementById("questions");
 
-  const box = document.createElement("div");
+  const box=document.createElement("div");
 
-  box.className = "creator-box";
+  box.className="box";
 
-  box.innerHTML = `
+  box.innerHTML=`
 
     <div class="question-number">
       QUESTION ${questionCount}
@@ -460,12 +685,12 @@ function addQuestion() {
 
 }
 
-function saveGame() {
+function saveGame(){
 
-  const title =
+  const title=
     document.getElementById("gameTitle").value.trim();
 
-  if (!title) {
+  if(!title){
 
     alert("Please enter a game title.");
 
@@ -473,24 +698,24 @@ function saveGame() {
 
   }
 
-  const questionBoxes =
-    document.querySelectorAll("#questions .creator-box");
+  const questionBoxes=
+    document.querySelectorAll("#questions .box");
 
-  const gameQuestions = [];
+  const gameQuestions=[];
 
-  for (const box of questionBoxes) {
+  for(const box of questionBoxes){
 
-    const question =
+    const question=
       box.querySelector(".question").value.trim();
 
-    const options =
+    const options=
       [...box.querySelectorAll(".option")]
-      .map(input => input.value.trim());
+      .map(input=>input.value.trim());
 
-    const correct =
+    const correct=
       Number(box.querySelector(".correct").value);
 
-    if (!question || options.some(option => !option)) {
+    if(!question || options.some(option=>!option)){
 
       alert("Please complete every question and answer.");
 
@@ -506,29 +731,226 @@ function saveGame() {
 
   }
 
-  const code =
+  const code=
     Math.random()
     .toString(36)
-    .substring(2, 8)
+    .substring(2,8)
     .toUpperCase();
 
-  const game = {
+  const game={
     title,
     code,
-    questions: gameQuestions
+    questions:gameQuestions
   };
 
   localStorage.setItem(
-    "smash2learn_" + code,
+    "smash2learn_"+code,
     JSON.stringify(game)
   );
 
-  document.getElementById("gameCode").textContent = code;
+  document.getElementById("gameCode").textContent=code;
 
-  document.getElementById("savedMessage").style.display = "block";
+  document.getElementById("savedMessage").style.display="block";
 
   document.getElementById("savedMessage")
     .scrollIntoView({behavior:"smooth"});
+
+}
+
+function joinGame(){
+
+  const code=
+    document.getElementById("joinCode")
+    .value
+    .trim()
+    .toUpperCase();
+
+  if(!code){
+
+    document.getElementById("joinError").textContent=
+      "Enter a game code.";
+
+    return;
+
+  }
+
+  const saved=
+    localStorage.getItem("smash2learn_"+code);
+
+  if(!saved){
+
+    document.getElementById("joinError").textContent=
+      "Game not found. Check the code and try again.";
+
+    return;
+
+  }
+
+  currentGame=JSON.parse(saved);
+
+  currentQuestion=0;
+  score=0;
+  energy=0;
+  answered=false;
+
+  hideScreens();
+
+  document.getElementById("quiz").style.display="block";
+
+  showQuestion();
+
+}
+
+function showQuestion(){
+
+  answered=false;
+
+  const q=currentGame.questions[currentQuestion];
+
+  document.getElementById("quizTitle").textContent=
+    currentGame.title;
+
+  document.getElementById("quizProgress").textContent=
+    "QUESTION "+(currentQuestion+1)+" OF "+currentGame.questions.length;
+
+  document.getElementById("quizQuestion").textContent=
+    q.question;
+
+  const answers=
+    document.getElementById("answerButtons");
+
+  answers.innerHTML="";
+
+  const letters=["A","B","C","D"];
+
+  q.options.forEach((option,index)=>{
+
+    const button=document.createElement("button");
+
+    button.className="answer-btn";
+
+    button.textContent=
+      letters[index]+". "+option;
+
+    button.onclick=()=>selectAnswer(index,button);
+
+    answers.appendChild(button);
+
+  });
+
+  document.getElementById("feedback").textContent="";
+
+  document.getElementById("nextButton").style.display="none";
+
+  updateEnergy();
+
+}
+
+function selectAnswer(index,button){
+
+  if(answered){
+    return;
+  }
+
+  answered=true;
+
+  const q=currentGame.questions[currentQuestion];
+
+  const buttons=
+    document.querySelectorAll(".answer-btn");
+
+  if(index===q.correct){
+
+    button.classList.add("correct");
+
+    document.getElementById("feedback").textContent=
+      "⚡ Correct! +25 Smash Energy";
+
+    score++;
+
+    energy+=25;
+
+  }else{
+
+    button.classList.add("wrong");
+
+    buttons[q.correct].classList.add("correct");
+
+    document.getElementById("feedback").textContent=
+      "Not quite — keep smashing!";
+
+  }
+
+  updateEnergy();
+
+  const nextButton=
+    document.getElementById("nextButton");
+
+  nextButton.style.display="block";
+
+  if(currentQuestion===currentGame.questions.length-1){
+
+    nextButton.textContent="See Results →";
+
+  }else{
+
+    nextButton.textContent="Next Question →";
+
+  }
+
+}
+
+function updateEnergy(){
+
+  document.getElementById("energyText").textContent=
+    energy;
+
+  const maxEnergy=
+    currentGame ? currentGame.questions.length*25 : 100;
+
+  const percent=
+    maxEnergy ? (energy/maxEnergy)*100 : 0;
+
+  document.getElementById("energyFill").style.width=
+    percent+"%";
+
+}
+
+function nextQuestion(){
+
+  if(currentQuestion<currentGame.questions.length-1){
+
+    currentQuestion++;
+
+    showQuestion();
+
+  }else{
+
+    showResults();
+
+  }
+
+}
+
+function showResults(){
+
+  hideScreens();
+
+  document.getElementById("results").style.display="block";
+
+  document.getElementById("finalEnergy").textContent=
+    energy+" ENERGY";
+
+  document.getElementById("finalScore").textContent=
+    "You got "+score+" of "+currentGame.questions.length+" correct.";
+
+}
+
+function smashComingSoon(){
+
+  alert(
+    "💥 Smash Zone unlocked! This is what we're building next."
+  );
 
 }
 
