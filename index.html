@@ -3,10 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Smash2Learn</title>
 
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
 
 body{
   font-family:Arial,Helvetica,sans-serif;
@@ -26,8 +32,14 @@ nav{
   align-items:center;
 }
 
-.logo{font-size:30px;font-weight:900}
-.logo span{color:#ffcc00}
+.logo{
+  font-size:30px;
+  font-weight:900;
+}
+
+.logo span{
+  color:#ffcc00;
+}
 
 .badge{
   background:rgba(255,255,255,.1);
@@ -37,15 +49,15 @@ nav{
 }
 
 main{
-  min-height:75vh;
+  min-height:78vh;
   display:flex;
-  align-items:center;
   justify-content:center;
+  align-items:center;
   padding:40px 20px;
 }
 
 .hero{
-  max-width:850px;
+  max-width:900px;
   text-align:center;
 }
 
@@ -64,10 +76,12 @@ h1{
   font-weight:900;
 }
 
-h1 span{color:#ffcc00}
+h1 span{
+  color:#ffcc00;
+}
 
 h2{
-  font-size:clamp(22px,4vw,36px);
+  font-size:clamp(24px,4vw,38px);
   margin-bottom:20px;
 }
 
@@ -75,7 +89,7 @@ h2{
   color:#c8cbe0;
   font-size:18px;
   line-height:1.6;
-  max-width:650px;
+  max-width:700px;
   margin:0 auto 40px;
 }
 
@@ -96,25 +110,36 @@ button{
   transition:.2s;
 }
 
-button:hover{transform:translateY(-3px)}
+button:hover{
+  transform:translateY(-3px);
+}
 
 button:disabled{
-  opacity:.6;
+  opacity:.55;
   cursor:not-allowed;
   transform:none;
 }
 
-.create{
+.yellow{
   background:#ffcc00;
   color:#101426;
 }
 
-.play{
+.white{
   background:white;
   color:#101426;
 }
 
-.smash-zone{
+.dark{
+  background:#282e4a;
+  color:white;
+}
+
+.full{
+  width:100%;
+}
+
+.cards{
   margin:55px auto 0;
   display:flex;
   justify-content:center;
@@ -123,42 +148,33 @@ button:disabled{
 }
 
 .card{
-  width:180px;
-  padding:20px;
+  width:190px;
+  padding:22px;
   border:1px solid rgba(255,255,255,.12);
   background:rgba(255,255,255,.06);
   border-radius:18px;
 }
 
 .card-icon{
-  font-size:32px;
+  font-size:34px;
   margin-bottom:10px;
 }
-
-.card h3{margin-bottom:6px}
 
 .card p{
   color:#aeb2ca;
   font-size:13px;
   line-height:1.4;
+  margin-top:7px;
 }
 
-.app-screen{
+
+/* SCREENS */
+
+.screen{
   display:none;
   width:100%;
   max-width:850px;
 }
-
-.screen-header{
-  margin-bottom:30px;
-}
-
-.screen-header h1{
-  font-size:48px;
-  margin-bottom:10px;
-}
-
-.screen-header p{color:#bfc3d8}
 
 .box{
   background:rgba(255,255,255,.07);
@@ -168,13 +184,20 @@ button:disabled{
   margin-bottom:25px;
 }
 
+.back{
+  background:transparent;
+  color:#c8cbe0;
+  padding-left:0;
+  margin-bottom:20px;
+}
+
 label{
   display:block;
   font-weight:bold;
   margin-bottom:8px;
 }
 
-input,select{
+input{
   width:100%;
   padding:15px;
   border-radius:10px;
@@ -185,43 +208,42 @@ input,select{
   margin-bottom:16px;
 }
 
-input:focus,select:focus{
+input:focus{
   outline:2px solid #ffcc00;
 }
 
-.question-number{
+.section-title{
   color:#ffcc00;
-  margin-bottom:15px;
   font-weight:bold;
+  letter-spacing:2px;
+  margin-bottom:15px;
 }
 
-.option-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
+.clue-row{
+  display:flex;
+  gap:10px;
+  align-items:center;
 }
 
-.add-question{
-  width:100%;
+.clue-row input{
+  flex:1;
+}
+
+.remove{
+  background:#47243a;
+  color:white;
+  padding:14px;
+  margin-bottom:16px;
+}
+
+.add{
   background:#282e4a;
   color:white;
-  margin-bottom:15px;
-}
-
-.primary{
   width:100%;
-  background:#ffcc00;
-  color:#101426;
-}
-
-.back{
-  background:transparent;
-  color:#c8cbe0;
-  padding-left:0;
   margin-bottom:15px;
 }
 
-.saved-message{
+.message{
   display:none;
   text-align:center;
   padding:25px;
@@ -233,13 +255,22 @@ input:focus,select:focus{
 
 .game-code{
   color:#ffcc00;
-  font-size:35px;
+  font-size:38px;
   font-weight:900;
   letter-spacing:5px;
-  margin:12px 0;
+  margin:15px 0;
 }
 
-.join-box{
+.error{
+  color:#ff7587;
+  margin-top:15px;
+  font-weight:bold;
+}
+
+
+/* JOIN */
+
+.join{
   max-width:550px;
   margin:auto;
   text-align:center;
@@ -253,110 +284,238 @@ input:focus,select:focus{
   font-weight:bold;
 }
 
-.energy-wrap{
+
+/* ESCAPE ROOM */
+
+.room-top{
+  display:flex;
+  justify-content:space-between;
+  gap:20px;
+  align-items:center;
+  margin-bottom:20px;
+}
+
+.room-progress{
+  color:#ffcc00;
+  font-weight:bold;
+}
+
+.lock{
+  font-size:28px;
+}
+
+.room{
+  text-align:center;
+  min-height:520px;
+  position:relative;
+  overflow:hidden;
+  background:
+    linear-gradient(rgba(10,13,27,.72),rgba(10,13,27,.85)),
+    radial-gradient(circle at center,#414867,#171b30);
+}
+
+.room h2{
+  margin-top:5px;
+}
+
+.room-text{
+  color:#c8cbe0;
+  line-height:1.6;
   margin-bottom:25px;
 }
 
-.energy-top{
+
+/* PLATE */
+
+.plate-area{
+  min-height:220px;
   display:flex;
-  justify-content:space-between;
-  margin-bottom:8px;
-  font-weight:bold;
+  align-items:center;
+  justify-content:center;
 }
 
-.energy-bar{
-  width:100%;
-  height:16px;
-  background:#252a43;
-  border-radius:20px;
-  overflow:hidden;
+.plate{
+  width:175px;
+  height:175px;
+  border-radius:50%;
+  background:
+    radial-gradient(circle,
+      #f5f5f5 0%,
+      #f5f5f5 47%,
+      #d7d9df 49%,
+      #ffffff 62%,
+      #c5c8d0 65%,
+      #eceef3 100%);
+  box-shadow:
+    0 18px 35px rgba(0,0,0,.4),
+    inset 0 0 15px rgba(0,0,0,.15);
+  cursor:pointer;
+  position:relative;
+  transition:.12s;
 }
 
-.energy-fill{
-  width:0%;
-  height:100%;
-  background:#ffcc00;
-  transition:.4s;
+.plate:hover{
+  transform:scale(1.03);
 }
 
-.quiz-question{
-  font-size:30px;
-  line-height:1.3;
-  margin:20px 0 30px;
+.plate.hit1{
+  transform:rotate(-4deg);
 }
 
-.answer-buttons{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:15px;
+.plate.hit2{
+  transform:rotate(5deg) scale(.98);
 }
 
-.answer-btn{
-  background:#252b49;
-  color:white;
-  text-align:left;
-  min-height:75px;
-}
-
-.answer-btn:hover{
-  background:#333a61;
-}
-
-.answer-btn.correct{
-  background:#2cb67d;
-}
-
-.answer-btn.wrong{
-  background:#e05263;
-}
-
-.feedback{
-  min-height:40px;
-  font-size:22px;
-  font-weight:bold;
-  margin-top:25px;
-}
-
-.next-btn{
+.crack{
   display:none;
-  width:100%;
-  background:#ffcc00;
-  color:#101426;
-  margin-top:20px;
+  position:absolute;
+  left:50%;
+  top:20px;
+  width:4px;
+  height:130px;
+  background:#555;
+  transform:rotate(20deg);
 }
 
-.results{
-  text-align:center;
+.crack:after{
+  content:"";
+  position:absolute;
+  width:60px;
+  height:4px;
+  background:#555;
+  top:55px;
+  left:-8px;
+  transform:rotate(-35deg);
 }
 
-.results .big-energy{
-  font-size:70px;
+.plate.hit2 .crack{
+  display:block;
+}
+
+.plate.smashed{
+  animation:smash .45s forwards;
+}
+
+@keyframes smash{
+  0%{transform:scale(1)}
+  30%{transform:scale(1.12) rotate(8deg)}
+  100%{
+    transform:scale(.05) rotate(80deg);
+    opacity:0;
+  }
+}
+
+.smash-instruction{
+  color:#ffcc00;
+  font-weight:900;
+  letter-spacing:2px;
+  margin-bottom:20px;
+}
+
+
+/* CLUE */
+
+.clue-box{
+  display:none;
+  background:rgba(255,204,0,.10);
+  border:1px solid rgba(255,204,0,.5);
+  padding:22px;
+  border-radius:16px;
   margin:20px 0;
 }
 
-.results-score{
-  font-size:25px;
-  color:#c8cbe0;
-  margin-bottom:25px;
+.clue-label{
+  color:#ffcc00;
+  font-size:13px;
+  font-weight:bold;
+  letter-spacing:2px;
+  margin-bottom:10px;
 }
 
-.smash-ready{
-  background:#ffcc00;
-  color:#101426;
-  width:100%;
+.clue-text{
   font-size:22px;
-}
-
-.error{
-  color:#ff7587;
-  margin-top:15px;
   font-weight:bold;
 }
 
-.cloud-message{
-  color:#9ee6bd;
+
+/* GUESS */
+
+.guess-area{
+  margin-top:20px;
+}
+
+.guess-feedback{
+  min-height:35px;
   margin-top:15px;
   font-weight:bold;
+  font-size:18px;
+}
+
+.next-clue{
+  display:none;
+  margin-top:15px;
+}
+
+
+/* SUCCESS */
+
+.success{
+  display:none;
+  text-align:center;
+  padding:30px 10px;
+}
+
+.key{
+  font-size:90px;
+  animation:keypop .6s;
+}
+
+@keyframes keypop{
+  0%{transform:scale(0)}
+  70%{transform:scale(1.2)}
+  100%{transform:scale(1)}
+}
+
+
+/* FINAL DOOR */
+
+.door-wrap{
+  text-align:center;
+}
+
+.door{
+  width:220px;
+  height:340px;
+  background:linear-gradient(90deg,#5d3828,#88553b,#5d3828);
+  margin:30px auto;
+  border:10px solid #34251f;
+  border-bottom:none;
+  position:relative;
+  transform-origin:left;
+  transition:1.4s;
+  box-shadow:0 20px 40px rgba(0,0,0,.5);
+}
+
+.knob{
+  position:absolute;
+  width:18px;
+  height:18px;
+  border-radius:50%;
+  background:#ffcc00;
+  right:20px;
+  top:165px;
+}
+
+.door.open{
+  transform:perspective(700px) rotateY(-72deg);
+}
+
+.escape-title{
+  display:none;
+  color:#ffcc00;
+  font-size:clamp(45px,8vw,80px);
+  font-weight:900;
+  margin-top:25px;
 }
 
 footer{
@@ -367,64 +526,104 @@ footer{
 }
 
 @media(max-width:600px){
-  .option-grid,
-  .answer-buttons{
-    grid-template-columns:1fr;
+
+  .badge{
+    display:none;
   }
 
-  .badge{display:none}
+  .room{
+    padding:22px;
+  }
+
+  .plate{
+    width:150px;
+    height:150px;
+  }
+
+  .clue-row{
+    display:block;
+  }
+
+  .remove{
+    width:100%;
+  }
+
 }
+
 </style>
 </head>
 
 <body>
 
 <nav>
-  <div class="logo">SMASH<span>2</span>LEARN</div>
-  <div class="badge">For teachers & students</div>
+
+  <div class="logo">
+    SMASH<span>2</span>LEARN
+  </div>
+
+  <div class="badge">
+    Educational Escape Rooms
+  </div>
+
 </nav>
+
 
 <main>
 
-<section class="hero" id="home">
 
-  <div class="small-title">LEARN • PLAY • SMASH</div>
+<!-- HOME -->
+
+<section id="home" class="hero">
+
+  <div class="small-title">
+    LEARN • SMASH • ESCAPE
+  </div>
 
   <h1>
-    Learn it.<br>
-    <span>Smash it.</span>
+    Smash your<br>
+    <span>way out.</span>
   </h1>
 
-  <h2>Turn learning into a game.</h2>
+  <h2>
+    The educational escape room.
+  </h2>
 
   <p class="description">
-    Create interactive learning challenges, answer questions,
-    earn Smash Energy and unleash it in the Smash Zone.
+    Break things. Unlock clues. Solve what you learned.
+    Escape the room.
   </p>
 
   <div class="buttons">
-    <button class="create" onclick="openCreator()">⚡ Create a Game</button>
-    <button class="play" onclick="openJoin()">🎮 Play a Game</button>
+
+    <button class="yellow" onclick="openCreator()">
+      🔐 Create an Escape Room
+    </button>
+
+    <button class="white" onclick="openJoin()">
+      🚪 Enter a Room
+    </button>
+
   </div>
 
-  <div class="smash-zone">
 
-    <div class="card">
-      <div class="card-icon">🧠</div>
-      <h3>Learn</h3>
-      <p>Answer challenges and test your knowledge.</p>
-    </div>
-
-    <div class="card">
-      <div class="card-icon">⚡</div>
-      <h3>Earn Energy</h3>
-      <p>Correct answers build your Smash Energy.</p>
-    </div>
+  <div class="cards">
 
     <div class="card">
       <div class="card-icon">💥</div>
       <h3>Smash</h3>
-      <p>Use your energy to smash your way through the game.</p>
+      <p>Release some rage through interactive challenges.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-icon">🔎</div>
+      <h3>Unlock</h3>
+      <p>Every challenge reveals another clue.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-icon">🚪</div>
+      <h3>Escape</h3>
+      <p>Solve every mystery and unlock the final door.</p>
     </div>
 
   </div>
@@ -432,47 +631,65 @@ footer{
 </section>
 
 
-<section id="creator" class="app-screen">
+<!-- CREATOR -->
 
-  <button class="back" onclick="goHome()">← Back to home</button>
+<section id="creator" class="screen">
 
-  <div class="screen-header">
-    <div class="small-title">GAME CREATOR</div>
-    <h1>Create your game.</h1>
-    <p>Add your questions and choose the correct answers.</p>
+  <button class="back" onclick="goHome()">
+    ← Back to home
+  </button>
+
+  <div class="small-title">
+    ESCAPE ROOM CREATOR
   </div>
+
+  <h2>Create your escape room.</h2>
+
+  <p class="description" style="margin-left:0;">
+    Add as many mysteries as you want.
+    Students must solve them all to escape.
+  </p>
+
 
   <div class="box">
 
-    <label>Game title</label>
+    <label>Escape Room title</label>
 
     <input
-      id="gameTitle"
-      type="text"
-      placeholder="Example: English Vocabulary Challenge"
+      id="roomTitle"
+      placeholder="Example: Biology Final Escape"
     >
 
   </div>
 
-  <div id="questions"></div>
 
-  <button class="add-question" onclick="addQuestion()">
-    + Add another question
+  <div id="mysteries"></div>
+
+
+  <button class="add" onclick="addMystery()">
+    + Add another mystery
   </button>
 
-  <button class="primary" id="saveGameButton" onclick="saveGame()">
-    ⚡ Save Game
+  <button
+    id="saveButton"
+    class="yellow full"
+    onclick="saveRoom()"
+  >
+    🔐 Create Escape Room
   </button>
 
-  <div class="saved-message" id="savedMessage">
 
-    <h2>💥 Game created!</h2>
+  <div id="saveMessage" class="message">
 
-    <p>Your online game code is</p>
+    <h2>🚪 Escape Room created!</h2>
 
-    <div class="game-code" id="gameCode"></div>
+    <p>Your room code is</p>
 
-    <p>Students can now use this code on another device.</p>
+    <div id="roomCode" class="game-code"></div>
+
+    <p>
+      Give this code to your students.
+    </p>
 
   </div>
 
@@ -481,22 +698,31 @@ footer{
 </section>
 
 
-<section id="join" class="app-screen">
+<!-- JOIN -->
 
-  <button class="back" onclick="goHome()">← Back to home</button>
+<section id="joinScreen" class="screen">
 
-  <div class="join-box">
+  <button class="back" onclick="goHome()">
+    ← Back to home
+  </button>
 
-    <div class="small-title">PLAYER MODE</div>
+  <div class="join">
 
-    <div class="screen-header">
-      <h1>Ready to play?</h1>
-      <p>Enter the game code from your teacher.</p>
+    <div class="small-title">
+      ENTER THE ESCAPE ROOM
     </div>
+
+    <h2>You're locked in.</h2>
+
+    <p class="description">
+      Enter the room code.
+      Find the clues. Solve the mysteries.
+      Smash your way out.
+    </p>
 
     <div class="box">
 
-      <label>Game code</label>
+      <label>Room code</label>
 
       <input
         id="joinCode"
@@ -505,8 +731,12 @@ footer{
         placeholder="ABC123"
       >
 
-      <button class="primary" id="startGameButton" onclick="joinGame()">
-        🎮 Start Game
+      <button
+        id="joinButton"
+        class="yellow full"
+        onclick="joinRoom()"
+      >
+        🚪 Enter Room
       </button>
 
       <div id="joinError" class="error"></div>
@@ -518,72 +748,180 @@ footer{
 </section>
 
 
-<section id="quiz" class="app-screen">
+<!-- GAME -->
 
-  <div class="energy-wrap">
+<section id="gameScreen" class="screen">
 
-    <div class="energy-top">
-      <span>⚡ Smash Energy</span>
-      <span id="energyText">0</span>
+  <div class="room-top">
+
+    <div>
+      <div id="gameTitle"></div>
+      <div id="progress" class="room-progress"></div>
     </div>
 
-    <div class="energy-bar">
-      <div class="energy-fill" id="energyFill"></div>
-    </div>
+    <div class="lock">🔒</div>
 
   </div>
 
-  <div class="box">
 
-    <div class="question-number" id="quizProgress"></div>
+  <div class="box room">
 
-    <h2 id="quizTitle"></h2>
+    <div class="small-title">
+      FIND THE ANSWER
+    </div>
 
-    <div class="quiz-question" id="quizQuestion"></div>
+    <h2 id="mysteryTitle">
+      Mystery locked.
+    </h2>
 
-    <div class="answer-buttons" id="answerButtons"></div>
+    <p class="room-text">
+      Destroy something to reveal a clue.
+      Think you know the answer? Try to solve it.
+    </p>
 
-    <div class="feedback" id="feedback"></div>
 
-    <button class="next-btn" id="nextButton" onclick="nextQuestion()">
-      Next Question →
-    </button>
+    <div id="smashSection">
+
+      <div class="smash-instruction">
+        🍽️ SMASH THE PLATE
+      </div>
+
+      <div class="plate-area">
+
+        <div
+          id="plate"
+          class="plate"
+          onclick="hitPlate()"
+        >
+          <div class="crack"></div>
+        </div>
+
+      </div>
+
+      <p id="hitText">
+        Tap the plate 3 times.
+      </p>
+
+    </div>
+
+
+    <div id="clueBox" class="clue-box">
+
+      <div id="clueLabel" class="clue-label">
+        CLUE 1
+      </div>
+
+      <div id="clueText" class="clue-text"></div>
+
+    </div>
+
+
+    <div id="guessArea" class="guess-area">
+
+      <label>What is the answer?</label>
+
+      <input
+        id="guessInput"
+        placeholder="Type your answer..."
+        onkeydown="if(event.key==='Enter') checkGuess()"
+      >
+
+      <button
+        class="yellow full"
+        onclick="checkGuess()"
+      >
+        💡 I KNOW IT!
+      </button>
+
+      <div
+        id="guessFeedback"
+        class="guess-feedback"
+      ></div>
+
+
+      <button
+        id="nextClueButton"
+        class="dark full next-clue"
+        onclick="prepareNextClue()"
+      >
+        💥 I need another clue
+      </button>
+
+    </div>
+
+
+    <div id="successArea" class="success">
+
+      <div class="key">🔑</div>
+
+      <h2>Mystery solved!</h2>
+
+      <p class="room-text">
+        You found a key.
+      </p>
+
+      <button
+        id="nextMysteryButton"
+        class="yellow full"
+        onclick="nextMystery()"
+      >
+        Unlock the next mystery →
+      </button>
+
+    </div>
 
   </div>
 
 </section>
 
 
-<section id="results" class="app-screen">
+<!-- FINAL ESCAPE -->
 
-  <div class="box results">
+<section id="escapeScreen" class="screen">
 
-    <div class="small-title">CHALLENGE COMPLETE</div>
+  <div class="box door-wrap">
 
-    <h2>Nice work!</h2>
+    <div class="small-title">
+      ALL MYSTERIES SOLVED
+    </div>
 
-    <div class="big-energy">⚡</div>
+    <h2>You found the final key.</h2>
 
-    <h1 id="finalEnergy">0</h1>
+    <div id="door" class="door">
+      <div class="knob"></div>
+    </div>
 
-    <div class="results-score" id="finalScore"></div>
+    <div id="escapeTitle" class="escape-title">
+      YOU ESCAPED! 💥
+    </div>
 
-    <button class="smash-ready" onclick="smashComingSoon()">
-      💥 ENTER SMASH ZONE
-    </button>
+    <p
+      id="escapeMessage"
+      class="description"
+      style="display:none;"
+    >
+      You smashed. You learned. You escaped.
+    </p>
 
-    <button class="back" onclick="goHome()">
-      ← Back to home
+    <button
+      id="homeButton"
+      class="yellow full"
+      style="display:none;"
+      onclick="goHome()"
+    >
+      Play another room
     </button>
 
   </div>
 
 </section>
+
 
 </main>
 
+
 <footer>
-Smash2Learn • Learning hits different.
+Smash2Learn • Learn. Smash. Escape.
 </footer>
 
 
@@ -591,57 +929,55 @@ Smash2Learn • Learning hits different.
 
 <script>
 
-/* ==============================================
-   SUPABASE CONNECTION
-   ============================================== */
+/* ==============================
+   SUPABASE
+============================== */
 
 const SUPABASE_URL =
-  "https://ygbagqdzjqhnevedxdjj.supabase.co";
-
-/*
-  ↓↓↓ PEGA TU PUBLISHABLE KEY ENTRE LAS COMILLAS ↓↓↓
-*/
+"https://ygbagqdzjqhnevedxdjj.supabase.co";
 
 const SUPABASE_KEY =
-  "sb_publishable_nYNGOy1ukYnTQtn9YBtb0A_4skXZ4dl";
+"sb_publishable_nYNGOy1ukYnTQtn9YBtb0A_4skXZ4dl";
 
-/*
-  ↑↑↑ SOLO CAMBIA ESA LINEA ↑↑↑
-*/
-
-const db = window.supabase.createClient(
+const db =
+window.supabase.createClient(
   SUPABASE_URL,
   SUPABASE_KEY
 );
 
 
-/* ==============================================
-   APP
-   ============================================== */
+/* ==============================
+   STATE
+============================== */
 
-let questionCount = 0;
+let mysteryCount = 0;
 
-let currentGame = null;
-let currentQuestion = 0;
-let score = 0;
-let energy = 0;
-let answered = false;
+let currentRoom = null;
+let currentMysteryIndex = 0;
+let currentClueIndex = 0;
+
+let plateHits = 0;
+let clueUnlocked = false;
 
 
-function hideScreens(){
+/* ==============================
+   NAVIGATION
+============================== */
+
+function hideAll(){
 
   document.getElementById("home").style.display="none";
   document.getElementById("creator").style.display="none";
-  document.getElementById("join").style.display="none";
-  document.getElementById("quiz").style.display="none";
-  document.getElementById("results").style.display="none";
+  document.getElementById("joinScreen").style.display="none";
+  document.getElementById("gameScreen").style.display="none";
+  document.getElementById("escapeScreen").style.display="none";
 
 }
 
 
 function goHome(){
 
-  hideScreens();
+  hideAll();
 
   document.getElementById("home").style.display="block";
 
@@ -650,12 +986,12 @@ function goHome(){
 
 function openCreator(){
 
-  hideScreens();
+  hideAll();
 
   document.getElementById("creator").style.display="block";
 
-  if(questionCount===0){
-    addQuestion();
+  if(mysteryCount===0){
+    addMystery();
   }
 
 }
@@ -663,162 +999,223 @@ function openCreator(){
 
 function openJoin(){
 
-  hideScreens();
+  hideAll();
 
-  document.getElementById("join").style.display="block";
+  document.getElementById("joinScreen").style.display="block";
 
   document.getElementById("joinError").textContent="";
-
-  document.getElementById("joinCode").value="";
 
 }
 
 
-function addQuestion(){
+/* ==============================
+   CREATOR
+============================== */
 
-  questionCount++;
+function addMystery(){
 
-  const questions=document.getElementById("questions");
+  mysteryCount++;
 
-  const box=document.createElement("div");
+  const wrapper =
+    document.createElement("div");
 
-  box.className="box";
+  wrapper.className="box mystery";
 
-  box.innerHTML=`
+  wrapper.innerHTML=`
 
-    <div class="question-number">
-      QUESTION ${questionCount}
-    </div>
-
-    <label>Question</label>
-
-    <input
-      type="text"
-      class="question"
-      placeholder="Type your question..."
-    >
-
-    <div class="option-grid">
-
-      <input class="option" type="text" placeholder="Answer A">
-
-      <input class="option" type="text" placeholder="Answer B">
-
-      <input class="option" type="text" placeholder="Answer C">
-
-      <input class="option" type="text" placeholder="Answer D">
-
+    <div class="section-title">
+      🔒 MYSTERY ${mysteryCount}
     </div>
 
     <label>Correct answer</label>
 
-    <select class="correct">
+    <input
+      class="answer"
+      placeholder="Example: Photosynthesis"
+    >
 
-      <option value="0">Answer A</option>
+    <label>Clues</label>
 
-      <option value="1">Answer B</option>
+    <div class="clues">
 
-      <option value="2">Answer C</option>
+      <div class="clue-row">
+        <input
+          class="clue"
+          placeholder="Clue 1"
+        >
+      </div>
 
-      <option value="3">Answer D</option>
+      <div class="clue-row">
+        <input
+          class="clue"
+          placeholder="Clue 2"
+        >
+      </div>
 
-    </select>
+      <div class="clue-row">
+        <input
+          class="clue"
+          placeholder="Clue 3"
+        >
+      </div>
+
+    </div>
+
+    <button
+      class="dark full"
+      onclick="addClue(this)"
+    >
+      + Add clue
+    </button>
 
   `;
 
-  questions.appendChild(box);
+  document
+    .getElementById("mysteries")
+    .appendChild(wrapper);
 
 }
 
 
-/* ==============================================
-   SAVE GAME TO SUPABASE
-   ============================================== */
+function addClue(button){
 
-async function saveGame(){
+  const clues =
+    button.parentElement
+    .querySelector(".clues");
 
-  const saveButton =
-    document.getElementById("saveGameButton");
+  const number =
+    clues.querySelectorAll(".clue").length+1;
 
-  const saveError =
+  const row =
+    document.createElement("div");
+
+  row.className="clue-row";
+
+  row.innerHTML=`
+
+    <input
+      class="clue"
+      placeholder="Clue ${number}"
+    >
+
+    <button
+      class="remove"
+      onclick="this.parentElement.remove()"
+    >
+      ✕
+    </button>
+
+  `;
+
+  clues.appendChild(row);
+
+}
+
+
+/* ==============================
+   SAVE ROOM
+============================== */
+
+async function saveRoom(){
+
+  const title =
+    document
+    .getElementById("roomTitle")
+    .value
+    .trim();
+
+  const errorBox =
     document.getElementById("saveError");
 
-  saveError.textContent="";
-
-  const title=
-    document.getElementById("gameTitle").value.trim();
+  errorBox.textContent="";
 
   if(!title){
 
-    alert("Please enter a game title.");
+    alert("Please enter an Escape Room title.");
 
     return;
 
   }
 
-  const questionBoxes=
-    document.querySelectorAll("#questions .box");
+  const boxes =
+    document.querySelectorAll(".mystery");
 
-  const gameQuestions=[];
+  const mysteries=[];
 
-  for(const box of questionBoxes){
+  for(const box of boxes){
 
-    const question=
-      box.querySelector(".question").value.trim();
+    const answer =
+      box.querySelector(".answer")
+      .value
+      .trim();
 
-    const options=
-      [...box.querySelectorAll(".option")]
-      .map(input=>input.value.trim());
+    const clues =
+      [...box.querySelectorAll(".clue")]
+      .map(x=>x.value.trim())
+      .filter(Boolean);
 
-    const correct=
-      Number(box.querySelector(".correct").value);
+    if(!answer){
 
-    if(!question || options.some(option=>!option)){
-
-      alert("Please complete every question and answer.");
+      alert(
+        "Please add the correct answer for every mystery."
+      );
 
       return;
 
     }
 
-    gameQuestions.push({
-      question,
-      options,
-      correct
+    if(clues.length===0){
+
+      alert(
+        "Every mystery needs at least one clue."
+      );
+
+      return;
+
+    }
+
+    mysteries.push({
+      answer,
+      clues
     });
 
   }
 
-  /*
-    Generate a code and check that it doesn't already exist.
-  */
 
-  let code="";
-  let available=false;
+  const button =
+    document.getElementById("saveButton");
 
-  saveButton.disabled=true;
-  saveButton.textContent="☁️ Saving online...";
+  button.disabled=true;
+  button.textContent="☁️ Creating room...";
+
 
   try{
 
+    let code="";
+    let available=false;
+
+
     while(!available){
 
-      code=
+      code =
         Math.random()
         .toString(36)
         .substring(2,8)
         .toUpperCase();
 
-      const { data, error } =
+
+      const {data,error} =
         await db
         .from("games")
         .select("id")
         .eq("code",code)
         .limit(1);
 
+
       if(error){
         throw error;
       }
+
 
       if(!data || data.length===0){
         available=true;
@@ -826,307 +1223,647 @@ async function saveGame(){
 
     }
 
-    const { error } =
+
+    /*
+      We reuse the existing "questions"
+      JSONB column to store mysteries.
+    */
+
+    const {error} =
       await db
       .from("games")
       .insert([
         {
           code:code,
           title:title,
-          questions:gameQuestions
+          questions:{
+            type:"escape-room",
+            mysteries:mysteries
+          }
         }
       ]);
+
 
     if(error){
       throw error;
     }
 
-    /*
-      Keep a local copy too.
-    */
 
-    const game={
-      title,
-      code,
-      questions:gameQuestions
-    };
+    document
+      .getElementById("roomCode")
+      .textContent=code;
 
-    localStorage.setItem(
-      "smash2learn_"+code,
-      JSON.stringify(game)
-    );
 
-    document.getElementById("gameCode").textContent=code;
+    document
+      .getElementById("saveMessage")
+      .style.display="block";
 
-    document.getElementById("savedMessage").style.display="block";
 
-    document.getElementById("savedMessage")
-      .scrollIntoView({behavior:"smooth"});
+    document
+      .getElementById("saveMessage")
+      .scrollIntoView({
+        behavior:"smooth"
+      });
+
 
   }catch(error){
 
     console.error(error);
 
-    saveError.textContent=
-      "We couldn't save the game online. Please try again.";
+    errorBox.textContent=
+      "We couldn't create the room. Please try again.";
 
   }finally{
 
-    saveButton.disabled=false;
-    saveButton.textContent="⚡ Save Game";
+    button.disabled=false;
+
+    button.textContent=
+      "🔐 Create Escape Room";
 
   }
 
 }
 
 
-/* ==============================================
-   LOAD GAME FROM SUPABASE
-   ============================================== */
+/* ==============================
+   JOIN ROOM
+============================== */
 
-async function joinGame(){
+async function joinRoom(){
 
-  const code=
-    document.getElementById("joinCode")
+  const code =
+    document
+    .getElementById("joinCode")
     .value
     .trim()
     .toUpperCase();
 
-  const joinError=
+
+  const errorBox =
     document.getElementById("joinError");
 
-  const startButton=
-    document.getElementById("startGameButton");
-
-  joinError.textContent="";
 
   if(!code){
 
-    joinError.textContent=
-      "Enter a game code.";
+    errorBox.textContent=
+      "Enter a room code.";
 
     return;
 
   }
 
-  startButton.disabled=true;
-  startButton.textContent="☁️ Loading game...";
+
+  const button =
+    document.getElementById("joinButton");
+
+  button.disabled=true;
+
+  button.textContent=
+    "🔓 Unlocking room...";
+
 
   try{
 
-    const { data, error } =
+    const {data,error} =
       await db
       .from("games")
       .select("code,title,questions")
       .eq("code",code)
       .limit(1);
 
+
     if(error){
       throw error;
     }
 
+
     if(!data || data.length===0){
 
-      joinError.textContent=
-        "Game not found. Check the code and try again.";
+      errorBox.textContent=
+        "Room not found. Check the code.";
 
       return;
 
     }
 
-    currentGame=data[0];
 
-    currentQuestion=0;
-    score=0;
-    energy=0;
-    answered=false;
+    const game=data[0];
 
-    hideScreens();
 
-    document.getElementById("quiz").style.display="block";
+    if(
+      !game.questions ||
+      game.questions.type!=="escape-room"
+    ){
 
-    showQuestion();
+      errorBox.textContent=
+        "This code belongs to an older Smash2Learn game.";
+
+      return;
+
+    }
+
+
+    currentRoom={
+      title:game.title,
+      code:game.code,
+      mysteries:game.questions.mysteries
+    };
+
+
+    currentMysteryIndex=0;
+
+
+    hideAll();
+
+    document
+      .getElementById("gameScreen")
+      .style.display="block";
+
+
+    loadMystery();
+
 
   }catch(error){
 
     console.error(error);
 
-    joinError.textContent=
-      "We couldn't connect to the game. Please try again.";
+    errorBox.textContent=
+      "We couldn't connect to the room.";
 
   }finally{
 
-    startButton.disabled=false;
-    startButton.textContent="🎮 Start Game";
+    button.disabled=false;
+
+    button.textContent=
+      "🚪 Enter Room";
 
   }
 
 }
 
 
-function showQuestion(){
+/* ==============================
+   MYSTERY
+============================== */
 
-  answered=false;
+function loadMystery(){
 
-  const q=currentGame.questions[currentQuestion];
+  currentClueIndex=0;
 
-  document.getElementById("quizTitle").textContent=
-    currentGame.title;
+  plateHits=0;
 
-  document.getElementById("quizProgress").textContent=
-    "QUESTION "+(currentQuestion+1)+
-    " OF "+currentGame.questions.length;
+  clueUnlocked=false;
 
-  document.getElementById("quizQuestion").textContent=
-    q.question;
 
-  const answers=
-    document.getElementById("answerButtons");
+  document
+    .getElementById("gameTitle")
+    .textContent=currentRoom.title;
 
-  answers.innerHTML="";
 
-  const letters=["A","B","C","D"];
+  document
+    .getElementById("progress")
+    .textContent=
+      "LOCK "+
+      (currentMysteryIndex+1)+
+      " OF "+
+      currentRoom.mysteries.length;
 
-  q.options.forEach((option,index)=>{
 
-    const button=document.createElement("button");
+  document
+    .getElementById("mysteryTitle")
+    .textContent="Mystery locked.";
 
-    button.className="answer-btn";
 
-    button.textContent=
-      letters[index]+". "+option;
+  document
+    .getElementById("smashSection")
+    .style.display="block";
 
-    button.onclick=
-      ()=>selectAnswer(index,button);
 
-    answers.appendChild(button);
+  document
+    .getElementById("clueBox")
+    .style.display="none";
 
-  });
 
-  document.getElementById("feedback").textContent="";
+  document
+    .getElementById("guessArea")
+    .style.display="block";
 
-  document.getElementById("nextButton").style.display="none";
 
-  updateEnergy();
+  document
+    .getElementById("successArea")
+    .style.display="none";
+
+
+  document
+    .getElementById("guessInput")
+    .value="";
+
+
+  document
+    .getElementById("guessFeedback")
+    .textContent="";
+
+
+  document
+    .getElementById("nextClueButton")
+    .style.display="none";
+
+
+  resetPlate();
 
 }
 
 
-function selectAnswer(index,button){
+/* ==============================
+   SMASH PLATE
+============================== */
 
-  if(answered){
+function resetPlate(){
+
+  plateHits=0;
+
+  const plate =
+    document.getElementById("plate");
+
+  plate.className="plate";
+
+
+  document
+    .getElementById("hitText")
+    .textContent=
+      "Tap the plate 3 times.";
+
+}
+
+
+function hitPlate(){
+
+  if(clueUnlocked){
     return;
   }
 
-  answered=true;
 
-  const q=currentGame.questions[currentQuestion];
+  plateHits++;
 
-  const buttons=
-    document.querySelectorAll(".answer-btn");
 
-  if(index===q.correct){
+  const plate =
+    document.getElementById("plate");
 
-    button.classList.add("correct");
 
-    document.getElementById("feedback").textContent=
-      "⚡ Correct! +25 Smash Energy";
+  if(plateHits===1){
 
-    score++;
+    plate.classList.add("hit1");
 
-    energy+=25;
-
-  }else{
-
-    button.classList.add("wrong");
-
-    buttons[q.correct].classList.add("correct");
-
-    document.getElementById("feedback").textContent=
-      "Not quite — keep smashing!";
+    document
+      .getElementById("hitText")
+      .textContent=
+        "Again! 💥";
 
   }
 
-  updateEnergy();
 
-  const nextButton=
-    document.getElementById("nextButton");
+  if(plateHits===2){
 
-  nextButton.style.display="block";
+    plate.classList.remove("hit1");
 
-  if(currentQuestion===currentGame.questions.length-1){
+    plate.classList.add("hit2");
 
-    nextButton.textContent="See Results →";
-
-  }else{
-
-    nextButton.textContent="Next Question →";
+    document
+      .getElementById("hitText")
+      .textContent=
+        "ONE MORE! 💥";
 
   }
 
-}
+
+  if(plateHits>=3){
+
+    clueUnlocked=true;
+
+    plate.classList.add("smashed");
 
 
-function updateEnergy(){
-
-  document.getElementById("energyText").textContent=
-    energy;
-
-  const maxEnergy=
-    currentGame
-    ? currentGame.questions.length*25
-    : 100;
-
-  const percent=
-    maxEnergy
-    ? (energy/maxEnergy)*100
-    : 0;
-
-  document.getElementById("energyFill").style.width=
-    percent+"%";
-
-}
+    document
+      .getElementById("hitText")
+      .textContent=
+        "SMASHED! 💥";
 
 
-function nextQuestion(){
-
-  if(currentQuestion<currentGame.questions.length-1){
-
-    currentQuestion++;
-
-    showQuestion();
-
-  }else{
-
-    showResults();
+    setTimeout(
+      revealClue,
+      450
+    );
 
   }
 
 }
 
 
-function showResults(){
+/* ==============================
+   CLUES
+============================== */
 
-  hideScreens();
+function revealClue(){
 
-  document.getElementById("results").style.display="block";
+  const mystery =
+    currentRoom
+    .mysteries[currentMysteryIndex];
 
-  document.getElementById("finalEnergy").textContent=
-    energy+" ENERGY";
 
-  document.getElementById("finalScore").textContent=
-    "You got "+score+
-    " of "+currentGame.questions.length+
-    " correct.";
+  const clue =
+    mystery.clues[currentClueIndex];
+
+
+  document
+    .getElementById("clueLabel")
+    .textContent=
+      "CLUE "+(currentClueIndex+1);
+
+
+  document
+    .getElementById("clueText")
+    .textContent=clue;
+
+
+  document
+    .getElementById("clueBox")
+    .style.display="block";
+
+
+  document
+    .getElementById("smashSection")
+    .style.display="none";
+
+
+  document
+    .getElementById("guessInput")
+    .focus();
 
 }
 
 
-function smashComingSoon(){
+/* ==============================
+   GUESS
+============================== */
 
-  alert(
-    "💥 Smash Zone unlocked! This is what we're building next."
-  );
+function normalize(text){
+
+  return text
+    .trim()
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g,"")
+    .replace(/[^\p{L}\p{N}\s]/gu,"")
+    .replace(/\s+/g," ");
+
+}
+
+
+function checkGuess(){
+
+  const guess =
+    document
+    .getElementById("guessInput")
+    .value;
+
+
+  const mystery =
+    currentRoom
+    .mysteries[currentMysteryIndex];
+
+
+  if(!guess.trim()){
+
+    document
+      .getElementById("guessFeedback")
+      .textContent=
+        "Type your answer first.";
+
+    return;
+
+  }
+
+
+  if(
+    normalize(guess)===
+    normalize(mystery.answer)
+  ){
+
+    mysterySolved();
+
+  }else{
+
+    document
+      .getElementById("guessFeedback")
+      .textContent=
+        "🔒 Not quite. Need another clue?";
+
+
+    if(
+      currentClueIndex <
+      mystery.clues.length-1
+    ){
+
+      document
+        .getElementById("nextClueButton")
+        .style.display="block";
+
+    }else{
+
+      document
+        .getElementById("guessFeedback")
+        .textContent=
+          "🔒 Not quite. Look at all your clues and try again.";
+
+    }
+
+  }
+
+}
+
+
+/* ==============================
+   NEXT CLUE
+============================== */
+
+function prepareNextClue(){
+
+  currentClueIndex++;
+
+  clueUnlocked=false;
+
+  plateHits=0;
+
+
+  document
+    .getElementById("clueBox")
+    .style.display="none";
+
+
+  document
+    .getElementById("nextClueButton")
+    .style.display="none";
+
+
+  document
+    .getElementById("guessFeedback")
+    .textContent="";
+
+
+  document
+    .getElementById("guessInput")
+    .value="";
+
+
+  document
+    .getElementById("smashSection")
+    .style.display="block";
+
+
+  resetPlate();
+
+}
+
+
+/* ==============================
+   SOLVED
+============================== */
+
+function mysterySolved(){
+
+  document
+    .getElementById("smashSection")
+    .style.display="none";
+
+
+  document
+    .getElementById("clueBox")
+    .style.display="none";
+
+
+  document
+    .getElementById("guessArea")
+    .style.display="none";
+
+
+  document
+    .getElementById("successArea")
+    .style.display="block";
+
+
+  const button =
+    document.getElementById(
+      "nextMysteryButton"
+    );
+
+
+  if(
+    currentMysteryIndex ===
+    currentRoom.mysteries.length-1
+  ){
+
+    button.textContent=
+      "🚪 Use the final key";
+
+  }else{
+
+    button.textContent=
+      "🔓 Unlock the next mystery";
+
+  }
+
+}
+
+
+/* ==============================
+   NEXT MYSTERY
+============================== */
+
+function nextMystery(){
+
+  if(
+    currentMysteryIndex <
+    currentRoom.mysteries.length-1
+  ){
+
+    currentMysteryIndex++;
+
+    loadMystery();
+
+    window.scrollTo({
+      top:0,
+      behavior:"smooth"
+    });
+
+  }else{
+
+    finalEscape();
+
+  }
+
+}
+
+
+/* ==============================
+   FINAL ESCAPE
+============================== */
+
+function finalEscape(){
+
+  hideAll();
+
+
+  document
+    .getElementById("escapeScreen")
+    .style.display="block";
+
+
+  const door =
+    document.getElementById("door");
+
+
+  door.classList.remove("open");
+
+
+  document
+    .getElementById("escapeTitle")
+    .style.display="none";
+
+
+  document
+    .getElementById("escapeMessage")
+    .style.display="none";
+
+
+  document
+    .getElementById("homeButton")
+    .style.display="none";
+
+
+  setTimeout(()=>{
+
+    door.classList.add("open");
+
+  },700);
+
+
+  setTimeout(()=>{
+
+    document
+      .getElementById("escapeTitle")
+      .style.display="block";
+
+
+    document
+      .getElementById("escapeMessage")
+      .style.display="block";
+
+
+    document
+      .getElementById("homeButton")
+      .style.display="block";
+
+  },1900);
 
 }
 
