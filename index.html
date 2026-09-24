@@ -98,6 +98,12 @@ button{
 
 button:hover{transform:translateY(-3px)}
 
+button:disabled{
+  opacity:.6;
+  cursor:not-allowed;
+  transform:none;
+}
+
 .create{
   background:#ffcc00;
   color:#101426;
@@ -136,8 +142,6 @@ button:hover{transform:translateY(-3px)}
   font-size:13px;
   line-height:1.4;
 }
-
-/* SHARED APP */
 
 .app-screen{
   display:none;
@@ -234,8 +238,6 @@ input:focus,select:focus{
   letter-spacing:5px;
   margin:12px 0;
 }
-
-/* PLAY MODE */
 
 .join-box{
   max-width:550px;
@@ -351,6 +353,12 @@ input:focus,select:focus{
   font-weight:bold;
 }
 
+.cloud-message{
+  color:#9ee6bd;
+  margin-top:15px;
+  font-weight:bold;
+}
+
 footer{
   text-align:center;
   padding:25px;
@@ -377,8 +385,6 @@ footer{
 </nav>
 
 <main>
-
-<!-- HOME -->
 
 <section class="hero" id="home">
 
@@ -425,7 +431,6 @@ footer{
 
 </section>
 
-<!-- CREATOR -->
 
 <section id="creator" class="app-screen">
 
@@ -455,7 +460,7 @@ footer{
     + Add another question
   </button>
 
-  <button class="primary" onclick="saveGame()">
+  <button class="primary" id="saveGameButton" onclick="saveGame()">
     ⚡ Save Game
   </button>
 
@@ -463,17 +468,18 @@ footer{
 
     <h2>💥 Game created!</h2>
 
-    <p>Your game code is</p>
+    <p>Your online game code is</p>
 
     <div class="game-code" id="gameCode"></div>
 
-    <p>Give this code to your students.</p>
+    <p>Students can now use this code on another device.</p>
 
   </div>
 
+  <div id="saveError" class="error"></div>
+
 </section>
 
-<!-- JOIN GAME -->
 
 <section id="join" class="app-screen">
 
@@ -499,7 +505,7 @@ footer{
         placeholder="ABC123"
       >
 
-      <button class="primary" onclick="joinGame()">
+      <button class="primary" id="startGameButton" onclick="joinGame()">
         🎮 Start Game
       </button>
 
@@ -511,7 +517,6 @@ footer{
 
 </section>
 
-<!-- QUIZ -->
 
 <section id="quiz" class="app-screen">
 
@@ -548,7 +553,6 @@ footer{
 
 </section>
 
-<!-- RESULTS -->
 
 <section id="results" class="app-screen">
 
@@ -582,7 +586,38 @@ footer{
 Smash2Learn • Learning hits different.
 </footer>
 
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <script>
+
+/* ==============================================
+   SUPABASE CONNECTION
+   ============================================== */
+
+const SUPABASE_URL =
+  "https://ygbagqdzjqhnevedxdjj.supabase.co";
+
+/*
+  ↓↓↓ PEGA TU PUBLISHABLE KEY ENTRE LAS COMILLAS ↓↓↓
+*/
+
+const SUPABASE_KEY =
+  "sb_publishable_nYNGOy1ukYnTQtn9YBtb0A_4skXZ4dl";
+
+/*
+  ↑↑↑ SOLO CAMBIA ESA LINEA ↑↑↑
+*/
+
+const db = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
+
+
+/* ==============================================
+   APP
+   ============================================== */
 
 let questionCount = 0;
 
@@ -592,18 +627,26 @@ let score = 0;
 let energy = 0;
 let answered = false;
 
+
 function hideScreens(){
+
   document.getElementById("home").style.display="none";
   document.getElementById("creator").style.display="none";
   document.getElementById("join").style.display="none";
   document.getElementById("quiz").style.display="none";
   document.getElementById("results").style.display="none";
+
 }
 
+
 function goHome(){
+
   hideScreens();
+
   document.getElementById("home").style.display="block";
+
 }
+
 
 function openCreator(){
 
@@ -617,6 +660,7 @@ function openCreator(){
 
 }
 
+
 function openJoin(){
 
   hideScreens();
@@ -628,6 +672,7 @@ function openJoin(){
   document.getElementById("joinCode").value="";
 
 }
+
 
 function addQuestion(){
 
@@ -685,7 +730,20 @@ function addQuestion(){
 
 }
 
-function saveGame(){
+
+/* ==============================================
+   SAVE GAME TO SUPABASE
+   ============================================== */
+
+async function saveGame(){
+
+  const saveButton =
+    document.getElementById("saveGameButton");
+
+  const saveError =
+    document.getElementById("saveError");
+
+  saveError.textContent="";
 
   const title=
     document.getElementById("gameTitle").value.trim();
@@ -731,33 +789,102 @@ function saveGame(){
 
   }
 
-  const code=
-    Math.random()
-    .toString(36)
-    .substring(2,8)
-    .toUpperCase();
+  /*
+    Generate a code and check that it doesn't already exist.
+  */
 
-  const game={
-    title,
-    code,
-    questions:gameQuestions
-  };
+  let code="";
+  let available=false;
 
-  localStorage.setItem(
-    "smash2learn_"+code,
-    JSON.stringify(game)
-  );
+  saveButton.disabled=true;
+  saveButton.textContent="☁️ Saving online...";
 
-  document.getElementById("gameCode").textContent=code;
+  try{
 
-  document.getElementById("savedMessage").style.display="block";
+    while(!available){
 
-  document.getElementById("savedMessage")
-    .scrollIntoView({behavior:"smooth"});
+      code=
+        Math.random()
+        .toString(36)
+        .substring(2,8)
+        .toUpperCase();
+
+      const { data, error } =
+        await db
+        .from("games")
+        .select("id")
+        .eq("code",code)
+        .limit(1);
+
+      if(error){
+        throw error;
+      }
+
+      if(!data || data.length===0){
+        available=true;
+      }
+
+    }
+
+    const { error } =
+      await db
+      .from("games")
+      .insert([
+        {
+          code:code,
+          title:title,
+          questions:gameQuestions
+        }
+      ]);
+
+    if(error){
+      throw error;
+    }
+
+    /*
+      Keep a local copy too.
+    */
+
+    const game={
+      title,
+      code,
+      questions:gameQuestions
+    };
+
+    localStorage.setItem(
+      "smash2learn_"+code,
+      JSON.stringify(game)
+    );
+
+    document.getElementById("gameCode").textContent=code;
+
+    document.getElementById("savedMessage").style.display="block";
+
+    document.getElementById("savedMessage")
+      .scrollIntoView({behavior:"smooth"});
+
+  }catch(error){
+
+    console.error(error);
+
+    saveError.textContent=
+      "We couldn't save the game online. Please try again.";
+
+  }finally{
+
+    saveButton.disabled=false;
+    saveButton.textContent="⚡ Save Game";
+
+  }
 
 }
 
-function joinGame(){
+
+/* ==============================================
+   LOAD GAME FROM SUPABASE
+   ============================================== */
+
+async function joinGame(){
 
   const code=
     document.getElementById("joinCode")
@@ -765,41 +892,77 @@ function joinGame(){
     .trim()
     .toUpperCase();
 
+  const joinError=
+    document.getElementById("joinError");
+
+  const startButton=
+    document.getElementById("startGameButton");
+
+  joinError.textContent="";
+
   if(!code){
 
-    document.getElementById("joinError").textContent=
+    joinError.textContent=
       "Enter a game code.";
 
     return;
 
   }
 
-  const saved=
-    localStorage.getItem("smash2learn_"+code);
+  startButton.disabled=true;
+  startButton.textContent="☁️ Loading game...";
 
-  if(!saved){
+  try{
 
-    document.getElementById("joinError").textContent=
-      "Game not found. Check the code and try again.";
+    const { data, error } =
+      await db
+      .from("games")
+      .select("code,title,questions")
+      .eq("code",code)
+      .limit(1);
 
-    return;
+    if(error){
+      throw error;
+    }
+
+    if(!data || data.length===0){
+
+      joinError.textContent=
+        "Game not found. Check the code and try again.";
+
+      return;
+
+    }
+
+    currentGame=data[0];
+
+    currentQuestion=0;
+    score=0;
+    energy=0;
+    answered=false;
+
+    hideScreens();
+
+    document.getElementById("quiz").style.display="block";
+
+    showQuestion();
+
+  }catch(error){
+
+    console.error(error);
+
+    joinError.textContent=
+      "We couldn't connect to the game. Please try again.";
+
+  }finally{
+
+    startButton.disabled=false;
+    startButton.textContent="🎮 Start Game";
 
   }
 
-  currentGame=JSON.parse(saved);
-
-  currentQuestion=0;
-  score=0;
-  energy=0;
-  answered=false;
-
-  hideScreens();
-
-  document.getElementById("quiz").style.display="block";
-
-  showQuestion();
-
 }
+
 
 function showQuestion(){
 
@@ -811,7 +974,8 @@ function showQuestion(){
     currentGame.title;
 
   document.getElementById("quizProgress").textContent=
-    "QUESTION "+(currentQuestion+1)+" OF "+currentGame.questions.length;
+    "QUESTION "+(currentQuestion+1)+
+    " OF "+currentGame.questions.length;
 
   document.getElementById("quizQuestion").textContent=
     q.question;
@@ -832,7 +996,8 @@ function showQuestion(){
     button.textContent=
       letters[index]+". "+option;
 
-    button.onclick=()=>selectAnswer(index,button);
+    button.onclick=
+      ()=>selectAnswer(index,button);
 
     answers.appendChild(button);
 
@@ -845,6 +1010,7 @@ function showQuestion(){
   updateEnergy();
 
 }
+
 
 function selectAnswer(index,button){
 
@@ -900,21 +1066,27 @@ function selectAnswer(index,button){
 
 }
 
+
 function updateEnergy(){
 
   document.getElementById("energyText").textContent=
     energy;
 
   const maxEnergy=
-    currentGame ? currentGame.questions.length*25 : 100;
+    currentGame
+    ? currentGame.questions.length*25
+    : 100;
 
   const percent=
-    maxEnergy ? (energy/maxEnergy)*100 : 0;
+    maxEnergy
+    ? (energy/maxEnergy)*100
+    : 0;
 
   document.getElementById("energyFill").style.width=
     percent+"%";
 
 }
+
 
 function nextQuestion(){
 
@@ -932,6 +1104,7 @@ function nextQuestion(){
 
 }
 
+
 function showResults(){
 
   hideScreens();
@@ -942,9 +1115,12 @@ function showResults(){
     energy+" ENERGY";
 
   document.getElementById("finalScore").textContent=
-    "You got "+score+" of "+currentGame.questions.length+" correct.";
+    "You got "+score+
+    " of "+currentGame.questions.length+
+    " correct.";
 
 }
+
 
 function smashComingSoon(){
 
