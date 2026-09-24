@@ -1,248 +1,538 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Smash2Learn</title>
 
-  <title>Smash2Learn</title>
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 20% 20%, #27305c 0%, transparent 30%),
+    radial-gradient(circle at 80% 70%, #4b175f 0%, transparent 35%),
+    #101426;
+  color: white;
+}
 
-    body {
-      font-family: Arial, Helvetica, sans-serif;
-      min-height: 100vh;
-      background:
-        radial-gradient(circle at 20% 20%, #27305c 0%, transparent 30%),
-        radial-gradient(circle at 80% 70%, #4b175f 0%, transparent 35%),
-        #101426;
-      color: white;
-    }
+nav {
+  width: 100%;
+  padding: 25px 7%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
-    nav {
-      width: 100%;
-      padding: 25px 7%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
+.logo {
+  font-size: 30px;
+  font-weight: 900;
+}
 
-    .logo {
-      font-size: 30px;
-      font-weight: 900;
-      letter-spacing: -1px;
-    }
+.logo span {
+  color: #ffcc00;
+}
 
-    .logo span {
-      color: #ffcc00;
-    }
+.badge {
+  background: rgba(255,255,255,0.1);
+  padding: 9px 15px;
+  border-radius: 20px;
+  font-size: 14px;
+}
 
-    .badge {
-      background: rgba(255,255,255,0.1);
-      padding: 9px 15px;
-      border-radius: 20px;
-      font-size: 14px;
-    }
+main {
+  min-height: 75vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+}
 
-    main {
-      min-height: 75vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 40px 20px;
-      text-align: center;
-    }
+.hero {
+  max-width: 850px;
+  text-align: center;
+}
 
-    .hero {
-      max-width: 850px;
-    }
+.small-title {
+  color: #ffcc00;
+  font-weight: bold;
+  letter-spacing: 3px;
+  margin-bottom: 18px;
+  font-size: 14px;
+}
 
-    .small-title {
-      color: #ffcc00;
-      font-weight: bold;
-      letter-spacing: 3px;
-      margin-bottom: 18px;
-      font-size: 14px;
-    }
+h1 {
+  font-size: clamp(55px, 9vw, 105px);
+  line-height: .95;
+  margin-bottom: 25px;
+  font-weight: 900;
+}
 
-    h1 {
-      font-size: clamp(55px, 9vw, 105px);
-      line-height: 0.95;
-      margin-bottom: 25px;
-      font-weight: 900;
-    }
+h1 span {
+  color: #ffcc00;
+}
 
-    h1 span {
-      color: #ffcc00;
-    }
+h2 {
+  font-size: clamp(22px,4vw,36px);
+  margin-bottom: 20px;
+}
 
-    h2 {
-      font-size: clamp(22px, 4vw, 36px);
-      margin-bottom: 20px;
-    }
+.description {
+  color: #c8cbe0;
+  font-size: 18px;
+  line-height: 1.6;
+  max-width: 650px;
+  margin: 0 auto 40px;
+}
 
-    .description {
-      color: #c8cbe0;
-      font-size: 18px;
-      line-height: 1.6;
-      max-width: 650px;
-      margin: 0 auto 40px;
-    }
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+  flex-wrap: wrap;
+}
 
-    .buttons {
-      display: flex;
-      justify-content: center;
-      gap: 18px;
-      flex-wrap: wrap;
-    }
+button {
+  border: none;
+  padding: 18px 32px;
+  border-radius: 14px;
+  font-size: 17px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: .2s;
+}
 
-    button {
-      border: none;
-      padding: 18px 32px;
-      border-radius: 14px;
-      font-size: 17px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: 0.2s;
-    }
+button:hover {
+  transform: translateY(-3px);
+}
 
-    button:hover {
-      transform: translateY(-4px) scale(1.03);
-    }
+.create {
+  background: #ffcc00;
+  color: #101426;
+}
 
-    .create {
-      background: #ffcc00;
-      color: #101426;
-      box-shadow: 0 8px 30px rgba(255,204,0,0.25);
-    }
+.play {
+  background: white;
+  color: #101426;
+}
 
-    .play {
-      background: white;
-      color: #101426;
-    }
+.smash-zone {
+  margin: 55px auto 0;
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  flex-wrap: wrap;
+}
 
-    .smash-zone {
-      margin: 55px auto 0;
-      display: flex;
-      justify-content: center;
-      gap: 25px;
-      flex-wrap: wrap;
-    }
+.card {
+  width: 180px;
+  padding: 20px;
+  border: 1px solid rgba(255,255,255,.12);
+  background: rgba(255,255,255,.06);
+  border-radius: 18px;
+}
 
-    .card {
-      width: 180px;
-      padding: 20px;
-      border: 1px solid rgba(255,255,255,0.12);
-      background: rgba(255,255,255,0.06);
-      border-radius: 18px;
-      backdrop-filter: blur(8px);
-    }
+.card-icon {
+  font-size: 32px;
+  margin-bottom: 10px;
+}
 
-    .card-icon {
-      font-size: 32px;
-      margin-bottom: 10px;
-    }
+.card h3 {
+  margin-bottom: 6px;
+}
 
-    .card h3 {
-      margin-bottom: 6px;
-      font-size: 16px;
-    }
+.card p {
+  color: #aeb2ca;
+  font-size: 13px;
+  line-height: 1.4;
+}
 
-    .card p {
-      color: #aeb2ca;
-      font-size: 13px;
-      line-height: 1.4;
-    }
+/* GAME CREATOR */
 
-    footer {
-      text-align: center;
-      padding: 25px;
-      color: #747990;
-      font-size: 13px;
-    }
+#creator {
+  display: none;
+  width: 100%;
+  max-width: 850px;
+}
 
-    @media (max-width: 600px) {
-      nav {
-        padding: 20px;
-      }
+.creator-header {
+  margin-bottom: 30px;
+}
 
-      .logo {
-        font-size: 24px;
-      }
+.creator-header h1 {
+  font-size: 48px;
+  margin-bottom: 10px;
+}
 
-      .badge {
-        display: none;
-      }
+.creator-header p {
+  color: #bfc3d8;
+}
 
-      .buttons button {
-        width: 100%;
-        max-width: 300px;
-      }
-    }
-  </style>
+.creator-box {
+  background: rgba(255,255,255,.07);
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 22px;
+  padding: 30px;
+  margin-bottom: 25px;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+input, select {
+  width: 100%;
+  padding: 15px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,.15);
+  background: #181d34;
+  color: white;
+  font-size: 16px;
+  margin-bottom: 16px;
+}
+
+input:focus, select:focus {
+  outline: 2px solid #ffcc00;
+}
+
+.question-number {
+  color: #ffcc00;
+  margin-bottom: 15px;
+  font-weight: bold;
+}
+
+.option-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.add-question {
+  width: 100%;
+  background: #282e4a;
+  color: white;
+  margin-bottom: 15px;
+}
+
+.save-game {
+  width: 100%;
+  background: #ffcc00;
+  color: #101426;
+}
+
+.back {
+  background: transparent;
+  color: #c8cbe0;
+  padding-left: 0;
+  margin-bottom: 15px;
+}
+
+.saved-message {
+  display: none;
+  text-align: center;
+  padding: 25px;
+  background: rgba(67, 214, 137, .12);
+  border: 1px solid rgba(67, 214, 137, .4);
+  border-radius: 15px;
+  margin-top: 20px;
+}
+
+.game-code {
+  color: #ffcc00;
+  font-size: 35px;
+  font-weight: 900;
+  letter-spacing: 5px;
+  margin: 12px 0;
+}
+
+footer {
+  text-align: center;
+  padding: 25px;
+  color: #747990;
+  font-size: 13px;
+}
+
+@media(max-width:600px) {
+  .option-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .badge {
+    display: none;
+  }
+}
+</style>
 </head>
 
 <body>
 
-  <nav>
-    <div class="logo">SMASH<span>2</span>LEARN</div>
-    <div class="badge">For teachers & students</div>
-  </nav>
+<nav>
+  <div class="logo">SMASH<span>2</span>LEARN</div>
+  <div class="badge">For teachers & students</div>
+</nav>
 
-  <main>
-    <section class="hero">
+<main>
 
-      <div class="small-title">LEARN • PLAY • SMASH</div>
+<section class="hero" id="home">
 
-      <h1>
-        Learn it.<br>
-        <span>Smash it.</span>
-      </h1>
+  <div class="small-title">LEARN • PLAY • SMASH</div>
 
-      <h2>Turn learning into a game.</h2>
+  <h1>
+    Learn it.<br>
+    <span>Smash it.</span>
+  </h1>
 
-      <p class="description">
-        Create interactive learning challenges, answer questions,
-        earn Smash Energy and unleash it in the Smash Zone.
-      </p>
+  <h2>Turn learning into a game.</h2>
 
-      <div class="buttons">
-        <button class="create">⚡ Create a Game</button>
-        <button class="play">🎮 Play a Game</button>
-      </div>
+  <p class="description">
+    Create interactive learning challenges, answer questions,
+    earn Smash Energy and unleash it in the Smash Zone.
+  </p>
 
-      <div class="smash-zone">
+  <div class="buttons">
+    <button class="create" onclick="openCreator()">⚡ Create a Game</button>
+    <button class="play">🎮 Play a Game</button>
+  </div>
 
-        <div class="card">
-          <div class="card-icon">🧠</div>
-          <h3>Learn</h3>
-          <p>Answer challenges and test your knowledge.</p>
-        </div>
+  <div class="smash-zone">
 
-        <div class="card">
-          <div class="card-icon">⚡</div>
-          <h3>Earn Energy</h3>
-          <p>Correct answers build your Smash Energy.</p>
-        </div>
+    <div class="card">
+      <div class="card-icon">🧠</div>
+      <h3>Learn</h3>
+      <p>Answer challenges and test your knowledge.</p>
+    </div>
 
-        <div class="card">
-          <div class="card-icon">💥</div>
-          <h3>Smash</h3>
-          <p>Use your energy to smash your way through the game.</p>
-        </div>
+    <div class="card">
+      <div class="card-icon">⚡</div>
+      <h3>Earn Energy</h3>
+      <p>Correct answers build your Smash Energy.</p>
+    </div>
 
-      </div>
+    <div class="card">
+      <div class="card-icon">💥</div>
+      <h3>Smash</h3>
+      <p>Use your energy to smash your way through the game.</p>
+    </div>
 
-    </section>
-  </main>
+  </div>
 
-  <footer>
-    Smash2Learn • Learning hits different.
-  </footer>
+</section>
+
+
+<section id="creator">
+
+  <button class="back" onclick="goHome()">← Back to home</button>
+
+  <div class="creator-header">
+    <div class="small-title">GAME CREATOR</div>
+    <h1>Create your game.</h1>
+    <p>Add your questions and choose the correct answers.</p>
+  </div>
+
+  <div class="creator-box">
+
+    <label>Game title</label>
+
+    <input
+      id="gameTitle"
+      type="text"
+      placeholder="Example: English Vocabulary Challenge"
+    >
+
+  </div>
+
+  <div id="questions"></div>
+
+  <button class="add-question" onclick="addQuestion()">
+    + Add another question
+  </button>
+
+  <button class="save-game" onclick="saveGame()">
+    ⚡ Save Game
+  </button>
+
+  <div class="saved-message" id="savedMessage">
+
+    <h2>💥 Game created!</h2>
+
+    <p>Your game code is</p>
+
+    <div class="game-code" id="gameCode"></div>
+
+    <p>Give this code to your students.</p>
+
+  </div>
+
+</section>
+
+</main>
+
+<footer>
+Smash2Learn • Learning hits different.
+</footer>
+
+
+<script>
+
+let questionCount = 0;
+
+function openCreator() {
+
+  document.getElementById("home").style.display = "none";
+
+  document.getElementById("creator").style.display = "block";
+
+  if (questionCount === 0) {
+    addQuestion();
+  }
+
+}
+
+function goHome() {
+
+  document.getElementById("creator").style.display = "none";
+
+  document.getElementById("home").style.display = "block";
+
+}
+
+function addQuestion() {
+
+  questionCount++;
+
+  const questions = document.getElementById("questions");
+
+  const box = document.createElement("div");
+
+  box.className = "creator-box";
+
+  box.innerHTML = `
+
+    <div class="question-number">
+      QUESTION ${questionCount}
+    </div>
+
+    <label>Question</label>
+
+    <input
+      type="text"
+      class="question"
+      placeholder="Type your question..."
+    >
+
+    <div class="option-grid">
+
+      <input class="option" type="text" placeholder="Answer A">
+
+      <input class="option" type="text" placeholder="Answer B">
+
+      <input class="option" type="text" placeholder="Answer C">
+
+      <input class="option" type="text" placeholder="Answer D">
+
+    </div>
+
+    <label>Correct answer</label>
+
+    <select class="correct">
+
+      <option value="0">Answer A</option>
+
+      <option value="1">Answer B</option>
+
+      <option value="2">Answer C</option>
+
+      <option value="3">Answer D</option>
+
+    </select>
+
+  `;
+
+  questions.appendChild(box);
+
+}
+
+function saveGame() {
+
+  const title =
+    document.getElementById("gameTitle").value.trim();
+
+  if (!title) {
+
+    alert("Please enter a game title.");
+
+    return;
+
+  }
+
+  const questionBoxes =
+    document.querySelectorAll("#questions .creator-box");
+
+  const gameQuestions = [];
+
+  for (const box of questionBoxes) {
+
+    const question =
+      box.querySelector(".question").value.trim();
+
+    const options =
+      [...box.querySelectorAll(".option")]
+      .map(input => input.value.trim());
+
+    const correct =
+      Number(box.querySelector(".correct").value);
+
+    if (!question || options.some(option => !option)) {
+
+      alert("Please complete every question and answer.");
+
+      return;
+
+    }
+
+    gameQuestions.push({
+      question,
+      options,
+      correct
+    });
+
+  }
+
+  const code =
+    Math.random()
+    .toString(36)
+    .substring(2, 8)
+    .toUpperCase();
+
+  const game = {
+    title,
+    code,
+    questions: gameQuestions
+  };
+
+  localStorage.setItem(
+    "smash2learn_" + code,
+    JSON.stringify(game)
+  );
+
+  document.getElementById("gameCode").textContent = code;
+
+  document.getElementById("savedMessage").style.display = "block";
+
+  document.getElementById("savedMessage")
+    .scrollIntoView({behavior:"smooth"});
+
+}
+
+</script>
 
 </body>
 </html>
