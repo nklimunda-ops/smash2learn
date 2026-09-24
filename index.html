@@ -132,8 +132,6 @@ button:disabled{
   margin-top:7px;
 }
 
-/* SCREENS */
-
 .screen{
   display:none;
   width:100%;
@@ -227,8 +225,6 @@ input:focus{outline:2px solid #ffcc00}
   font-weight:bold;
 }
 
-/* JOIN */
-
 .join{
   max-width:550px;
   margin:auto;
@@ -242,8 +238,6 @@ input:focus{outline:2px solid #ffcc00}
   letter-spacing:5px;
   font-weight:bold;
 }
-
-/* ESCAPE ROOM */
 
 .room-top{
   display:flex;
@@ -270,8 +264,6 @@ input:focus{outline:2px solid #ffcc00}
     radial-gradient(circle at center,#414867,#171b30);
 }
 
-.room h2{margin-top:5px}
-
 .room-text{
   color:#c8cbe0;
   line-height:1.6;
@@ -279,11 +271,11 @@ input:focus{outline:2px solid #ffcc00}
 }
 
 /* ==========================
-   SMASH PLATE
+   PLATE
 ========================== */
 
 .plate-area{
-  min-height:250px;
+  min-height:270px;
   display:flex;
   align-items:center;
   justify-content:center;
@@ -292,133 +284,126 @@ input:focus{outline:2px solid #ffcc00}
 }
 
 .plate{
-  width:175px;
-  height:175px;
+  width:180px;
+  height:180px;
   border-radius:50%;
   background:
     radial-gradient(circle,
-      #f5f5f5 0%,
-      #f5f5f5 47%,
-      #d7d9df 49%,
-      #ffffff 62%,
-      #c5c8d0 65%,
-      #eceef3 100%);
+      #f7f7f7 0%,
+      #f7f7f7 43%,
+      #d5d8df 46%,
+      #fff 61%,
+      #c3c7cf 64%,
+      #eef0f4 100%);
   box-shadow:
-    0 18px 35px rgba(0,0,0,.4),
-    inset 0 0 15px rgba(0,0,0,.15);
+    0 20px 38px rgba(0,0,0,.45),
+    inset 0 0 16px rgba(0,0,0,.16);
   cursor:pointer;
   position:relative;
-  transition:.12s;
   z-index:5;
   user-select:none;
   -webkit-tap-highlight-color:transparent;
 }
 
-.plate:hover{transform:scale(1.03)}
-
 .plate.hit1{
-  animation:plateHit1 .18s;
+  animation:hitOne .18s;
 }
 
 .plate.hit2{
-  animation:plateHit2 .22s;
+  animation:hitTwo .23s;
 }
 
-@keyframes plateHit1{
-  0%{transform:translateX(0) rotate(0)}
-  25%{transform:translateX(-7px) rotate(-4deg)}
-  50%{transform:translateX(7px) rotate(4deg)}
-  100%{transform:translateX(0) rotate(0)}
+@keyframes hitOne{
+  0%{transform:rotate(0) translateX(0)}
+  30%{transform:rotate(-5deg) translateX(-7px)}
+  60%{transform:rotate(5deg) translateX(7px)}
+  100%{transform:rotate(0) translateX(0)}
 }
 
-@keyframes plateHit2{
-  0%{transform:translateX(0) rotate(0)}
-  20%{transform:translateX(10px) rotate(6deg)}
-  40%{transform:translateX(-10px) rotate(-6deg)}
-  70%{transform:translateX(6px) rotate(3deg)}
-  100%{transform:translateX(0) rotate(0)}
+@keyframes hitTwo{
+  0%{transform:rotate(0)}
+  20%{transform:rotate(7deg) translateX(9px)}
+  45%{transform:rotate(-7deg) translateX(-9px)}
+  70%{transform:rotate(4deg)}
+  100%{transform:rotate(0)}
 }
 
 .crack{
   display:none;
   position:absolute;
-  left:51%;
-  top:18px;
+  left:50%;
+  top:16px;
   width:3px;
-  height:135px;
-  background:#555;
-  transform:rotate(20deg);
-  opacity:.85;
+  height:145px;
+  background:#52545a;
+  transform:rotate(18deg);
 }
 
 .crack:before{
   content:"";
   position:absolute;
-  width:70px;
+  width:72px;
   height:3px;
-  background:#555;
-  top:48px;
-  left:-12px;
-  transform:rotate(-38deg);
+  background:#52545a;
+  top:52px;
+  left:-13px;
+  transform:rotate(-42deg);
 }
 
 .crack:after{
   content:"";
   position:absolute;
-  width:55px;
+  width:62px;
   height:3px;
-  background:#555;
-  top:88px;
-  left:-35px;
-  transform:rotate(42deg);
+  background:#52545a;
+  top:92px;
+  left:-42px;
+  transform:rotate(44deg);
 }
 
-.plate.hit2 .crack{display:block}
+.plate.hit2 .crack{
+  display:block;
+}
 
 .plate.smashed{
   opacity:0;
-  transform:scale(.85);
+  transform:scale(.3);
   pointer-events:none;
+  transition:.08s;
 }
-
-/* Flying ceramic pieces */
 
 .shard{
   position:absolute;
   left:50%;
   top:50%;
-  width:42px;
-  height:55px;
-  background:linear-gradient(135deg,#fff,#d7d9df);
-  border:1px solid #b8bbc4;
-  box-shadow:0 5px 10px rgba(0,0,0,.3);
+  width:48px;
+  height:60px;
+  background:linear-gradient(135deg,#fff,#d2d5dc);
+  border:1px solid #aeb2ba;
+  box-shadow:0 7px 12px rgba(0,0,0,.35);
   z-index:8;
   pointer-events:none;
-  clip-path:polygon(0 0,100% 12%,76% 100%,15% 78%);
-  transform:translate(-50%,-50%);
-  animation:shardFly 1.15s cubic-bezier(.18,.72,.25,1) forwards;
+  clip-path:polygon(7% 4%,96% 15%,71% 98%,18% 76%);
+  animation:shardFly 1.35s cubic-bezier(.15,.65,.28,1) forwards;
 }
 
 .shard.small{
-  width:22px;
-  height:30px;
+  width:29px;
+  height:37px;
 }
 
 .shard.tiny{
-  width:12px;
-  height:17px;
+  width:15px;
+  height:21px;
 }
 
 @keyframes shardFly{
   0%{
-    transform:
-      translate(-50%,-50%)
-      translate(0,0)
-      rotate(0deg);
+    transform:translate(-50%,-50%) translate(0,0) rotate(0);
     opacity:1;
   }
 
-  60%{
+  58%{
     transform:
       translate(-50%,-50%)
       translate(var(--x),var(--y))
@@ -429,28 +414,26 @@ input:focus{outline:2px solid #ffcc00}
   100%{
     transform:
       translate(-50%,-50%)
-      translate(var(--x2),220px)
+      translate(var(--x2),175px)
       rotate(var(--r2));
-    opacity:.15;
+    opacity:.7;
   }
 }
-
-/* tiny dust/spark particles */
 
 .particle{
   position:absolute;
   left:50%;
   top:50%;
-  width:6px;
-  height:6px;
-  background:#f4f4f4;
+  width:7px;
+  height:7px;
   border-radius:50%;
-  z-index:9;
+  background:#fff;
   pointer-events:none;
-  animation:particleFly .65s ease-out forwards;
+  z-index:9;
+  animation:dust .65s ease-out forwards;
 }
 
-@keyframes particleFly{
+@keyframes dust{
   from{
     transform:translate(-50%,-50%);
     opacity:1;
@@ -465,32 +448,32 @@ input:focus{outline:2px solid #ffcc00}
   }
 }
 
-.smash-flash{
+.flash{
   position:absolute;
   left:50%;
   top:50%;
-  width:40px;
-  height:40px;
-  border-radius:50%;
+  width:35px;
+  height:35px;
   background:white;
+  border-radius:50%;
   transform:translate(-50%,-50%);
   opacity:0;
   pointer-events:none;
   z-index:7;
 }
 
-.smash-flash.go{
-  animation:flash .3s ease-out;
+.flash.go{
+  animation:flashBoom .3s ease-out;
 }
 
-@keyframes flash{
+@keyframes flashBoom{
   0%{
-    opacity:.8;
-    transform:translate(-50%,-50%) scale(.5);
+    opacity:.9;
+    transform:translate(-50%,-50%) scale(.4);
   }
   100%{
     opacity:0;
-    transform:translate(-50%,-50%) scale(7);
+    transform:translate(-50%,-50%) scale(8);
   }
 }
 
@@ -501,7 +484,7 @@ input:focus{outline:2px solid #ffcc00}
   margin-bottom:20px;
 }
 
-/* CLUE */
+/* CLUES */
 
 .clue-box{
   display:none;
@@ -525,8 +508,6 @@ input:focus{outline:2px solid #ffcc00}
   font-weight:bold;
 }
 
-/* GUESS */
-
 .guess-area{margin-top:20px}
 
 .guess-feedback{
@@ -540,8 +521,6 @@ input:focus{outline:2px solid #ffcc00}
   display:none;
   margin-top:15px;
 }
-
-/* SUCCESS */
 
 .success{
   display:none;
@@ -559,8 +538,6 @@ input:focus{outline:2px solid #ffcc00}
   70%{transform:scale(1.2)}
   100%{transform:scale(1)}
 }
-
-/* FINAL DOOR */
 
 .door-wrap{text-align:center}
 
@@ -609,7 +586,7 @@ footer{
 @media(max-width:600px){
   .badge{display:none}
   .room{padding:22px}
-  .plate{width:150px;height:150px}
+  .plate{width:155px;height:155px}
   .clue-row{display:block}
   .remove{width:100%}
 }
@@ -624,8 +601,6 @@ footer{
 </nav>
 
 <main>
-
-<!-- HOME -->
 
 <section id="home" class="hero">
 
@@ -644,7 +619,6 @@ footer{
   </p>
 
   <div class="buttons">
-
     <button class="yellow" onclick="openCreator()">
       🔐 Create an Escape Room
     </button>
@@ -652,7 +626,6 @@ footer{
     <button class="white" onclick="openJoin()">
       🚪 Enter a Room
     </button>
-
   </div>
 
   <div class="cards">
@@ -680,8 +653,6 @@ footer{
 </section>
 
 
-<!-- CREATOR -->
-
 <section id="creator" class="screen">
 
   <button class="back" onclick="goHome()">← Back to home</button>
@@ -696,14 +667,8 @@ footer{
   </p>
 
   <div class="box">
-
     <label>Escape Room title</label>
-
-    <input
-      id="roomTitle"
-      placeholder="Example: Biology Final Escape"
-    >
-
+    <input id="roomTitle" placeholder="Example: Biology Final Escape">
   </div>
 
   <div id="mysteries"></div>
@@ -712,32 +677,21 @@ footer{
     + Add another mystery
   </button>
 
-  <button
-    id="saveButton"
-    class="yellow full"
-    onclick="saveRoom()"
-  >
+  <button id="saveButton" class="yellow full" onclick="saveRoom()">
     🔐 Create Escape Room
   </button>
 
   <div id="saveMessage" class="message">
-
     <h2>🚪 Escape Room created!</h2>
-
     <p>Your room code is</p>
-
     <div id="roomCode" class="game-code"></div>
-
     <p>Give this code to your students.</p>
-
   </div>
 
   <div id="saveError" class="error"></div>
 
 </section>
 
-
-<!-- JOIN -->
 
 <section id="joinScreen" class="screen">
 
@@ -750,9 +704,8 @@ footer{
     <h2>You're locked in.</h2>
 
     <p class="description">
-      Enter the room code.
-      Find the clues. Solve the mysteries.
-      Smash your way out.
+      Enter the room code. Find the clues.
+      Solve the mysteries. Smash your way out.
     </p>
 
     <div class="box">
@@ -766,11 +719,7 @@ footer{
         placeholder="ABC123"
       >
 
-      <button
-        id="joinButton"
-        class="yellow full"
-        onclick="joinRoom()"
-      >
+      <button id="joinButton" class="yellow full" onclick="joinRoom()">
         🚪 Enter Room
       </button>
 
@@ -783,19 +732,15 @@ footer{
 </section>
 
 
-<!-- GAME -->
-
 <section id="gameScreen" class="screen">
 
   <div class="room-top">
-
     <div>
       <div id="gameTitle"></div>
       <div id="progress" class="room-progress"></div>
     </div>
 
     <div class="lock">🔒</div>
-
   </div>
 
   <div class="box room">
@@ -817,32 +762,21 @@ footer{
 
       <div id="plateArea" class="plate-area">
 
-        <div id="smashFlash" class="smash-flash"></div>
+        <div id="smashFlash" class="flash"></div>
 
-        <div
-          id="plate"
-          class="plate"
-          onclick="hitPlate()"
-        >
+        <div id="plate" class="plate" onclick="hitPlate()">
           <div class="crack"></div>
         </div>
 
       </div>
 
-      <p id="hitText">
-        Tap the plate 3 times.
-      </p>
+      <p id="hitText">Tap the plate 3 times.</p>
 
     </div>
 
     <div id="clueBox" class="clue-box">
-
-      <div id="clueLabel" class="clue-label">
-        CLUE 1
-      </div>
-
+      <div id="clueLabel" class="clue-label">CLUE 1</div>
       <div id="clueText" class="clue-text"></div>
-
     </div>
 
     <div id="guessArea" class="guess-area">
@@ -855,17 +789,11 @@ footer{
         onkeydown="if(event.key==='Enter') checkGuess()"
       >
 
-      <button
-        class="yellow full"
-        onclick="checkGuess()"
-      >
+      <button class="yellow full" onclick="checkGuess()">
         💡 I KNOW IT!
       </button>
 
-      <div
-        id="guessFeedback"
-        class="guess-feedback"
-      ></div>
+      <div id="guessFeedback" class="guess-feedback"></div>
 
       <button
         id="nextClueButton"
@@ -883,9 +811,7 @@ footer{
 
       <h2>Mystery solved!</h2>
 
-      <p class="room-text">
-        You found a key.
-      </p>
+      <p class="room-text">You found a key.</p>
 
       <button
         id="nextMysteryButton"
@@ -902,15 +828,11 @@ footer{
 </section>
 
 
-<!-- FINAL ESCAPE -->
-
 <section id="escapeScreen" class="screen">
 
   <div class="box door-wrap">
 
-    <div class="small-title">
-      ALL MYSTERIES SOLVED
-    </div>
+    <div class="small-title">ALL MYSTERIES SOLVED</div>
 
     <h2>You found the final key.</h2>
 
@@ -922,11 +844,7 @@ footer{
       YOU ESCAPED! 💥
     </div>
 
-    <p
-      id="escapeMessage"
-      class="description"
-      style="display:none;"
-    >
+    <p id="escapeMessage" class="description" style="display:none;">
       You smashed. You learned. You escaped.
     </p>
 
@@ -946,7 +864,7 @@ footer{
 </main>
 
 <footer>
-Smash2Learn • Learn. Smash. Escape.
+  Smash2Learn • Learn. Smash. Escape.
 </footer>
 
 
@@ -954,15 +872,13 @@ Smash2Learn • Learn. Smash. Escape.
 
 <script>
 
-/* ==============================
-   SUPABASE
-============================== */
+/* SUPABASE */
 
 const SUPABASE_URL =
 "https://ygbagqdzjqhnevedxdjj.supabase.co";
 
 const SUPABASE_KEY =
-"PEGA_AQUI_TU_PUBLISHABLE_KEY";
+"sb_publishable_nYNGOy1ukYnTQtn9YBtb0A_4skXZ4dl";
 
 const db =
 window.supabase.createClient(
@@ -971,44 +887,37 @@ window.supabase.createClient(
 );
 
 
-/* ==============================
-   STATE
-============================== */
+/* STATE */
 
-let mysteryCount = 0;
+let mysteryCount=0;
 
-let currentRoom = null;
-let currentMysteryIndex = 0;
-let currentClueIndex = 0;
+let currentRoom=null;
+let currentMysteryIndex=0;
+let currentClueIndex=0;
 
-let plateHits = 0;
-let clueUnlocked = false;
+let plateHits=0;
+let clueUnlocked=false;
 
 
-/* ==============================
-   AUDIO
-============================== */
+/* AUDIO */
 
-let audioContext = null;
+let audioContext=null;
 
 function getAudioContext(){
 
   if(!audioContext){
 
-    const AudioCtx =
+    const AudioCtx=
       window.AudioContext ||
       window.webkitAudioContext;
 
     if(AudioCtx){
-      audioContext = new AudioCtx();
+      audioContext=new AudioCtx();
     }
 
   }
 
-  if(
-    audioContext &&
-    audioContext.state === "suspended"
-  ){
+  if(audioContext && audioContext.state==="suspended"){
     audioContext.resume();
   }
 
@@ -1018,179 +927,149 @@ function getAudioContext(){
 
 function ceramicHit(strength=1){
 
-  const ctx = getAudioContext();
+  const ctx=getAudioContext();
+  if(!ctx)return;
 
-  if(!ctx) return;
+  const now=ctx.currentTime;
 
-  const now = ctx.currentTime;
+  const osc=ctx.createOscillator();
+  const gain=ctx.createGain();
 
-  const osc = ctx.createOscillator();
-  const gain = ctx.createGain();
-
-  osc.type = "triangle";
+  osc.type="triangle";
 
   osc.frequency.setValueAtTime(
-    850 + Math.random()*450,
+    900+Math.random()*500,
     now
   );
 
   osc.frequency.exponentialRampToValueAtTime(
-    420,
-    now+.08
+    400,
+    now+.1
   );
 
-  gain.gain.setValueAtTime(
-    .12*strength,
-    now
-  );
+  gain.gain.setValueAtTime(.13*strength,now);
 
   gain.gain.exponentialRampToValueAtTime(
     .001,
-    now+.12
+    now+.13
   );
 
   osc.connect(gain);
   gain.connect(ctx.destination);
 
   osc.start(now);
-  osc.stop(now+.13);
-
+  osc.stop(now+.14);
 }
 
 
 function ceramicCrash(){
 
-  const ctx = getAudioContext();
+  const ctx=getAudioContext();
+  if(!ctx)return;
 
-  if(!ctx) return;
+  const now=ctx.currentTime;
 
-  const now = ctx.currentTime;
+  /* THUD */
 
-  /* Main impact */
-
-  const impact = ctx.createOscillator();
-  const impactGain = ctx.createGain();
+  const impact=ctx.createOscillator();
+  const impactGain=ctx.createGain();
 
   impact.type="triangle";
 
-  impact.frequency.setValueAtTime(180,now);
-  impact.frequency.exponentialRampToValueAtTime(
-    55,
-    now+.18
-  );
+  impact.frequency.setValueAtTime(190,now);
+  impact.frequency.exponentialRampToValueAtTime(50,now+.2);
 
-  impactGain.gain.setValueAtTime(.45,now);
-  impactGain.gain.exponentialRampToValueAtTime(
-    .001,
-    now+.22
-  );
+  impactGain.gain.setValueAtTime(.5,now);
+  impactGain.gain.exponentialRampToValueAtTime(.001,now+.23);
 
   impact.connect(impactGain);
   impactGain.connect(ctx.destination);
 
   impact.start(now);
-  impact.stop(now+.23);
+  impact.stop(now+.24);
 
 
-  /* Several ceramic clinks */
+  /* CERAMIC PIECES */
 
-  for(let i=0;i<12;i++){
+  for(let i=0;i<16;i++){
 
     const osc=ctx.createOscillator();
     const gain=ctx.createGain();
 
-    const start =
-      now + Math.random()*.22;
+    const start=now+Math.random()*.28;
 
-    osc.type =
-      Math.random()>.5
-      ? "triangle"
-      : "square";
+    osc.type=Math.random()>.5 ? "triangle" : "square";
 
     osc.frequency.setValueAtTime(
-      500 + Math.random()*1800,
+      600+Math.random()*2000,
       start
     );
 
     osc.frequency.exponentialRampToValueAtTime(
-      250 + Math.random()*500,
-      start+.08+Math.random()*.12
+      250+Math.random()*600,
+      start+.1
     );
 
     gain.gain.setValueAtTime(
-      .025 + Math.random()*.06,
+      .025+Math.random()*.055,
       start
     );
 
     gain.gain.exponentialRampToValueAtTime(
       .001,
-      start+.12+Math.random()*.15
+      start+.18
     );
 
     osc.connect(gain);
     gain.connect(ctx.destination);
 
     osc.start(start);
-    osc.stop(start+.3);
+    osc.stop(start+.22);
 
   }
 
 
-  /* Noise = crash texture */
+  /* CRASH NOISE */
 
-  const bufferSize =
-    Math.floor(ctx.sampleRate*.35);
+  const bufferSize=Math.floor(ctx.sampleRate*.45);
 
-  const buffer =
-    ctx.createBuffer(
-      1,
-      bufferSize,
-      ctx.sampleRate
-    );
+  const buffer=ctx.createBuffer(
+    1,
+    bufferSize,
+    ctx.sampleRate
+  );
 
-  const data =
-    buffer.getChannelData(0);
+  const data=buffer.getChannelData(0);
 
   for(let i=0;i<bufferSize;i++){
 
-    data[i] =
+    data[i]=
       (Math.random()*2-1) *
-      Math.pow(1-i/bufferSize,2);
+      Math.pow(1-i/bufferSize,1.7);
 
   }
 
-  const noise =
-    ctx.createBufferSource();
-
-  const noiseGain =
-    ctx.createGain();
-
-  const filter =
-    ctx.createBiquadFilter();
+  const noise=ctx.createBufferSource();
+  const filter=ctx.createBiquadFilter();
+  const noiseGain=ctx.createGain();
 
   noise.buffer=buffer;
 
   filter.type="highpass";
-  filter.frequency.value=900;
+  filter.frequency.value=750;
 
-  noiseGain.gain.setValueAtTime(.22,now);
-  noiseGain.gain.exponentialRampToValueAtTime(
-    .001,
-    now+.35
-  );
+  noiseGain.gain.setValueAtTime(.27,now);
+  noiseGain.gain.exponentialRampToValueAtTime(.001,now+.45);
 
   noise.connect(filter);
   filter.connect(noiseGain);
   noiseGain.connect(ctx.destination);
 
   noise.start(now);
-
 }
 
 
-/* ==============================
-   NAVIGATION
-============================== */
+/* NAVIGATION */
 
 function hideAll(){
 
@@ -1202,14 +1081,10 @@ function hideAll(){
 
 }
 
-
 function goHome(){
-
   hideAll();
   document.getElementById("home").style.display="block";
-
 }
-
 
 function openCreator(){
 
@@ -1222,7 +1097,6 @@ function openCreator(){
 
 }
 
-
 function openJoin(){
 
   hideAll();
@@ -1232,16 +1106,13 @@ function openJoin(){
 }
 
 
-/* ==============================
-   CREATOR
-============================== */
+/* CREATOR */
 
 function addMystery(){
 
   mysteryCount++;
 
-  const wrapper =
-    document.createElement("div");
+  const wrapper=document.createElement("div");
 
   wrapper.className="box mystery";
 
@@ -1285,33 +1156,26 @@ function addMystery(){
 
   `;
 
-  document
-    .getElementById("mysteries")
-    .appendChild(wrapper);
+  document.getElementById("mysteries").appendChild(wrapper);
 
 }
 
 
 function addClue(button){
 
-  const clues =
-    button.parentElement
-    .querySelector(".clues");
+  const clues=
+    button.parentElement.querySelector(".clues");
 
-  const number =
+  const number=
     clues.querySelectorAll(".clue").length+1;
 
-  const row =
-    document.createElement("div");
+  const row=document.createElement("div");
 
   row.className="clue-row";
 
   row.innerHTML=`
 
-    <input
-      class="clue"
-      placeholder="Clue ${number}"
-    >
+    <input class="clue" placeholder="Clue ${number}">
 
     <button
       class="remove"
@@ -1327,19 +1191,14 @@ function addClue(button){
 }
 
 
-/* ==============================
-   SAVE ROOM
-============================== */
+/* SAVE */
 
 async function saveRoom(){
 
-  const title =
-    document
-    .getElementById("roomTitle")
-    .value
-    .trim();
+  const title=
+    document.getElementById("roomTitle").value.trim();
 
-  const errorBox =
+  const errorBox=
     document.getElementById("saveError");
 
   errorBox.textContent="";
@@ -1351,50 +1210,40 @@ async function saveRoom(){
 
   }
 
-  const boxes =
+  const boxes=
     document.querySelectorAll(".mystery");
 
   const mysteries=[];
 
   for(const box of boxes){
 
-    const answer =
-      box.querySelector(".answer")
-      .value
-      .trim();
+    const answer=
+      box.querySelector(".answer").value.trim();
 
-    const clues =
+    const clues=
       [...box.querySelectorAll(".clue")]
       .map(x=>x.value.trim())
       .filter(Boolean);
 
     if(!answer){
 
-      alert(
-        "Please add the correct answer for every mystery."
-      );
-
+      alert("Please add the correct answer for every mystery.");
       return;
+
     }
 
     if(clues.length===0){
 
-      alert(
-        "Every mystery needs at least one clue."
-      );
-
+      alert("Every mystery needs at least one clue.");
       return;
+
     }
 
-    mysteries.push({
-      answer,
-      clues
-    });
+    mysteries.push({answer,clues});
 
   }
 
-  const button =
-    document.getElementById("saveButton");
+  const button=document.getElementById("saveButton");
 
   button.disabled=true;
   button.textContent="☁️ Creating room...";
@@ -1406,22 +1255,20 @@ async function saveRoom(){
 
     while(!available){
 
-      code =
+      code=
         Math.random()
         .toString(36)
         .substring(2,8)
         .toUpperCase();
 
-      const {data,error} =
+      const {data,error}=
         await db
         .from("games")
         .select("id")
         .eq("code",code)
         .limit(1);
 
-      if(error){
-        throw error;
-      }
+      if(error)throw error;
 
       if(!data || data.length===0){
         available=true;
@@ -1429,7 +1276,7 @@ async function saveRoom(){
 
     }
 
-    const {error} =
+    const {error}=
       await db
       .from("games")
       .insert([
@@ -1443,23 +1290,15 @@ async function saveRoom(){
         }
       ]);
 
-    if(error){
-      throw error;
-    }
+    if(error)throw error;
 
-    document
-      .getElementById("roomCode")
-      .textContent=code;
+    document.getElementById("roomCode").textContent=code;
 
-    document
-      .getElementById("saveMessage")
-      .style.display="block";
+    document.getElementById("saveMessage").style.display="block";
 
-    document
-      .getElementById("saveMessage")
-      .scrollIntoView({
-        behavior:"smooth"
-      });
+    document.getElementById("saveMessage").scrollIntoView({
+      behavior:"smooth"
+    });
 
   }catch(error){
 
@@ -1478,51 +1317,43 @@ async function saveRoom(){
 }
 
 
-/* ==============================
-   JOIN ROOM
-============================== */
+/* JOIN */
 
 async function joinRoom(){
 
-  const code =
-    document
-    .getElementById("joinCode")
+  const code=
+    document.getElementById("joinCode")
     .value
     .trim()
     .toUpperCase();
 
-  const errorBox =
+  const errorBox=
     document.getElementById("joinError");
 
   errorBox.textContent="";
 
   if(!code){
 
-    errorBox.textContent=
-      "Enter a room code.";
-
+    errorBox.textContent="Enter a room code.";
     return;
 
   }
 
-  const button =
-    document.getElementById("joinButton");
+  const button=document.getElementById("joinButton");
 
   button.disabled=true;
   button.textContent="🔓 Unlocking room...";
 
   try{
 
-    const {data,error} =
+    const {data,error}=
       await db
       .from("games")
       .select("code,title,questions")
       .eq("code",code)
       .limit(1);
 
-    if(error){
-      throw error;
-    }
+    if(error)throw error;
 
     if(!data || data.length===0){
 
@@ -1557,9 +1388,7 @@ async function joinRoom(){
 
     hideAll();
 
-    document
-      .getElementById("gameScreen")
-      .style.display="block";
+    document.getElementById("gameScreen").style.display="block";
 
     loadMystery();
 
@@ -1580,9 +1409,7 @@ async function joinRoom(){
 }
 
 
-/* ==============================
-   MYSTERY
-============================== */
+/* MYSTERY */
 
 function loadMystery(){
 
@@ -1590,58 +1417,33 @@ function loadMystery(){
   plateHits=0;
   clueUnlocked=false;
 
-  document
-    .getElementById("gameTitle")
-    .textContent=currentRoom.title;
+  document.getElementById("gameTitle").textContent=
+    currentRoom.title;
 
-  document
-    .getElementById("progress")
-    .textContent=
-      "LOCK "+
-      (currentMysteryIndex+1)+
-      " OF "+
-      currentRoom.mysteries.length;
+  document.getElementById("progress").textContent=
+    "LOCK "+
+    (currentMysteryIndex+1)+
+    " OF "+
+    currentRoom.mysteries.length;
 
-  document
-    .getElementById("mysteryTitle")
-    .textContent="Mystery locked.";
+  document.getElementById("mysteryTitle").textContent=
+    "Mystery locked.";
 
-  document
-    .getElementById("smashSection")
-    .style.display="block";
+  document.getElementById("smashSection").style.display="block";
+  document.getElementById("clueBox").style.display="none";
+  document.getElementById("guessArea").style.display="block";
+  document.getElementById("successArea").style.display="none";
 
-  document
-    .getElementById("clueBox")
-    .style.display="none";
-
-  document
-    .getElementById("guessArea")
-    .style.display="block";
-
-  document
-    .getElementById("successArea")
-    .style.display="none";
-
-  document
-    .getElementById("guessInput")
-    .value="";
-
-  document
-    .getElementById("guessFeedback")
-    .textContent="";
-
-  document
-    .getElementById("nextClueButton")
-    .style.display="none";
+  document.getElementById("guessInput").value="";
+  document.getElementById("guessFeedback").textContent="";
+  document.getElementById("nextClueButton").style.display="none";
 
   resetPlate();
 
 }
 
 
-/* ==============================
-   PLATE EFFECTS
-============================== */
+/* PLATE */
 
 function clearDebris(){
 
@@ -1658,103 +1460,72 @@ function resetPlate(){
 
   clearDebris();
 
-  const plate =
-    document.getElementById("plate");
+  const plate=document.getElementById("plate");
 
   plate.className="plate";
 
-  document
-    .getElementById("hitText")
-    .textContent=
-      "Tap the plate 3 times.";
+  document.getElementById("hitText").textContent=
+    "Tap the plate 3 times.";
 
 }
 
 
 function createPlateDebris(){
 
-  const area =
-    document.getElementById("plateArea");
+  const area=document.getElementById("plateArea");
 
   const directions=[
-    [-135,-110,-220],
-    [-95,-145,-170],
-    [-45,-150,-120],
-    [35,-155,120],
-    [90,-135,180],
-    [140,-95,250],
-    [-155,-35,-300],
-    [155,-25,310],
-    [-110,25,-170],
-    [110,30,190],
-    [-55,55,-100],
-    [55,60,130]
+    [-150,-120,-220],
+    [-110,-155,-170],
+    [-60,-165,-120],
+    [-20,-145,-70],
+    [30,-160,90],
+    [75,-150,140],
+    [125,-125,210],
+    [160,-70,270],
+    [-165,-55,-310],
+    [-135,5,-240],
+    [135,5,250],
+    [-100,45,-160],
+    [100,50,170],
+    [-50,70,-100],
+    [50,75,120]
   ];
 
   directions.forEach((d,index)=>{
 
-    const shard =
-      document.createElement("div");
+    const shard=document.createElement("div");
 
     shard.className="shard";
 
-    if(index>6){
-      shard.classList.add("small");
-    }
+    if(index>7)shard.classList.add("small");
+    if(index>12)shard.classList.add("tiny");
 
-    if(index>9){
-      shard.classList.add("tiny");
-    }
-
-    shard.style.setProperty(
-      "--x",
-      d[0]+"px"
-    );
-
-    shard.style.setProperty(
-      "--y",
-      d[1]+"px"
-    );
-
-    shard.style.setProperty(
-      "--x2",
-      (d[0]*1.25)+"px"
-    );
-
-    shard.style.setProperty(
-      "--r",
-      d[2]+"deg"
-    );
-
-    shard.style.setProperty(
-      "--r2",
-      (d[2]*2)+"deg"
-    );
+    shard.style.setProperty("--x",d[0]+"px");
+    shard.style.setProperty("--y",d[1]+"px");
+    shard.style.setProperty("--x2",(d[0]*1.18)+"px");
+    shard.style.setProperty("--r",d[2]+"deg");
+    shard.style.setProperty("--r2",(d[2]*2)+"deg");
 
     area.appendChild(shard);
 
   });
 
 
-  for(let i=0;i<22;i++){
+  for(let i=0;i<30;i++){
 
-    const particle =
-      document.createElement("div");
+    const particle=document.createElement("div");
 
     particle.className="particle";
 
     particle.style.setProperty(
       "--px",
-      (
-        Math.random()*320-160
-      )+"px"
+      (Math.random()*360-180)+"px"
     );
 
     particle.style.setProperty(
       "--py",
-      (
-        Math.random()*260-160
-      )+"px"
+      (Math.random()*300-190)+"px"
     );
 
     area.appendChild(particle);
@@ -1764,10 +1535,9 @@ function createPlateDebris(){
 }
 
 
-function smashFlash(){
+function doFlash(){
 
-  const flash =
-    document.getElementById("smashFlash");
+  const flash=document.getElementById("smashFlash");
 
   flash.classList.remove("go");
 
@@ -1778,37 +1548,28 @@ function smashFlash(){
 }
 
 
-/* ==============================
-   SMASH PLATE
-============================== */
-
 function hitPlate(){
 
-  if(clueUnlocked){
-    return;
-  }
+  if(clueUnlocked)return;
 
-  /* User tap unlocks browser audio */
   getAudioContext();
 
   plateHits++;
 
-  const plate =
-    document.getElementById("plate");
-
+  const plate=document.getElementById("plate");
 
   if(plateHits===1){
 
-    ceramicHit(.7);
+    ceramicHit(.75);
 
     plate.classList.remove("hit1");
+
     void plate.offsetWidth;
+
     plate.classList.add("hit1");
 
-    document
-      .getElementById("hitText")
-      .textContent=
-        "Again! 💥";
+    document.getElementById("hitText").textContent=
+      "Again! 💥";
 
     if(navigator.vibrate){
       navigator.vibrate(25);
@@ -1828,13 +1589,11 @@ function hitPlate(){
 
     plate.classList.add("hit2");
 
-    document
-      .getElementById("hitText")
-      .textContent=
-        "ONE MORE! 💥";
+    document.getElementById("hitText").textContent=
+      "ONE MORE! 💥";
 
     if(navigator.vibrate){
-      navigator.vibrate(40);
+      navigator.vibrate(45);
     }
 
   }
@@ -1846,35 +1605,28 @@ function hitPlate(){
 
     ceramicCrash();
 
-    smashFlash();
+    doFlash();
 
     createPlateDebris();
 
     plate.classList.add("smashed");
 
-    document
-      .getElementById("hitText")
-      .textContent=
-        "CRASH! 💥";
+    document.getElementById("hitText").textContent=
+      "CRASH! 💥";
 
     if(navigator.vibrate){
 
       navigator.vibrate([
-        70,
-        30,
-        120
+        80,
+        35,
+        140
       ]);
 
     }
 
-    /*
-      Keep the broken pieces visible
-      before revealing the clue.
-    */
-
     setTimeout(
       revealClue,
-      1250
+      1350
     );
 
   }
@@ -1882,46 +1634,32 @@ function hitPlate(){
 }
 
 
-/* ==============================
-   CLUES
-============================== */
+/* CLUES */
 
 function revealClue(){
 
-  const mystery =
-    currentRoom
-    .mysteries[currentMysteryIndex];
+  const mystery=
+    currentRoom.mysteries[currentMysteryIndex];
 
-  const clue =
+  const clue=
     mystery.clues[currentClueIndex];
 
-  document
-    .getElementById("clueLabel")
-    .textContent=
-      "CLUE "+(currentClueIndex+1);
+  document.getElementById("clueLabel").textContent=
+    "CLUE "+(currentClueIndex+1);
 
-  document
-    .getElementById("clueText")
-    .textContent=clue;
+  document.getElementById("clueText").textContent=
+    clue;
 
-  document
-    .getElementById("clueBox")
-    .style.display="block";
+  document.getElementById("clueBox").style.display="block";
 
-  document
-    .getElementById("smashSection")
-    .style.display="none";
+  document.getElementById("smashSection").style.display="none";
 
-  document
-    .getElementById("guessInput")
-    .focus();
+  document.getElementById("guessInput").focus();
 
 }
 
 
-/* ==============================
-   GUESS
-============================== */
+/* ANSWERS */
 
 function normalize(text){
 
@@ -1938,21 +1676,16 @@ function normalize(text){
 
 function checkGuess(){
 
-  const guess =
-    document
-    .getElementById("guessInput")
-    .value;
+  const guess=
+    document.getElementById("guessInput").value;
 
-  const mystery =
-    currentRoom
-    .mysteries[currentMysteryIndex];
+  const mystery=
+    currentRoom.mysteries[currentMysteryIndex];
 
   if(!guess.trim()){
 
-    document
-      .getElementById("guessFeedback")
-      .textContent=
-        "Type your answer first.";
+    document.getElementById("guessFeedback").textContent=
+      "Type your answer first.";
 
     return;
 
@@ -1967,26 +1700,21 @@ function checkGuess(){
 
   }else{
 
-    document
-      .getElementById("guessFeedback")
-      .textContent=
-        "🔒 Not quite. Need another clue?";
+    document.getElementById("guessFeedback").textContent=
+      "🔒 Not quite. Need another clue?";
 
     if(
       currentClueIndex <
       mystery.clues.length-1
     ){
 
-      document
-        .getElementById("nextClueButton")
-        .style.display="block";
+      document.getElementById("nextClueButton").style.display=
+        "block";
 
     }else{
 
-      document
-        .getElementById("guessFeedback")
-        .textContent=
-          "🔒 Not quite. Look at all your clues and try again.";
+      document.getElementById("guessFeedback").textContent=
+        "🔒 Not quite. Look at all your clues and try again.";
 
     }
 
@@ -1995,9 +1723,7 @@ function checkGuess(){
 }
 
 
-/* ==============================
-   NEXT CLUE
-============================== */
+/* NEXT CLUE */
 
 function prepareNextClue(){
 
@@ -2006,79 +1732,50 @@ function prepareNextClue(){
   clueUnlocked=false;
   plateHits=0;
 
-  document
-    .getElementById("clueBox")
-    .style.display="none";
+  document.getElementById("clueBox").style.display="none";
 
-  document
-    .getElementById("nextClueButton")
-    .style.display="none";
+  document.getElementById("nextClueButton").style.display="none";
 
-  document
-    .getElementById("guessFeedback")
-    .textContent="";
+  document.getElementById("guessFeedback").textContent="";
 
-  document
-    .getElementById("guessInput")
-    .value="";
+  document.getElementById("guessInput").value="";
 
-  document
-    .getElementById("smashSection")
-    .style.display="block";
+  document.getElementById("smashSection").style.display="block";
 
   resetPlate();
 
 }
 
 
-/* ==============================
-   SOLVED
-============================== */
+/* SOLVED */
 
 function mysterySolved(){
 
-  document
-    .getElementById("smashSection")
-    .style.display="none";
+  document.getElementById("smashSection").style.display="none";
+  document.getElementById("clueBox").style.display="none";
+  document.getElementById("guessArea").style.display="none";
+  document.getElementById("successArea").style.display="block";
 
-  document
-    .getElementById("clueBox")
-    .style.display="none";
-
-  document
-    .getElementById("guessArea")
-    .style.display="none";
-
-  document
-    .getElementById("successArea")
-    .style.display="block";
-
-  const button =
-    document.getElementById(
-      "nextMysteryButton"
-    );
+  const button=
+    document.getElementById("nextMysteryButton");
 
   if(
-    currentMysteryIndex ===
+    currentMysteryIndex===
     currentRoom.mysteries.length-1
   ){
 
-    button.textContent=
-      "🚪 Use the final key";
+    button.textContent="🚪 Use the final key";
 
   }else{
 
-    button.textContent=
-      "🔓 Unlock the next mystery";
+    button.textContent="🔓 Unlock the next mystery";
 
   }
 
 }
 
 
-/* ==============================
-   NEXT MYSTERY
-============================== */
+/* NEXT MYSTERY */
 
 function nextMystery(){
 
@@ -2105,34 +1802,21 @@ function nextMystery(){
 }
 
 
-/* ==============================
-   FINAL ESCAPE
-============================== */
+/* FINAL ESCAPE */
 
 function finalEscape(){
 
   hideAll();
 
-  document
-    .getElementById("escapeScreen")
-    .style.display="block";
+  document.getElementById("escapeScreen").style.display="block";
 
-  const door =
-    document.getElementById("door");
+  const door=document.getElementById("door");
 
   door.classList.remove("open");
 
-  document
-    .getElementById("escapeTitle")
-    .style.display="none";
-
-  document
-    .getElementById("escapeMessage")
-    .style.display="none";
-
-  document
-    .getElementById("homeButton")
-    .style.display="none";
+  document.getElementById("escapeTitle").style.display="none";
+  document.getElementById("escapeMessage").style.display="none";
+  document.getElementById("homeButton").style.display="none";
 
   setTimeout(()=>{
 
@@ -2142,17 +1826,9 @@ function finalEscape(){
 
   setTimeout(()=>{
 
-    document
-      .getElementById("escapeTitle")
-      .style.display="block";
-
-    document
-      .getElementById("escapeMessage")
-      .style.display="block";
-
-    document
-      .getElementById("homeButton")
-      .style.display="block";
+    document.getElementById("escapeTitle").style.display="block";
+    document.getElementById("escapeMessage").style.display="block";
+    document.getElementById("homeButton").style.display="block";
 
   },1900);
 
