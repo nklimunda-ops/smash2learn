@@ -3,832 +3,872 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Smash2Learn</title>
 
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
+*{
+  box-sizing:border-box;
+}
 
 body{
-font-family:Arial,Helvetica,sans-serif;
-min-height:100vh;
-background:
-radial-gradient(circle at 20% 20%,#27305c 0%,transparent 30%),
-radial-gradient(circle at 80% 70%,#4b175f 0%,transparent 35%),
-#101426;
-color:white;
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:
+    radial-gradient(circle at 50% 20%,#26334b 0,#101725 38%,#05080e 100%);
+  color:white;
+  min-height:100vh;
 }
 
 nav{
-width:100%;
-padding:25px 7%;
-display:flex;
-justify-content:space-between;
-align-items:center;
+  height:68px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:0 28px;
+  background:rgba(4,7,13,.94);
+  border-bottom:1px solid rgba(255,255,255,.08);
+  position:sticky;
+  top:0;
+  z-index:1000;
 }
 
-.logo{font-size:30px;font-weight:900}
-.logo span{color:#ffcc00}
+.logo{
+  font-size:25px;
+  font-weight:900;
+  letter-spacing:-1px;
+  cursor:pointer;
+}
 
-.badge{
-background:rgba(255,255,255,.1);
-padding:9px 15px;
-border-radius:20px;
-font-size:14px;
+.logo span{
+  color:#ff3b30;
+}
+
+.sound-button{
+  border:1px solid rgba(255,255,255,.18);
+  background:#161d2a;
+  color:white;
+  border-radius:12px;
+  padding:9px 13px;
+  cursor:pointer;
+  font-size:18px;
 }
 
 main{
-min-height:78vh;
-display:flex;
-justify-content:center;
-align-items:center;
-padding:40px 20px;
+  width:min(1000px,94%);
+  margin:auto;
+  padding:40px 0 80px;
 }
 
-.hero{max-width:900px;text-align:center}
+section{
+  display:none;
+}
 
-.small-title{
-color:#ffcc00;
-font-weight:bold;
-letter-spacing:3px;
-margin-bottom:18px;
-font-size:14px;
+section.active{
+  display:block;
+}
+
+.hero{
+  min-height:72vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+}
+
+.badge{
+  background:#192231;
+  border:1px solid #354158;
+  border-radius:100px;
+  padding:8px 15px;
+  font-size:13px;
+  font-weight:bold;
+  letter-spacing:.7px;
+  margin-bottom:22px;
 }
 
 h1{
-font-size:clamp(55px,9vw,105px);
-line-height:.95;
-margin-bottom:25px;
-font-weight:900;
+  font-size:clamp(48px,8vw,86px);
+  margin:0;
+  line-height:.95;
 }
 
-h1 span{color:#ffcc00}
-
-h2{
-font-size:clamp(24px,4vw,38px);
-margin-bottom:20px;
+.red{
+  color:#ff3b30;
 }
 
-.description{
-color:#c8cbe0;
-font-size:18px;
-line-height:1.6;
-max-width:700px;
-margin:0 auto 40px;
-}
-
-.buttons{
-display:flex;
-justify-content:center;
-gap:18px;
-flex-wrap:wrap;
+.subtitle{
+  font-size:21px;
+  color:#adb7c8;
+  margin:20px 0 34px;
 }
 
 button{
-border:none;
-padding:18px 32px;
-border-radius:14px;
-font-size:17px;
-font-weight:bold;
-cursor:pointer;
-transition:.2s;
+  font:inherit;
 }
 
-button:hover{transform:translateY(-3px)}
-
-button:disabled{
-opacity:.55;
-cursor:not-allowed;
-transform:none;
+.primary,
+.secondary{
+  border:none;
+  border-radius:13px;
+  padding:15px 23px;
+  font-weight:800;
+  cursor:pointer;
+  margin:6px;
 }
 
-.yellow{background:#ffcc00;color:#101426}
-.white{background:white;color:#101426}
-.dark{background:#282e4a;color:white}
-.full{width:100%}
+.primary{
+  background:#ff3b30;
+  color:white;
+}
 
-.cards{
-margin:55px auto 0;
-display:flex;
-justify-content:center;
-gap:25px;
-flex-wrap:wrap;
+.primary:hover{
+  background:#ff5148;
+}
+
+.secondary{
+  background:#1b2433;
+  color:white;
+  border:1px solid #364157;
 }
 
 .card{
-width:190px;
-padding:22px;
-border:1px solid rgba(255,255,255,.12);
-background:rgba(255,255,255,.06);
-border-radius:18px;
-}
-
-.card-icon{
-font-size:34px;
-margin-bottom:10px;
-}
-
-.card p{
-color:#aeb2ca;
-font-size:13px;
-line-height:1.4;
-margin-top:7px;
-}
-
-.screen{
-display:none;
-width:100%;
-max-width:850px;
-}
-
-.box{
-background:rgba(255,255,255,.07);
-border:1px solid rgba(255,255,255,.12);
-border-radius:22px;
-padding:30px;
-margin-bottom:25px;
-}
-
-.back{
-background:transparent;
-color:#c8cbe0;
-padding-left:0;
-margin-bottom:20px;
-}
-
-label{
-display:block;
-font-weight:bold;
-margin-bottom:8px;
+  background:rgba(16,23,35,.96);
+  border:1px solid #2d394d;
+  border-radius:20px;
+  padding:26px;
+  box-shadow:0 22px 70px rgba(0,0,0,.35);
+  margin-bottom:22px;
 }
 
 input{
-width:100%;
-padding:15px;
-border-radius:10px;
-border:1px solid rgba(255,255,255,.15);
-background:#181d34;
-color:white;
-font-size:16px;
-margin-bottom:16px;
+  width:100%;
+  padding:14px;
+  margin:7px 0;
+  border-radius:10px;
+  border:1px solid #3b4658;
+  background:#0a101a;
+  color:white;
+  font-size:16px;
 }
 
-input:focus{outline:2px solid #ffcc00}
+input:focus{
+  outline:2px solid rgba(255,59,48,.45);
+}
 
-.section-title{
-color:#ffcc00;
-font-weight:bold;
-letter-spacing:2px;
-margin-bottom:15px;
+label{
+  font-weight:bold;
+}
+
+.small{
+  color:#98a5b8;
+  font-size:14px;
+}
+
+.mystery{
+  border-top:1px solid #303a4a;
+  margin-top:22px;
+  padding-top:22px;
 }
 
 .clue-row{
-display:flex;
-gap:10px;
-align-items:center;
+  display:flex;
+  gap:8px;
+  align-items:center;
 }
 
-.clue-row input{flex:1}
+.clue-row input{
+  flex:1;
+}
 
 .remove{
-background:#47243a;
-color:white;
-padding:14px;
-margin-bottom:16px;
+  background:#31191c;
+  border:1px solid #673137;
+  color:#ff9993;
+  border-radius:9px;
+  padding:10px 12px;
+  cursor:pointer;
 }
 
-.add{
-background:#282e4a;
-color:white;
-width:100%;
-margin-bottom:15px;
+.room-code{
+  font-size:38px;
+  letter-spacing:6px;
+  font-weight:900;
+  color:#ff4a41;
 }
 
-.message{
-display:none;
-text-align:center;
-padding:25px;
-background:rgba(67,214,137,.12);
-border:1px solid rgba(67,214,137,.4);
-border-radius:15px;
-margin-top:20px;
+.game-header{
+  text-align:center;
+  margin-bottom:18px;
 }
 
-.game-code{
-color:#ffcc00;
-font-size:38px;
-font-weight:900;
-letter-spacing:5px;
-margin:15px 0;
+.progress{
+  color:#aab4c5;
+  font-weight:bold;
 }
 
-.error{
-color:#ff7587;
-margin-top:15px;
-font-weight:bold;
+.challenge-card{
+  overflow:hidden;
 }
-
-.join{
-max-width:550px;
-margin:auto;
-text-align:center;
-}
-
-.code-input{
-text-align:center;
-text-transform:uppercase;
-font-size:28px;
-letter-spacing:5px;
-font-weight:bold;
-}
-
-.room-top{
-display:flex;
-justify-content:space-between;
-gap:20px;
-align-items:center;
-margin-bottom:20px;
-}
-
-.room-progress{
-color:#ffcc00;
-font-weight:bold;
-}
-
-.lock{font-size:28px}
-
-.room{
-text-align:center;
-min-height:560px;
-position:relative;
-overflow:hidden;
-background:
-linear-gradient(rgba(10,13,27,.72),rgba(10,13,27,.85)),
-radial-gradient(circle at center,#414867,#171b30);
-}
-
-.room-text{
-color:#c8cbe0;
-line-height:1.6;
-margin-bottom:25px;
-}
-
-/* CHALLENGES */
 
 .challenge-title{
-color:#ffcc00;
-font-weight:900;
-letter-spacing:2px;
-margin-bottom:14px;
+  text-align:center;
+  font-size:27px;
+  margin:0 0 6px;
 }
 
-.challenge-stage{
-height:280px;
-position:relative;
-display:flex;
-align-items:center;
-justify-content:center;
-overflow:hidden;
-border-radius:18px;
-background:rgba(0,0,0,.12);
-touch-action:none;
+.challenge-instruction{
+  text-align:center;
+  color:#aab5c6;
+  margin-bottom:24px;
 }
 
-.challenge-help{
-margin-top:12px;
-color:#c8cbe0;
+.stage{
+  height:390px;
+  border-radius:22px;
+  overflow:hidden;
+  position:relative;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  user-select:none;
+  touch-action:none;
+  background:
+    linear-gradient(rgba(255,255,255,.025),rgba(0,0,0,.18)),
+    repeating-linear-gradient(
+      90deg,
+      #202937 0,
+      #202937 79px,
+      #1b2430 80px
+    );
+  border:1px solid #354156;
+  box-shadow:inset 0 0 80px rgba(0,0,0,.65);
+}
+
+.stage::after{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:0;
+  height:64px;
+  background:linear-gradient(#111821,#090d13);
+  border-top:2px solid #374052;
+}
+
+.flash{
+  position:absolute;
+  inset:0;
+  background:white;
+  opacity:0;
+  pointer-events:none;
+  z-index:50;
+}
+
+.flash.go{
+  animation:flash .25s ease;
+}
+
+@keyframes flash{
+  0%{opacity:.9}
+  100%{opacity:0}
+}
+
+.shake{
+  animation:shake .27s linear;
+}
+
+@keyframes shake{
+  0%{transform:translate(0,0)}
+  20%{transform:translate(-8px,5px)}
+  40%{transform:translate(9px,-4px)}
+  60%{transform:translate(-6px,-3px)}
+  80%{transform:translate(5px,5px)}
+  100%{transform:translate(0,0)}
 }
 
 /* PLATE */
 
+.plate-wrap{
+  position:relative;
+  z-index:3;
+}
+
 .plate{
-width:170px;
-height:170px;
-border-radius:50%;
-background:
-radial-gradient(circle,
-#fafafa 0 43%,
-#d5d8df 46%,
-#fff 61%,
-#c3c7cf 64%,
-#eef0f4 100%);
-box-shadow:
-0 20px 38px rgba(0,0,0,.45),
-inset 0 0 16px rgba(0,0,0,.16);
-cursor:pointer;
-position:relative;
-z-index:3;
+  width:225px;
+  height:225px;
+  border-radius:50%;
+  cursor:pointer;
+  position:relative;
+  background:
+    radial-gradient(circle at 42% 34%,
+      #ffffff 0 12%,
+      #f5f3eb 35%,
+      #d8d6cf 60%,
+      #faf8ef 68%,
+      #bebdb7 71%,
+      #f4f1e8 77%);
+  border:7px solid #dedbd2;
+  box-shadow:
+    0 26px 30px rgba(0,0,0,.55),
+    inset -12px -14px 25px rgba(0,0,0,.13),
+    inset 10px 10px 20px rgba(255,255,255,.85);
+  transition:.1s;
 }
 
-.plate.cracked:after{
-content:"";
-position:absolute;
-left:50%;
-top:12px;
-width:4px;
-height:145px;
-background:#555;
-transform:rotate(21deg);
-box-shadow:
-30px 35px 0 -1px #555,
--28px 65px 0 -1px #555;
+.plate::before,
+.plate::after{
+  content:"";
+  position:absolute;
+  width:4px;
+  background:#404040;
+  left:50%;
+  top:45%;
+  transform-origin:top;
+  opacity:0;
 }
 
-.shake{
-animation:shake .2s;
+.plate.crack1::before{
+  opacity:1;
+  height:88px;
+  transform:rotate(35deg);
+  box-shadow:
+    22px 27px 0 -1px #404040,
+    -25px 42px 0 -1px #404040;
 }
 
-@keyframes shake{
-25%{transform:translateX(-10px) rotate(-5deg)}
-50%{transform:translateX(10px) rotate(5deg)}
-100%{transform:none}
+.plate.crack2::after{
+  opacity:1;
+  height:92px;
+  transform:rotate(-54deg);
+  box-shadow:
+    31px 18px 0 -1px #404040,
+    -30px 38px 0 -1px #404040;
+}
+
+.plate.hit{
+  transform:scale(.94) rotate(-2deg);
 }
 
 .fragment{
-position:absolute;
-left:50%;
-top:50%;
-width:38px;
-height:48px;
-background:linear-gradient(135deg,#fff,#cfd2da);
-border:1px solid #aaa;
-clip-path:polygon(0 0,100% 15%,75% 100%,12% 78%);
-z-index:5;
-pointer-events:none;
+  position:absolute;
+  width:38px;
+  height:28px;
+  background:#f1eee5;
+  border:2px solid #c7c5bd;
+  z-index:8;
+  pointer-events:none;
+  animation:fragmentFly 1.25s cubic-bezier(.1,.7,.2,1) forwards;
+}
+
+@keyframes fragmentFly{
+  to{
+    transform:
+      translate(var(--x),var(--y))
+      rotate(var(--r));
+    opacity:0;
+  }
 }
 
 /* HORN */
 
 .horn{
-position:relative;
-width:220px;
-height:150px;
-cursor:pointer;
-user-select:none;
+  position:relative;
+  z-index:3;
+  width:270px;
+  height:170px;
+  cursor:pointer;
+  filter:drop-shadow(0 25px 18px rgba(0,0,0,.55));
+  transition:.1s;
 }
 
 .horn-bell{
-position:absolute;
-right:0;
-top:28px;
-width:125px;
-height:95px;
-background:linear-gradient(90deg,#d5a900,#ffdf4d);
-clip-path:polygon(0 30%,100% 0,100% 100%,0 70%);
-filter:drop-shadow(0 12px 10px rgba(0,0,0,.3));
+  position:absolute;
+  right:15px;
+  top:28px;
+  width:175px;
+  height:110px;
+  background:linear-gradient(90deg,#ba1717,#ff3b30 55%,#9d1010);
+  clip-path:polygon(0 34%,100% 0,100% 100%,0 66%);
+  border-radius:12px;
 }
 
 .horn-body{
-position:absolute;
-left:25px;
-top:55px;
-width:95px;
-height:42px;
-background:#e6b900;
-border-radius:22px 5px 5px 22px;
+  position:absolute;
+  left:20px;
+  top:63px;
+  width:105px;
+  height:40px;
+  border-radius:18px;
+  background:linear-gradient(#e7e7e7,#777,#ddd);
 }
 
-.horn-button{
-position:absolute;
-left:0;
-top:59px;
-width:48px;
-height:34px;
-background:#ffcc00;
-border-radius:15px;
-box-shadow:inset 0 -5px 0 rgba(0,0,0,.18);
+.horn-handle{
+  position:absolute;
+  left:65px;
+  top:93px;
+  width:55px;
+  height:65px;
+  background:linear-gradient(90deg,#333,#777,#222);
+  transform:skew(-10deg);
+  border-radius:8px;
 }
 
-.horn.honking{
-animation:hornShake .12s infinite alternate;
+.horn.pressed{
+  transform:scale(.95);
 }
 
-@keyframes hornShake{
-to{transform:rotate(3deg) scale(1.04)}
+.soundwaves{
+  position:absolute;
+  right:-30px;
+  top:43px;
+  font-size:65px;
+  opacity:0;
 }
 
-.soundwave{
-position:absolute;
-border:4px solid #ffcc00;
-border-left:0;
-border-radius:0 100% 100% 0;
-width:55px;
-height:90px;
-right:18px;
-opacity:0;
+.soundwaves.on{
+  opacity:1;
+  animation:pulse .4s infinite alternate;
 }
 
-.soundwave.go{
-animation:wave .7s ease-out;
-}
-
-@keyframes wave{
-0%{
-opacity:1;
-transform:translateX(90px) scale(.4);
-}
-100%{
-opacity:0;
-transform:translateX(160px) scale(1.5);
-}
+@keyframes pulse{
+  to{transform:scale(1.2);opacity:.5}
 }
 
 /* GLASS */
 
-.glass-pane{
-width:280px;
-height:205px;
-background:
-linear-gradient(
-135deg,
-rgba(157,224,255,.34),
-rgba(255,255,255,.08)
-);
-border:7px solid #8895a8;
-box-shadow:
-inset 0 0 30px rgba(255,255,255,.18),
-0 15px 30px rgba(0,0,0,.3);
-position:relative;
-cursor:crosshair;
-overflow:hidden;
+.window-frame{
+  width:270px;
+  height:285px;
+  padding:17px;
+  position:relative;
+  z-index:3;
+  background:linear-gradient(90deg,#343434,#777,#292929);
+  box-shadow:0 25px 30px rgba(0,0,0,.55);
 }
 
-.glass-pane:before,
-.glass-pane:after{
-content:"";
-position:absolute;
-display:none;
-background:#eefaff;
-transform-origin:left center;
-height:2px;
-width:220px;
-left:50%;
-top:50%;
-box-shadow:0 0 5px white;
+.glass{
+  width:100%;
+  height:100%;
+  position:relative;
+  cursor:pointer;
+  overflow:hidden;
+  background:
+    linear-gradient(130deg,
+      rgba(255,255,255,.25),
+      rgba(100,190,220,.13) 35%,
+      rgba(255,255,255,.05) 65%,
+      rgba(150,220,240,.17));
+  border:2px solid rgba(210,245,255,.4);
 }
 
-.glass-pane.crack1:before{
-display:block;
-transform:rotate(25deg);
+.glass::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  opacity:0;
+  background:
+    linear-gradient(35deg,transparent 49%,white 50%,transparent 51%),
+    linear-gradient(75deg,transparent 49%,white 50%,transparent 51%),
+    linear-gradient(115deg,transparent 49%,white 50%,transparent 51%),
+    linear-gradient(150deg,transparent 49%,white 50%,transparent 51%);
 }
 
-.glass-pane.crack2:before,
-.glass-pane.crack2:after{
-display:block;
-}
-
-.glass-pane.crack2:after{
-transform:rotate(-35deg);
+.glass.cracked::before{
+  opacity:.75;
 }
 
 .hammer{
-position:absolute;
-font-size:70px;
-right:35px;
-bottom:25px;
-transform:rotate(-25deg);
-pointer-events:none;
+  position:absolute;
+  right:55px;
+  bottom:35px;
+  font-size:92px;
+  z-index:8;
+  transform:rotate(-28deg);
+  pointer-events:none;
+  filter:drop-shadow(0 8px 7px rgba(0,0,0,.4));
 }
 
 .hammer.swing{
-animation:hammer .25s;
+  animation:hammerSwing .25s ease;
 }
 
-@keyframes hammer{
-50%{
-transform:
-translate(-65px,-45px)
-rotate(-65deg);
-}
+@keyframes hammerSwing{
+  50%{transform:rotate(-75deg) translate(-25px,-10px)}
 }
 
 .glass-piece{
-position:absolute;
-left:50%;
-top:50%;
-width:35px;
-height:45px;
-background:rgba(190,235,255,.45);
-border:1px solid rgba(255,255,255,.8);
-clip-path:polygon(10% 0,100% 20%,70% 100%,0 70%);
-pointer-events:none;
+  position:absolute;
+  width:28px;
+  height:35px;
+  background:rgba(190,235,245,.45);
+  border:1px solid rgba(255,255,255,.7);
+  z-index:9;
+  animation:glassFall 1.2s ease-in forwards;
 }
 
-/* BOXING BAG */
+@keyframes glassFall{
+  to{
+    transform:translate(var(--gx),330px) rotate(var(--gr));
+    opacity:0;
+  }
+}
 
-.bag-wrap{
-height:100%;
-position:relative;
-display:flex;
-align-items:flex-start;
-justify-content:center;
-padding-top:45px;
+/* BAG */
+
+.bag-system{
+  position:relative;
+  width:290px;
+  height:360px;
+  z-index:3;
 }
 
 .chain{
-position:absolute;
-top:0;
-width:5px;
-height:60px;
-background:#aaa;
+  position:absolute;
+  top:0;
+  left:50%;
+  width:5px;
+  height:65px;
+  background:repeating-linear-gradient(
+    #aaa 0 7px,
+    #333 7px 12px
+  );
 }
 
 .bag{
-width:115px;
-height:185px;
-border-radius:48% 48% 40% 40%;
-background:
-linear-gradient(
-90deg,
-#7d1624,
-#c6283e,
-#6f111d
-);
-box-shadow:
-inset -18px 0 20px rgba(0,0,0,.25),
-0 18px 25px rgba(0,0,0,.3);
-cursor:pointer;
-transform-origin:50% -30px;
-position:relative;
+  position:absolute;
+  top:58px;
+  left:65px;
+  width:165px;
+  height:270px;
+  cursor:pointer;
+  border-radius:48% 48% 38% 38% / 15% 15% 18% 18%;
+  background:
+    linear-gradient(90deg,#430808,#a51313 35%,#d22323 55%,#640909);
+  border:5px solid #2b0707;
+  box-shadow:
+    inset 20px 0 30px rgba(255,255,255,.08),
+    inset -25px 0 35px rgba(0,0,0,.35),
+    0 25px 30px rgba(0,0,0,.5);
+  transform-origin:50% 0;
 }
 
-.bag:after{
-content:"SMASH";
-position:absolute;
-top:72px;
-left:20px;
-font-weight:900;
-letter-spacing:2px;
-color:rgba(255,255,255,.7);
-transform:rotate(-90deg);
+.bag::before{
+  content:"SMASH";
+  position:absolute;
+  width:100%;
+  text-align:center;
+  top:105px;
+  font-size:25px;
+  font-weight:900;
+  opacity:.7;
 }
 
-.bag.left{
-animation:bagLeft .45s;
+.bag.punched-left{
+  animation:punchLeft .42s ease;
 }
 
-.bag.right{
-animation:bagRight .45s;
+.bag.punched-right{
+  animation:punchRight .42s ease;
 }
 
-@keyframes bagLeft{
-50%{transform:rotate(-24deg)}
+@keyframes punchLeft{
+  50%{transform:rotate(12deg) translateX(18px)}
 }
 
-@keyframes bagRight{
-50%{transform:rotate(24deg)}
+@keyframes punchRight{
+  50%{transform:rotate(-12deg) translateX(-18px)}
 }
 
-.glove{
-position:absolute;
-font-size:58px;
-left:35px;
-bottom:25px;
-pointer-events:none;
-}
-
-.glove.punch{
-animation:punch .22s;
-}
-
-@keyframes punch{
-50%{
-transform:
-translate(100px,-20px)
-scale(1.15);
-}
+.fist{
+  position:absolute;
+  bottom:18px;
+  right:15px;
+  font-size:82px;
+  z-index:10;
+  pointer-events:none;
+  opacity:.95;
 }
 
 /* GRAFFITI */
 
-.wall{
-width:100%;
-height:100%;
-position:relative;
-background:
-linear-gradient(
-90deg,
-rgba(255,255,255,.04) 1px,
-transparent 1px
-),
-linear-gradient(
-rgba(255,255,255,.04) 1px,
-transparent 1px
-),
-#5d6170;
-background-size:55px 28px;
-cursor:crosshair;
-overflow:hidden;
+.graffiti-wall{
+  position:absolute;
+  inset:0;
+  z-index:2;
+  cursor:crosshair;
+  background:
+    linear-gradient(rgba(0,0,0,.18),rgba(0,0,0,.18)),
+    repeating-linear-gradient(
+      0deg,
+      transparent 0 38px,
+      rgba(0,0,0,.3) 39px 42px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      #8a3f32 0 78px,
+      #78372c 79px 82px
+    );
 }
 
 .spray-dot{
-position:absolute;
-width:42px;
-height:42px;
-border-radius:50%;
-background:#ff3fb4;
-filter:blur(2px);
-opacity:.8;
-pointer-events:none;
+  position:absolute;
+  width:30px;
+  height:30px;
+  border-radius:50%;
+  background:#ff2f73;
+  box-shadow:
+    0 0 12px #ff2f73,
+    10px -4px 8px rgba(255,47,115,.6),
+    -7px 7px 8px rgba(255,47,115,.5);
+  pointer-events:none;
+  transform:translate(-50%,-50%);
 }
 
 .spray-can{
-position:absolute;
-right:18px;
-bottom:15px;
-font-size:62px;
-pointer-events:none;
+  position:absolute;
+  right:35px;
+  bottom:30px;
+  width:55px;
+  height:115px;
+  z-index:20;
+  border-radius:8px 8px 13px 13px;
+  background:linear-gradient(90deg,#999,#eee 45%,#777);
+  border:2px solid #333;
+  pointer-events:none;
+}
+
+.spray-can::before{
+  content:"";
+  position:absolute;
+  width:30px;
+  height:15px;
+  top:-15px;
+  left:11px;
+  background:#111;
+  border-radius:4px 4px 0 0;
+}
+
+.spray-can::after{
+  content:"SMASH";
+  position:absolute;
+  transform:rotate(-90deg);
+  font-size:12px;
+  font-weight:bold;
+  color:#ff2f73;
+  top:48px;
+  left:2px;
 }
 
 /* BOX */
 
-.cardboard{
-width:190px;
-height:150px;
-background:#a8733e;
-border:4px solid #6c4626;
-position:relative;
-cursor:pointer;
-box-shadow:0 18px 25px rgba(0,0,0,.35);
-transition:.2s;
+.box-wrap{
+  position:relative;
+  width:270px;
+  height:230px;
+  z-index:3;
 }
 
-.cardboard:before{
-content:"FRAGILE";
-position:absolute;
-left:48px;
-top:55px;
-border:3px solid #6c4626;
-padding:8px;
-font-weight:900;
-color:#6c4626;
-transform:rotate(-5deg);
+.box-object{
+  position:absolute;
+  width:230px;
+  height:175px;
+  left:20px;
+  bottom:0;
+  cursor:pointer;
+  background:
+    linear-gradient(90deg,#9b6a35,#c99351 45%,#a26d36);
+  border:4px solid #6e4825;
+  box-shadow:
+    inset 0 0 30px rgba(0,0,0,.18),
+    0 25px 25px rgba(0,0,0,.45);
+  transition:.15s;
 }
 
-.cardboard.step1{
-transform:scaleY(.82) skewX(4deg);
+.box-object::before{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:0;
+  bottom:0;
+  width:24px;
+  transform:translateX(-50%);
+  background:rgba(225,191,132,.45);
+  border-left:2px solid rgba(80,50,20,.2);
+  border-right:2px solid rgba(80,50,20,.2);
 }
 
-.cardboard.step2{
-transform:scaleY(.58) skewX(-8deg);
-border-radius:8px;
+.box-object::after{
+  content:"FRAGILE";
+  position:absolute;
+  left:65px;
+  top:68px;
+  border:3px solid #67391e;
+  color:#67391e;
+  padding:8px 14px;
+  font-weight:900;
+  transform:rotate(-6deg);
 }
 
-.cardboard.step3{
-transform:scaleY(.28) rotate(3deg);
-filter:brightness(.85);
+.box-object.crush1{
+  transform:scaleY(.82) skew(-3deg);
+  transform-origin:bottom;
 }
 
-.shoe{
-position:absolute;
-font-size:75px;
-top:15px;
-right:60px;
-transform:rotate(25deg);
-pointer-events:none;
+.box-object.crush2{
+  transform:scaleY(.58) skew(7deg);
+  transform-origin:bottom;
 }
 
-.shoe.stomp{
-animation:stomp .3s;
+.box-object.crush3{
+  transform:scaleY(.28) rotate(-4deg);
+  transform-origin:bottom;
+}
+
+.boot{
+  position:absolute;
+  top:-50px;
+  left:95px;
+  font-size:90px;
+  z-index:10;
+  pointer-events:none;
+  transform:rotate(90deg);
+}
+
+.boot.stomp{
+  animation:stomp .25s ease;
 }
 
 @keyframes stomp{
-50%{
-transform:
-translate(-65px,100px)
-rotate(5deg)
-scale(1.15);
-}
+  50%{transform:rotate(90deg) translateX(70px)}
 }
 
-/* CLUES */
+/* CLUE */
 
 .clue-box{
-display:none;
-background:rgba(255,204,0,.10);
-border:1px solid rgba(255,204,0,.5);
-padding:22px;
-border-radius:16px;
-margin:20px 0;
+  margin-top:20px;
+  background:#0b111b;
+  border:1px solid #3a465a;
+  border-left:5px solid #ff3b30;
+  padding:20px;
+  border-radius:13px;
+  display:none;
+}
+
+.clue-box.show{
+  display:block;
+  animation:reveal .45s ease;
+}
+
+@keyframes reveal{
+  from{opacity:0;transform:translateY(10px)}
 }
 
 .clue-label{
-color:#ffcc00;
-font-size:13px;
-font-weight:bold;
-letter-spacing:2px;
-margin-bottom:10px;
+  color:#ff655d;
+  font-weight:900;
+  letter-spacing:1px;
+  font-size:13px;
 }
 
 .clue-text{
-font-size:22px;
-font-weight:bold;
+  font-size:21px;
+  margin:8px 0 18px;
 }
 
-.guess-area{
-margin-top:20px;
+.answer-area{
+  display:none;
+  margin-top:20px;
 }
 
-.guess-feedback{
-min-height:35px;
-margin-top:15px;
-font-weight:bold;
-font-size:18px;
+.answer-area.show{
+  display:block;
 }
 
-.next-clue{
-display:none;
-margin-top:15px;
+.message{
+  min-height:24px;
+  margin-top:10px;
+  font-weight:bold;
 }
 
-.success{
-display:none;
-text-align:center;
-padding:30px 10px;
+.correct{
+  color:#62e899;
 }
 
-.key{
-font-size:90px;
-animation:keypop .6s;
+.wrong{
+  color:#ff817a;
 }
 
-@keyframes keypop{
-0%{transform:scale(0)}
-70%{transform:scale(1.2)}
-100%{transform:scale(1)}
+.key-pop{
+  font-size:70px;
+  animation:keyPop .7s ease;
 }
 
-/* DOOR */
+@keyframes keyPop{
+  0%{transform:scale(0) rotate(-30deg)}
+  70%{transform:scale(1.25) rotate(8deg)}
+  100%{transform:scale(1)}
+}
 
-.door-wrap{text-align:center}
+/* FINAL DOOR */
+
+.door-room{
+  min-height:70vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+}
 
 .door{
-width:220px;
-height:340px;
-background:
-linear-gradient(
-90deg,
-#5d3828,
-#88553b,
-#5d3828
-);
-margin:30px auto;
-border:10px solid #34251f;
-border-bottom:none;
-position:relative;
-transform-origin:left;
-transition:1.4s;
-box-shadow:0 20px 40px rgba(0,0,0,.5);
+  width:235px;
+  height:350px;
+  background:
+    linear-gradient(90deg,#30160b,#74401f 35%,#4a2511 75%,#241006);
+  border:13px solid #151515;
+  position:relative;
+  box-shadow:0 0 70px rgba(255,59,48,.25);
+  transform-origin:left;
+  animation:doorOpen 2s 1s ease forwards;
 }
 
-.knob{
-position:absolute;
-width:18px;
-height:18px;
-border-radius:50%;
-background:#ffcc00;
-right:20px;
-top:165px;
+.door::before{
+  content:"";
+  position:absolute;
+  right:20px;
+  top:170px;
+  width:18px;
+  height:18px;
+  background:#d7a93d;
+  border-radius:50%;
+  box-shadow:0 0 12px #ffd86c;
 }
 
-.door.open{
-transform:
-perspective(700px)
-rotateY(-72deg);
+@keyframes doorOpen{
+  to{
+    transform:perspective(700px) rotateY(-72deg);
+  }
 }
 
 .escape-title{
-display:none;
-color:#ffcc00;
-font-size:clamp(45px,8vw,80px);
-font-weight:900;
-margin-top:25px;
+  font-size:clamp(52px,8vw,88px);
+  margin:30px 0 10px;
+  color:#ff3b30;
 }
 
 footer{
-text-align:center;
-padding:25px;
-color:#747990;
-font-size:13px;
+  text-align:center;
+  color:#687488;
+  padding:30px;
 }
 
 @media(max-width:600px){
-
-.badge{display:none}
-
-.room{padding:20px}
-
-.challenge-stage{
-height:245px;
-}
-
-.clue-row{
-display:block;
-}
-
-.remove{
-width:100%;
-}
-
+  nav{padding:0 15px}
+  main{padding-top:25px}
+  .stage{height:350px}
+  .card{padding:18px}
 }
 </style>
 </head>
@@ -836,460 +876,256 @@ width:100%;
 <body>
 
 <nav>
-<div class="logo">SMASH<span>2</span>LEARN</div>
-<div class="badge">Educational Escape Rooms</div>
+  <div class="logo" onclick="goHome()">SMASH<span>2</span>LEARN</div>
+
+  <button
+    id="soundToggle"
+    class="sound-button"
+    onclick="toggleSound()"
+    title="Sound"
+  >
+    🔊
+  </button>
 </nav>
 
 <main>
 
-<!-- HOME -->
+<section id="home" class="active">
+  <div class="hero">
 
-<section id="home" class="hero">
+    <div class="badge">💥 EDUCATIONAL ESCAPE ROOMS</div>
 
-<div class="small-title">
-LEARN • SMASH • ESCAPE
-</div>
+    <h1>
+      Smash your<br>
+      <span class="red">way out.</span>
+    </h1>
 
-<h1>
-Smash your<br>
-<span>way out.</span>
-</h1>
+    <div class="subtitle">
+      The educational escape room.
+      <br><br>
+      <strong>LEARN • SMASH • ESCAPE</strong>
+    </div>
 
-<h2>
-The educational escape room.
-</h2>
+    <div>
+      <button class="primary" onclick="openCreator()">
+        🔐 Create an Escape Room
+      </button>
 
-<p class="description">
-Break things. Unlock clues.
-Solve what you learned.
-Escape the room.
-</p>
+      <button class="secondary" onclick="openJoin()">
+        🚪 Enter a Room
+      </button>
+    </div>
 
-<div class="buttons">
+  </div>
+</section>
 
-<button
-class="yellow"
-onclick="openCreator()"
->
-🔐 Create an Escape Room
-</button>
 
-<button
-class="white"
-onclick="openJoin()"
->
-🚪 Enter a Room
-</button>
+<section id="creator">
 
-</div>
+  <h2>🔐 Create an Escape Room</h2>
 
-<div class="cards">
+  <div class="card">
 
-<div class="card">
-<div class="card-icon">💥</div>
-<h3>Smash</h3>
-<p>
-Release some rage through
-interactive challenges.
-</p>
-</div>
+    <label>Room title</label>
+    <input
+      id="roomTitle"
+      placeholder="Example: The Human Body Escape Room"
+    >
 
-<div class="card">
-<div class="card-icon">🔎</div>
-<h3>Unlock</h3>
-<p>
-Every challenge reveals
-another clue.
-</p>
-</div>
+    <p class="small">
+      Create as many mysteries as you want.
+      Each mystery has one answer and several clues.
+    </p>
 
-<div class="card">
-<div class="card-icon">🚪</div>
-<h3>Escape</h3>
-<p>
-Solve every mystery and
-unlock the final door.
-</p>
-</div>
+    <div id="mysteries"></div>
 
-</div>
+    <button class="secondary" onclick="addMystery()">
+      + Add another mystery
+    </button>
+
+    <br><br>
+
+    <button class="primary" onclick="saveRoom()">
+      🔐 Create Escape Room
+    </button>
+
+    <div id="creatorMessage" class="message"></div>
+
+  </div>
 
 </section>
 
 
-<!-- CREATOR -->
+<section id="joinScreen">
 
-<section id="creator" class="screen">
+  <h2>🚪 Enter a Room</h2>
 
-<button
-class="back"
-onclick="goHome()"
->
-← Back to home
-</button>
+  <div class="card">
 
-<div class="small-title">
-ESCAPE ROOM CREATOR
-</div>
+    <label>Room code</label>
 
-<h2>
-Create your escape room.
-</h2>
+    <input
+      id="joinCode"
+      maxlength="6"
+      placeholder="ABC123"
+      style="
+        text-transform:uppercase;
+        font-size:28px;
+        letter-spacing:5px;
+        text-align:center;
+      "
+    >
 
-<p
-class="description"
-style="margin-left:0"
->
-Add as many mysteries as you want.
-Students must solve them all to escape.
-</p>
+    <button class="primary" onclick="joinRoom()">
+      Enter Room
+    </button>
 
-<div class="box">
+    <div id="joinMessage" class="message"></div>
 
-<label>
-Escape Room title
-</label>
-
-<input
-id="roomTitle"
-placeholder="Example: Biology Final Escape"
->
-
-</div>
-
-<div id="mysteries"></div>
-
-<button
-class="add"
-onclick="addMystery()"
->
-+ Add another mystery
-</button>
-
-<button
-id="saveButton"
-class="yellow full"
-onclick="saveRoom()"
->
-🔐 Create Escape Room
-</button>
-
-<div
-id="saveMessage"
-class="message"
->
-
-<h2>
-🚪 Escape Room created!
-</h2>
-
-<p>Your room code is</p>
-
-<div
-id="roomCode"
-class="game-code"
-></div>
-
-<p>
-Give this code to your students.
-</p>
-
-</div>
-
-<div
-id="saveError"
-class="error"
-></div>
+  </div>
 
 </section>
 
 
-<!-- JOIN -->
+<section id="gameScreen">
 
-<section
-id="joinScreen"
-class="screen"
->
+  <div class="game-header">
 
-<button
-class="back"
-onclick="goHome()"
->
-← Back to home
-</button>
+    <h2 id="gameTitle"></h2>
 
-<div class="join">
+    <div id="progressText" class="progress"></div>
 
-<div class="small-title">
-ENTER THE ESCAPE ROOM
-</div>
+  </div>
 
-<h2>
-You're locked in.
-</h2>
+  <div class="card challenge-card">
 
-<p class="description">
-Enter the room code.
-Find the clues.
-Solve the mysteries.
-Smash your way out.
-</p>
+    <h3 id="challengeTitle" class="challenge-title"></h3>
 
-<div class="box">
+    <div
+      id="challengeInstruction"
+      class="challenge-instruction"
+    ></div>
 
-<label>
-Room code
-</label>
+    <div id="stage" class="stage">
 
-<input
-id="joinCode"
-class="code-input"
-maxlength="6"
-placeholder="ABC123"
->
+      <div id="flash" class="flash"></div>
 
-<button
-id="joinButton"
-class="yellow full"
-onclick="joinRoom()"
->
-🚪 Enter Room
-</button>
+    </div>
 
-<div
-id="joinError"
-class="error"
-></div>
+    <div id="clueBox" class="clue-box">
 
-</div>
+      <div class="clue-label">
+        🔎 CLUE UNLOCKED
+      </div>
 
-</div>
+      <div id="clueText" class="clue-text"></div>
+
+      <div id="answerArea" class="answer-area">
+
+        <input
+          id="answerInput"
+          placeholder="What is the answer?"
+          onkeydown="
+            if(event.key==='Enter'){
+              submitAnswer()
+            }
+          "
+        >
+
+        <button class="primary" onclick="submitAnswer()">
+          Unlock 🔑
+        </button>
+
+        <div id="answerMessage" class="message"></div>
+
+      </div>
+
+    </div>
+
+  </div>
 
 </section>
 
 
-<!-- GAME -->
+<section id="escapeScreen">
 
-<section
-id="gameScreen"
-class="screen"
->
+  <div class="door-room">
 
-<div class="room-top">
+    <div class="door"></div>
 
-<div>
+    <h1 class="escape-title">
+      YOU ESCAPED! 💥
+    </h1>
 
-<div id="gameTitle"></div>
+    <p class="subtitle">
+      You smashed every mystery and unlocked the final door.
+    </p>
 
-<div
-id="progress"
-class="room-progress"
-></div>
+    <button class="primary" onclick="goHome()">
+      Play Again
+    </button>
 
-</div>
-
-<div class="lock">
-🔒
-</div>
-
-</div>
-
-<div class="box room">
-
-<div class="small-title">
-FIND THE ANSWER
-</div>
-
-<h2 id="mysteryTitle">
-Mystery locked.
-</h2>
-
-<p class="room-text">
-Complete the challenge to reveal a clue.
-Think you know the answer?
-Try to solve it.
-</p>
-
-<div id="challengeSection">
-
-<div
-id="challengeTitle"
-class="challenge-title"
-></div>
-
-<div
-id="challengeStage"
-class="challenge-stage"
-></div>
-
-<p
-id="challengeHelp"
-class="challenge-help"
-></p>
-
-</div>
-
-<div
-id="clueBox"
-class="clue-box"
->
-
-<div
-id="clueLabel"
-class="clue-label"
->
-CLUE 1
-</div>
-
-<div
-id="clueText"
-class="clue-text"
-></div>
-
-</div>
-
-<div
-id="guessArea"
-class="guess-area"
->
-
-<label>
-What is the answer?
-</label>
-
-<input
-id="guessInput"
-placeholder="Type your answer..."
-onkeydown="
-if(event.key==='Enter')
-checkGuess()
-"
->
-
-<button
-class="yellow full"
-onclick="checkGuess()"
->
-💡 I KNOW IT!
-</button>
-
-<div
-id="guessFeedback"
-class="guess-feedback"
-></div>
-
-<button
-id="nextClueButton"
-class="dark full next-clue"
-onclick="prepareNextClue()"
->
-💥 I need another clue
-</button>
-
-</div>
-
-<div
-id="successArea"
-class="success"
->
-
-<div class="key">
-🔑
-</div>
-
-<h2>
-Mystery solved!
-</h2>
-
-<p class="room-text">
-You found a key.
-</p>
-
-<button
-id="nextMysteryButton"
-class="yellow full"
-onclick="nextMystery()"
->
-Unlock the next mystery →
-</button>
-
-</div>
-
-</div>
-
-</section>
-
-
-<!-- ESCAPE -->
-
-<section
-id="escapeScreen"
-class="screen"
->
-
-<div class="box door-wrap">
-
-<div class="small-title">
-ALL MYSTERIES SOLVED
-</div>
-
-<h2>
-You found the final key.
-</h2>
-
-<div
-id="door"
-class="door"
->
-<div class="knob"></div>
-</div>
-
-<div
-id="escapeTitle"
-class="escape-title"
->
-YOU ESCAPED! 💥
-</div>
-
-<p
-id="escapeMessage"
-class="description"
-style="display:none"
->
-You smashed.
-You learned.
-You escaped.
-</p>
-
-<button
-id="homeButton"
-class="yellow full"
-style="display:none"
-onclick="goHome()"
->
-Play another room
-</button>
-
-</div>
+  </div>
 
 </section>
 
 </main>
 
 <footer>
-Smash2Learn • Learn. Smash. Escape.
+  SMASH2LEARN • LEARN • SMASH • ESCAPE
 </footer>
 
 
-<script
-src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
-></script>
+<!-- REAL AUDIO FILES -->
+
+<audio
+  id="music"
+  src="sounds/mystery.mp3"
+  preload="auto"
+  loop
+></audio>
+
+<audio
+  id="plateAudio"
+  src="sounds/plate-break.mp3"
+  preload="auto"
+></audio>
+
+<audio
+  id="hornAudio"
+  src="sounds/horn.mp3"
+  preload="auto"
+></audio>
+
+<audio
+  id="glassAudio"
+  src="sounds/glass-break.mp3"
+  preload="auto"
+></audio>
+
+<audio
+  id="punchAudio"
+  src="sounds/punch.mp3"
+  preload="auto"
+></audio>
+
+<audio
+  id="sprayAudio"
+  src="sounds/spray.mp3"
+  preload="auto"
+  loop
+></audio>
+
+<audio
+  id="cardboardAudio"
+  src="sounds/cardboard.mp3"
+  preload="auto"
+></audio>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
-
-/* =========================
-   SUPABASE
-========================= */
 
 const SUPABASE_URL =
 "https://ygbagqdzjqhnevedxdjj.supabase.co";
@@ -1299,2356 +1135,1849 @@ const SUPABASE_KEY =
 
 const db =
 window.supabase.createClient(
-SUPABASE_URL,
-SUPABASE_KEY
+  SUPABASE_URL,
+  SUPABASE_KEY
 );
 
 
-/* =========================
-   STATE
-========================= */
+/* -------------------------
+   AUDIO
+------------------------- */
 
-let mysteryCount=0;
+let soundEnabled = true;
+let musicStarted = false;
 
-let currentRoom=null;
+const music =
+document.getElementById("music");
 
-let currentMysteryIndex=0;
+const plateAudio =
+document.getElementById("plateAudio");
 
-let currentClueIndex=0;
+const hornAudio =
+document.getElementById("hornAudio");
 
-let challengeDone=false;
+const glassAudio =
+document.getElementById("glassAudio");
 
-let actionCount=0;
+const punchAudio =
+document.getElementById("punchAudio");
 
-let audioContext=null;
+const sprayAudio =
+document.getElementById("sprayAudio");
 
-let sprayDrawing=false;
-
-let sprayAmount=0;
-
-let sprayNode=null;
-
-
-/* =========================
-   AUDIO ENGINE
-========================= */
-
-function ctx(){
-
-if(!audioContext){
-
-const AudioCtx =
-window.AudioContext ||
-window.webkitAudioContext;
-
-if(AudioCtx){
-audioContext =
-new AudioCtx();
-}
-
-}
-
-if(
-audioContext &&
-audioContext.state==="suspended"
-){
-audioContext.resume();
-}
-
-return audioContext;
-
-}
+const cardboardAudio =
+document.getElementById("cardboardAudio");
 
 
-function tone(
-freq,
-dur=.12,
-type="triangle",
-vol=.12
-){
+music.volume = .28;
+plateAudio.volume = 1;
+hornAudio.volume = 1;
+glassAudio.volume = 1;
+punchAudio.volume = 1;
+sprayAudio.volume = .9;
+cardboardAudio.volume = 1;
 
-const c=ctx();
 
-if(!c)return;
+function startMusic(){
 
-const o=
-c.createOscillator();
+  if(
+    !soundEnabled ||
+    musicStarted
+  ){
+    return;
+  }
 
-const g=
-c.createGain();
-
-const now=
-c.currentTime;
-
-o.type=type;
-
-o.frequency
-.setValueAtTime(
-freq,
-now
-);
-
-g.gain
-.setValueAtTime(
-vol,
-now
-);
-
-g.gain
-.exponentialRampToValueAtTime(
-.001,
-now+dur
-);
-
-o.connect(g)
-.connect(c.destination);
-
-o.start(now);
-
-o.stop(
-now+dur
-);
+  music.play()
+    .then(()=>{
+      musicStarted = true;
+    })
+    .catch(()=>{});
 
 }
 
 
-function noise(
-dur=.3,
-vol=.18,
-high=500
-){
+function stopAllEffects(){
 
-const c=ctx();
+  [
+    plateAudio,
+    hornAudio,
+    glassAudio,
+    punchAudio,
+    sprayAudio,
+    cardboardAudio
+  ].forEach(audio=>{
 
-if(!c)return;
+    audio.pause();
+    audio.currentTime = 0;
 
-const len=
-Math.floor(
-c.sampleRate*dur
-);
-
-const buffer=
-c.createBuffer(
-1,
-len,
-c.sampleRate
-);
-
-const data=
-buffer.getChannelData(0);
-
-for(
-let i=0;
-i<len;
-i++
-){
-
-data[i]=
-(Math.random()*2-1) *
-(1-i/len);
-
-}
-
-const source=
-c.createBufferSource();
-
-const filter=
-c.createBiquadFilter();
-
-const gain=
-c.createGain();
-
-source.buffer=
-buffer;
-
-filter.type=
-"highpass";
-
-filter.frequency.value=
-high;
-
-gain.gain
-.setValueAtTime(
-vol,
-c.currentTime
-);
-
-gain.gain
-.exponentialRampToValueAtTime(
-.001,
-c.currentTime+dur
-);
-
-source
-.connect(filter)
-.connect(gain)
-.connect(c.destination);
-
-source.start();
+  });
 
 }
 
 
-/* CERAMIC */
+function toggleSound(){
 
-function ceramic(){
+  soundEnabled = !soundEnabled;
 
-noise(
-.5,
-.27,
-700
-);
+  const button =
+  document.getElementById("soundToggle");
 
-[
-500,
-750,
-1050,
-1450,
-1900,
-2400
-]
-.forEach(
-(freq,index)=>{
+  if(soundEnabled){
 
-setTimeout(
-()=>tone(
-freq,
-.16,
-"triangle",
-.09
-),
-index*28
-);
+    button.textContent = "🔊";
 
-}
-);
+    music.play()
+      .then(()=>{
+        musicStarted = true;
+      })
+      .catch(()=>{});
+
+  }else{
+
+    button.textContent = "🔇";
+
+    music.pause();
+
+    stopAllEffects();
+
+  }
 
 }
 
 
-/* HORN */
+function playEffect(audio){
 
-function hornSound(){
+  if(!soundEnabled){
+    return;
+  }
 
-const c=ctx();
+  audio.pause();
+  audio.currentTime = 0;
 
-if(!c)return;
-
-[
-220,
-277,
-330
-]
-.forEach(freq=>{
-
-const o=
-c.createOscillator();
-
-const g=
-c.createGain();
-
-const now=
-c.currentTime;
-
-o.type=
-"sawtooth";
-
-o.frequency.value=
-freq;
-
-g.gain
-.setValueAtTime(
-.06,
-now
-);
-
-g.gain
-.exponentialRampToValueAtTime(
-.001,
-now+.75
-);
-
-o.connect(g)
-.connect(c.destination);
-
-o.start();
-
-o.stop(
-now+.78
-);
-
-});
+  audio.play().catch(()=>{});
 
 }
 
 
-/* GLASS */
+/* Browser requires user interaction
+   before autoplaying audio.
+*/
 
-function glassSound(){
-
-noise(
-.65,
-.32,
-1500
+document.addEventListener(
+  "pointerdown",
+  ()=>{
+    startMusic();
+  },
+  {once:true}
 );
 
-for(
-let i=0;
-i<12;
-i++
-){
 
-setTimeout(
-()=>tone(
-900+
-Math.random()*2500,
-.12,
-"triangle",
-.04+
-Math.random()*.05
-),
-Math.random()*350
-);
+/* -------------------------
+   SCREENS
+------------------------- */
 
-}
+function showScreen(id){
 
-}
+  document
+    .querySelectorAll("main section")
+    .forEach(section=>{
+      section.classList.remove("active");
+    });
 
+  document
+    .getElementById(id)
+    .classList.add("active");
 
-/* PUNCH */
-
-function punchSound(){
-
-noise(
-.11,
-.16,
-80
-);
-
-tone(
-90,
-.12,
-"sine",
-.18
-);
-
-}
-
-
-/* CARDBOARD */
-
-function cardboardSound(){
-
-noise(
-.25,
-.2,
-180
-);
-
-tone(
-120,
-.12,
-"triangle",
-.08
-);
-
-}
-
-
-function vibrate(pattern){
-
-if(navigator.vibrate){
-
-navigator.vibrate(
-pattern
-);
-
-}
-
-}
-
-
-/* =========================
-   NAVIGATION
-========================= */
-
-function hideAll(){
-
-[
-"home",
-"creator",
-"joinScreen",
-"gameScreen",
-"escapeScreen"
-]
-.forEach(id=>{
-
-document
-.getElementById(id)
-.style.display=
-"none";
-
-});
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
 
 }
 
 
 function goHome(){
 
-stopSpray();
+  stopAllEffects();
 
-hideAll();
-
-document
-.getElementById("home")
-.style.display=
-"block";
+  showScreen("home");
 
 }
 
 
 function openCreator(){
 
-hideAll();
+  startMusic();
 
-document
-.getElementById("creator")
-.style.display=
-"block";
+  showScreen("creator");
 
-if(!mysteryCount){
-
-addMystery();
-
-}
+  if(
+    document.querySelectorAll(".mystery").length === 0
+  ){
+    addMystery();
+  }
 
 }
 
 
 function openJoin(){
 
-hideAll();
+  startMusic();
 
-document
-.getElementById("joinScreen")
-.style.display=
-"block";
-
-document
-.getElementById("joinError")
-.textContent=
-"";
+  showScreen("joinScreen");
 
 }
 
 
-/* =========================
+/* -------------------------
    CREATOR
-========================= */
+------------------------- */
+
+let mysteryCount = 0;
+
 
 function addMystery(){
 
-mysteryCount++;
+  mysteryCount++;
 
-const wrapper=
-document.createElement(
-"div"
-);
+  const wrapper =
+  document.createElement("div");
 
-wrapper.className=
-"box mystery";
+  wrapper.className = "mystery";
 
-wrapper.innerHTML=`
+  wrapper.innerHTML = `
+    <h3>Mystery ${mysteryCount}</h3>
 
-<div class="section-title">
-🔒 MYSTERY ${mysteryCount}
-</div>
+    <label>Correct answer</label>
 
-<label>
-Correct answer
-</label>
+    <input
+      class="answer"
+      placeholder="Example: Photosynthesis"
+    >
 
-<input
-class="answer"
-placeholder="Example: Photosynthesis"
->
+    <br>
 
-<label>
-Clues
-</label>
+    <label>Clues</label>
 
-<div class="clues">
+    <p class="small">
+      Put the hardest clue first and make each clue easier.
+    </p>
 
-<div class="clue-row">
-<input
-class="clue"
-placeholder="Clue 1"
->
-</div>
+    <div class="clues">
 
-<div class="clue-row">
-<input
-class="clue"
-placeholder="Clue 2"
->
-</div>
+      <div class="clue-row">
+        <input
+          class="clue"
+          placeholder="Clue 1"
+        >
+      </div>
 
-<div class="clue-row">
-<input
-class="clue"
-placeholder="Clue 3"
->
-</div>
+      <div class="clue-row">
+        <input
+          class="clue"
+          placeholder="Clue 2"
+        >
+      </div>
 
-</div>
+      <div class="clue-row">
+        <input
+          class="clue"
+          placeholder="Clue 3"
+        >
+      </div>
 
-<button
-class="dark full"
-onclick="addClue(this)"
->
-+ Add clue
-</button>
+    </div>
 
-`;
+    <button
+      class="secondary"
+      onclick="addClue(this)"
+    >
+      + Add clue
+    </button>
+  `;
 
-document
-.getElementById("mysteries")
-.appendChild(
-wrapper
-);
+  document
+    .getElementById("mysteries")
+    .appendChild(wrapper);
 
 }
 
 
 function addClue(button){
 
-const clues=
-button
-.parentElement
-.querySelector(
-".clues"
-);
+  const clues =
+  button.parentElement
+    .querySelector(".clues");
 
-const number=
-clues
-.querySelectorAll(
-".clue"
-)
-.length+1;
+  const number =
+  clues.querySelectorAll(".clue").length + 1;
 
-const row=
-document.createElement(
-"div"
-);
+  const row =
+  document.createElement("div");
 
-row.className=
-"clue-row";
+  row.className = "clue-row";
 
-row.innerHTML=`
+  row.innerHTML = `
+    <input
+      class="clue"
+      placeholder="Clue ${number}"
+    >
 
-<input
-class="clue"
-placeholder="Clue ${number}"
->
+    <button
+      class="remove"
+      onclick="this.parentElement.remove()"
+    >
+      ×
+    </button>
+  `;
 
-<button
-class="remove"
-onclick="
-this.parentElement.remove()
-"
->
-✕
-</button>
-
-`;
-
-clues.appendChild(
-row
-);
+  clues.appendChild(row);
 
 }
 
 
-/* =========================
-   SAVE ROOM
-========================= */
+function randomCode(){
+
+  const chars =
+  "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+
+  let code = "";
+
+  for(let i=0;i<6;i++){
+
+    code += chars[
+      Math.floor(
+        Math.random() * chars.length
+      )
+    ];
+
+  }
+
+  return code;
+
+}
+
 
 async function saveRoom(){
 
-const title=
-document
-.getElementById("roomTitle")
-.value
-.trim();
+  const title =
+  document
+    .getElementById("roomTitle")
+    .value
+    .trim();
 
-const errorBox=
-document
-.getElementById("saveError");
+  const message =
+  document
+    .getElementById("creatorMessage");
 
-errorBox.textContent=
-"";
+  if(!title){
 
-if(!title){
+    message.textContent =
+    "Please enter a room title.";
 
-alert(
-"Please enter an Escape Room title."
-);
+    message.className =
+    "message wrong";
 
-return;
+    return;
 
-}
+  }
 
-const mysteries=[];
+  const mysteryElements =
+  document.querySelectorAll(".mystery");
 
-for(
-const box
-of
-document.querySelectorAll(
-".mystery"
-)
-){
+  const mysteries = [];
 
-const answer=
-box
-.querySelector(".answer")
-.value
-.trim();
+  for(
+    const mysteryElement
+    of mysteryElements
+  ){
 
-const clues=
-[
-...box
-.querySelectorAll(".clue")
-]
-.map(
-item=>
-item.value.trim()
-)
-.filter(Boolean);
+    const answer =
+    mysteryElement
+      .querySelector(".answer")
+      .value
+      .trim();
 
-if(!answer){
+    const clues =
+    Array.from(
+      mysteryElement
+        .querySelectorAll(".clue")
+    )
+    .map(input=>input.value.trim())
+    .filter(Boolean);
 
-alert(
-"Please add the correct answer for every mystery."
-);
+    if(
+      !answer ||
+      clues.length === 0
+    ){
 
-return;
+      message.textContent =
+      "Every mystery needs an answer and at least one clue.";
 
-}
+      message.className =
+      "message wrong";
 
-if(!clues.length){
+      return;
 
-alert(
-"Every mystery needs at least one clue."
-);
+    }
 
-return;
+    mysteries.push({
+      answer,
+      clues
+    });
 
-}
+  }
 
-mysteries.push({
-answer,
-clues
-});
+  if(mysteries.length === 0){
 
-}
+    message.textContent =
+    "Add at least one mystery.";
 
-const button=
-document
-.getElementById(
-"saveButton"
-);
+    message.className =
+    "message wrong";
 
-button.disabled=true;
+    return;
 
-button.textContent=
-"☁️ Creating room...";
+  }
 
-try{
+  message.textContent =
+  "Creating your escape room...";
 
-let code="";
+  message.className =
+  "message";
 
-let available=false;
 
-while(!available){
+  let code;
+  let unique = false;
 
-code=
-Math.random()
-.toString(36)
-.substring(2,8)
-.toUpperCase();
+  while(!unique){
 
-const {
-data,
-error
-}=
-await db
-.from("games")
-.select("id")
-.eq("code",code)
-.limit(1);
+    code = randomCode();
 
-if(error){
-throw error;
-}
+    const {
+      data,
+      error
+    } =
+    await db
+      .from("games")
+      .select("id")
+      .eq("code",code);
 
-if(
-!data ||
-!data.length
-){
+    if(error){
 
-available=true;
+      console.error(error);
 
-}
+      message.textContent =
+      "Something went wrong.";
 
-}
+      message.className =
+      "message wrong";
 
-const {error}=
-await db
-.from("games")
-.insert([
-{
-code,
-title,
-questions:{
-type:"escape-room",
-mysteries
-}
-}
-]);
+      return;
 
-if(error){
-throw error;
-}
+    }
 
-document
-.getElementById("roomCode")
-.textContent=
-code;
+    if(
+      !data ||
+      data.length === 0
+    ){
+      unique = true;
+    }
 
-document
-.getElementById("saveMessage")
-.style.display=
-"block";
+  }
 
-document
-.getElementById("saveMessage")
-.scrollIntoView({
-behavior:"smooth"
-});
 
-}catch(error){
+  const {
+    error
+  } =
+  await db
+    .from("games")
+    .insert({
+      code,
+      title,
+      questions:{
+        type:"escape-room",
+        mysteries
+      }
+    });
 
-console.error(
-error
-);
 
-errorBox.textContent=
-"We couldn't create the room. Please try again.";
+  if(error){
 
-}finally{
+    console.error(error);
 
-button.disabled=false;
+    message.textContent =
+    "Could not create the room.";
 
-button.textContent=
-"🔐 Create Escape Room";
+    message.className =
+    "message wrong";
 
-}
+    return;
+
+  }
+
+
+  message.innerHTML = `
+    <div class="correct">
+      ESCAPE ROOM CREATED! 💥
+    </div>
+
+    <br>
+
+    Room code:
+
+    <div class="room-code">
+      ${code}
+    </div>
+
+    <div class="small">
+      Give this code to your students.
+    </div>
+  `;
 
 }
 
 
-/* =========================
+/* -------------------------
    JOIN ROOM
-========================= */
+------------------------- */
+
+let currentGame = null;
+
+let currentMysteryIndex = 0;
+let currentClueIndex = 0;
+
 
 async function joinRoom(){
 
-const code=
-document
-.getElementById("joinCode")
-.value
-.trim()
-.toUpperCase();
+  startMusic();
 
-const errorBox=
-document
-.getElementById("joinError");
+  const code =
+  document
+    .getElementById("joinCode")
+    .value
+    .trim()
+    .toUpperCase();
 
-errorBox.textContent=
-"";
+  const message =
+  document
+    .getElementById("joinMessage");
 
-if(!code){
+  if(!code){
 
-errorBox.textContent=
-"Enter a room code.";
+    message.textContent =
+    "Enter a room code.";
 
-return;
+    message.className =
+    "message wrong";
 
-}
+    return;
 
-const button=
-document
-.getElementById(
-"joinButton"
-);
+  }
 
-button.disabled=true;
+  message.textContent =
+  "Opening the room...";
 
-button.textContent=
-"🔓 Unlocking room...";
+  message.className =
+  "message";
 
-try{
 
-const {
-data,
-error
-}=
-await db
-.from("games")
-.select(
-"code,title,questions"
-)
-.eq(
-"code",
-code
-)
-.limit(1);
+  const {
+    data,
+    error
+  } =
+  await db
+    .from("games")
+    .select("code,title,questions")
+    .eq("code",code)
+    .maybeSingle();
 
-if(error){
-throw error;
-}
 
-if(
-!data ||
-!data.length
-){
+  if(error){
 
-errorBox.textContent=
-"Room not found. Check the code.";
+    console.error(error);
 
-return;
+    message.textContent =
+    "Could not open this room.";
 
-}
+    message.className =
+    "message wrong";
 
-const game=
-data[0];
+    return;
 
-if(
-!game.questions ||
-game.questions.type
-!==
-"escape-room"
-){
+  }
 
-errorBox.textContent=
-"This code belongs to an older Smash2Learn game.";
 
-return;
+  if(!data){
 
-}
+    message.textContent =
+    "Room not found.";
 
-currentRoom={
-title:game.title,
-code:game.code,
-mysteries:
-game.questions.mysteries
-};
+    message.className =
+    "message wrong";
 
-currentMysteryIndex=0;
+    return;
 
-hideAll();
+  }
 
-document
-.getElementById("gameScreen")
-.style.display=
-"block";
 
-loadMystery();
+  if(
+    !data.questions ||
+    data.questions.type !== "escape-room"
+  ){
 
-}catch(error){
+    message.textContent =
+    "This room uses an older game format.";
 
-console.error(
-error
-);
+    message.className =
+    "message wrong";
 
-errorBox.textContent=
-"We couldn't connect to the room.";
+    return;
 
-}finally{
+  }
 
-button.disabled=false;
 
-button.textContent=
-"🚪 Enter Room";
+  currentGame = data;
 
-}
+  currentMysteryIndex = 0;
+  currentClueIndex = 0;
+
+  document
+    .getElementById("gameTitle")
+    .textContent = data.title;
+
+  showScreen("gameScreen");
+
+  loadMystery();
 
 }
 
 
-/* =========================
-   LOAD MYSTERY
-========================= */
+/* -------------------------
+   GAME
+------------------------- */
+
+function getMysteries(){
+
+  return currentGame
+    .questions
+    .mysteries;
+
+}
+
 
 function loadMystery(){
 
-currentClueIndex=0;
+  stopAllEffects();
 
-document
-.getElementById("gameTitle")
-.textContent=
-currentRoom.title;
+  currentClueIndex = 0;
 
-document
-.getElementById("progress")
-.textContent=
-"LOCK "+
-(currentMysteryIndex+1)+
-" OF "+
-currentRoom.mysteries.length;
+  document
+    .getElementById("clueBox")
+    .classList
+    .remove("show");
 
-document
-.getElementById("mysteryTitle")
-.textContent=
-"Mystery locked.";
+  document
+    .getElementById("answerArea")
+    .classList
+    .remove("show");
 
-document
-.getElementById("clueBox")
-.style.display=
-"none";
+  document
+    .getElementById("answerMessage")
+    .textContent = "";
 
-document
-.getElementById("guessArea")
-.style.display=
-"block";
+  document
+    .getElementById("answerInput")
+    .value = "";
 
-document
-.getElementById("successArea")
-.style.display=
-"none";
+  updateProgress();
 
-document
-.getElementById("guessInput")
-.value=
-"";
-
-document
-.getElementById("guessFeedback")
-.textContent=
-"";
-
-document
-.getElementById("nextClueButton")
-.style.display=
-"none";
-
-startChallenge();
+  startChallenge();
 
 }
 
 
-/* =========================
+function updateProgress(){
+
+  const mysteries =
+  getMysteries();
+
+  document
+    .getElementById("progressText")
+    .textContent =
+    `🔑 ${currentMysteryIndex} / ${mysteries.length} keys collected • Mystery ${currentMysteryIndex + 1}`;
+
+}
+
+
+/* -------------------------
    CHALLENGE SELECTOR
-========================= */
+------------------------- */
 
 function startChallenge(){
 
-challengeDone=false;
+  stopAllEffects();
 
-actionCount=0;
+  const type =
+  currentClueIndex % 6;
 
-sprayAmount=0;
+  const stage =
+  document.getElementById("stage");
 
-sprayDrawing=false;
+  stage.innerHTML =
+  `<div id="flash" class="flash"></div>`;
 
-stopSpray();
+  if(type === 0){
+    setupPlate();
+  }
 
-document
-.getElementById("challengeSection")
-.style.display=
-"block";
+  if(type === 1){
+    setupHorn();
+  }
 
-document
-.getElementById("clueBox")
-.style.display=
-"none";
+  if(type === 2){
+    setupGlass();
+  }
 
-const type=
-currentClueIndex % 6;
+  if(type === 3){
+    setupBag();
+  }
 
-const stage=
-document
-.getElementById(
-"challengeStage"
-);
+  if(type === 4){
+    setupGraffiti();
+  }
 
-const title=
-document
-.getElementById(
-"challengeTitle"
-);
-
-const help=
-document
-.getElementById(
-"challengeHelp"
-);
-
-stage.innerHTML="";
-
-
-/* CLUE 1 — PLATE */
-
-if(type===0){
-
-title.textContent=
-"🍽️ SMASH THE PLATE";
-
-help.textContent=
-"Hit the plate 3 times.";
-
-stage.innerHTML=`
-
-<div
-id="plate"
-class="plate"
-onclick="plateHit()"
-></div>
-
-`;
+  if(type === 5){
+    setupBox();
+  }
 
 }
 
 
-/* CLUE 2 — HORN */
+/* -------------------------
+   IMPACT FX
+------------------------- */
 
-if(type===1){
+function cameraShake(strong=false){
 
-title.textContent=
-"📣 HONK THE HORN";
+  const stage =
+  document.getElementById("stage");
 
-help.textContent=
-"Press the horn.";
+  stage.classList.remove("shake");
 
-stage.innerHTML=`
+  void stage.offsetWidth;
 
-<div
-class="horn"
-id="horn"
-onclick="honk()"
->
+  stage.classList.add("shake");
 
-<div
-class="horn-button"
-></div>
+  if(
+    navigator.vibrate
+  ){
 
-<div
-class="horn-body"
-></div>
+    if(strong){
 
-<div
-class="horn-bell"
-></div>
+      navigator.vibrate(
+        [80,35,140]
+      );
 
-</div>
+    }else{
 
-<div
-id="wave"
-class="soundwave"
-></div>
+      navigator.vibrate(55);
 
-`;
+    }
+
+  }
 
 }
 
 
-/* CLUE 3 — GLASS */
+function flashScreen(){
 
-if(type===2){
+  const flash =
+  document.getElementById("flash");
 
-title.textContent=
-"🔨 BREAK THE GLASS";
+  if(!flash){
+    return;
+  }
 
-help.textContent=
-"Hit the glass with the hammer 3 times.";
+  flash.classList.remove("go");
 
-stage.innerHTML=`
+  void flash.offsetWidth;
 
-<div
-id="glass"
-class="glass-pane"
-onclick="hitGlass()"
-></div>
-
-<div
-id="hammer"
-class="hammer"
->
-🔨
-</div>
-
-`;
+  flash.classList.add("go");
 
 }
 
 
-/* CLUE 4 — BOXING */
-
-if(type===3){
-
-title.textContent=
-"🥊 PUNCH THE BAG";
-
-help.textContent=
-"Land 5 punches.";
-
-stage.innerHTML=`
-
-<div class="bag-wrap">
-
-<div class="chain"></div>
-
-<div
-id="bag"
-class="bag"
-onclick="punchBag()"
-></div>
-
-</div>
-
-<div
-id="glove"
-class="glove"
->
-🥊
-</div>
-
-`;
-
-}
-
-
-/* CLUE 5 — GRAFFITI */
-
-if(type===4){
-
-title.textContent=
-"🎨 MAKE SOME GRAFFITI";
-
-help.textContent=
-"Drag your mouse or finger across the wall.";
-
-stage.innerHTML=`
-
-<div
-id="wall"
-class="wall"
-></div>
-
-<div class="spray-can">
-🧴
-</div>
-
-`;
-
-setupGraffiti();
-
-}
-
-
-/* CLUE 6 — BOX */
-
-if(type===5){
-
-title.textContent=
-"📦 STOMP THE BOX";
-
-help.textContent=
-"Stomp it 3 times until it's crushed.";
-
-stage.innerHTML=`
-
-<div
-id="boxThing"
-class="cardboard"
-onclick="stompBox()"
-></div>
-
-<div
-id="shoe"
-class="shoe"
->
-👟
-</div>
-
-`;
-
-}
-
-}
-
-
-/* =========================
-   FLYING PIECES
-========================= */
-
-function animateFragments(
-kind
-){
-
-const stage=
-document
-.getElementById(
-"challengeStage"
-);
-
-for(
-let i=0;
-i<16;
-i++
-){
-
-const fragment=
-document.createElement(
-"div"
-);
-
-fragment.className=
-kind==="glass"
-?
-"glass-piece"
-:
-"fragment";
-
-stage.appendChild(
-fragment
-);
-
-const x=
-Math.random()*360-180;
-
-const y=
-Math.random()*-170-20;
-
-const rotation=
-Math.random()*700-350;
-
-fragment.animate(
-[
-{
-transform:
-"translate(-50%,-50%) translate(0,0) rotate(0)",
-opacity:1
-},
-{
-transform:
-`translate(-50%,-50%) translate(${x}px,${y}px) rotate(${rotation}deg)`,
-opacity:1,
-offset:.5
-},
-{
-transform:
-`translate(-50%,-50%) translate(${x*1.2}px,190px) rotate(${rotation*2}deg)`,
-opacity:.15
-}
-],
-{
-duration:
-1100+
-Math.random()*350,
-easing:
-"cubic-bezier(.2,.7,.2,1)",
-fill:
-"forwards"
-}
-);
-
-}
-
-}
-
-
-/* =========================
+/* -------------------------
    PLATE
-========================= */
+------------------------- */
 
-function plateHit(){
+function setupPlate(){
 
-if(challengeDone){
-return;
+  document
+    .getElementById("challengeTitle")
+    .textContent =
+    "🍽️ SMASH THE PLATE";
+
+  document
+    .getElementById("challengeInstruction")
+    .textContent =
+    "Hit the plate three times to release the clue.";
+
+  const stage =
+  document.getElementById("stage");
+
+  const wrap =
+  document.createElement("div");
+
+  wrap.className =
+  "plate-wrap";
+
+  wrap.innerHTML =
+  `<div class="plate"></div>`;
+
+  stage.appendChild(wrap);
+
+  const plate =
+  wrap.querySelector(".plate");
+
+  let hits = 0;
+
+
+  plate.addEventListener(
+    "pointerdown",
+    ()=>{
+
+      hits++;
+
+      cameraShake();
+
+      plate.classList.add("hit");
+
+      setTimeout(()=>{
+        plate.classList.remove("hit");
+      },100);
+
+
+      if(hits === 1){
+
+        plate.classList.add(
+          "crack1"
+        );
+
+      }
+
+
+      if(hits === 2){
+
+        plate.classList.add(
+          "crack2"
+        );
+
+      }
+
+
+      if(hits >= 3){
+
+        playEffect(plateAudio);
+
+        flashScreen();
+
+        cameraShake(true);
+
+        explodePlate(plate);
+
+        plate.style.visibility =
+        "hidden";
+
+        setTimeout(
+          unlockClue,
+          1050
+        );
+
+      }
+
+    }
+  );
+
 }
 
-ctx();
 
-actionCount++;
+function explodePlate(plate){
 
-tone(
-900+
-actionCount*170,
-.1,
-"triangle",
-.1
-);
+  const stage =
+  document.getElementById("stage");
 
-const plate=
-document
-.getElementById(
-"plate"
-);
+  const plateRect =
+  plate.getBoundingClientRect();
 
-plate
-.classList
-.remove(
-"shake"
-);
+  const stageRect =
+  stage.getBoundingClientRect();
 
-void plate.offsetWidth;
+  const centerX =
+  plateRect.left -
+  stageRect.left +
+  plateRect.width/2;
 
-plate
-.classList
-.add(
-"shake"
-);
+  const centerY =
+  plateRect.top -
+  stageRect.top +
+  plateRect.height/2;
 
-if(actionCount===2){
 
-plate
-.classList
-.add(
-"cracked"
-);
+  for(let i=0;i<24;i++){
+
+    const piece =
+    document.createElement("div");
+
+    piece.className =
+    "fragment";
+
+    piece.style.left =
+    `${centerX}px`;
+
+    piece.style.top =
+    `${centerY}px`;
+
+    const angle =
+    Math.random() *
+    Math.PI * 2;
+
+    const distance =
+    100 +
+    Math.random()*220;
+
+    piece.style.setProperty(
+      "--x",
+      `${Math.cos(angle)*distance}px`
+    );
+
+    piece.style.setProperty(
+      "--y",
+      `${Math.sin(angle)*distance + 130}px`
+    );
+
+    piece.style.setProperty(
+      "--r",
+      `${Math.random()*800-400}deg`
+    );
+
+    piece.style.clipPath =
+    `polygon(
+      0 ${Math.random()*60}%,
+      100% 0,
+      ${50+Math.random()*50}% 100%
+    )`;
+
+    stage.appendChild(piece);
+
+    setTimeout(()=>{
+      piece.remove();
+    },1300);
+
+  }
 
 }
 
-if(actionCount>=3){
 
-challengeDone=true;
-
-ceramic();
-
-vibrate([
-60,
-25,
-120
-]);
-
-plate.style.opacity=
-"0";
-
-animateFragments(
-"plate"
-);
-
-setTimeout(
-revealClue,
-1200
-);
-
-}
-
-}
-
-
-/* =========================
+/* -------------------------
    HORN
-========================= */
+------------------------- */
 
-function honk(){
+function setupHorn(){
 
-if(challengeDone){
-return;
+  document
+    .getElementById("challengeTitle")
+    .textContent =
+    "📣 MAKE SOME NOISE";
+
+  document
+    .getElementById("challengeInstruction")
+    .textContent =
+    "Hold the horn down until the clue unlocks.";
+
+  const stage =
+  document.getElementById("stage");
+
+  const horn =
+  document.createElement("div");
+
+  horn.className =
+  "horn";
+
+  horn.innerHTML = `
+    <div class="horn-bell"></div>
+    <div class="horn-body"></div>
+    <div class="horn-handle"></div>
+    <div class="soundwaves">)))</div>
+  `;
+
+  stage.appendChild(horn);
+
+  const waves =
+  horn.querySelector(
+    ".soundwaves"
+  );
+
+  let timer = null;
+  let finished = false;
+
+
+  const startHorn = ()=>{
+
+    if(finished){
+      return;
+    }
+
+    horn.classList.add(
+      "pressed"
+    );
+
+    waves.classList.add(
+      "on"
+    );
+
+    cameraShake();
+
+    if(soundEnabled){
+
+      hornAudio.currentTime = 0;
+      hornAudio.loop = true;
+      hornAudio.play().catch(()=>{});
+
+    }
+
+    timer =
+    setTimeout(()=>{
+
+      finished = true;
+
+      hornAudio.pause();
+      hornAudio.loop = false;
+
+      horn.classList.remove(
+        "pressed"
+      );
+
+      waves.classList.remove(
+        "on"
+      );
+
+      flashScreen();
+
+      cameraShake(true);
+
+      unlockClue();
+
+    },1800);
+
+  };
+
+
+  const stopHorn = ()=>{
+
+    if(finished){
+      return;
+    }
+
+    horn.classList.remove(
+      "pressed"
+    );
+
+    waves.classList.remove(
+      "on"
+    );
+
+    clearTimeout(timer);
+
+    hornAudio.pause();
+    hornAudio.currentTime = 0;
+    hornAudio.loop = false;
+
+  };
+
+
+  horn.addEventListener(
+    "pointerdown",
+    startHorn
+  );
+
+  horn.addEventListener(
+    "pointerup",
+    stopHorn
+  );
+
+  horn.addEventListener(
+    "pointerleave",
+    stopHorn
+  );
+
+  horn.addEventListener(
+    "pointercancel",
+    stopHorn
+  );
+
 }
 
-challengeDone=true;
 
-hornSound();
-
-vibrate(80);
-
-const horn=
-document
-.getElementById(
-"horn"
-);
-
-const wave=
-document
-.getElementById(
-"wave"
-);
-
-horn
-.classList
-.add(
-"honking"
-);
-
-wave
-.classList
-.add(
-"go"
-);
-
-setTimeout(
-()=>{
-
-horn
-.classList
-.remove(
-"honking"
-);
-
-},
-700
-);
-
-setTimeout(
-revealClue,
-850
-);
-
-}
-
-
-/* =========================
+/* -------------------------
    GLASS
-========================= */
+------------------------- */
 
-function hitGlass(){
+function setupGlass(){
 
-if(challengeDone){
-return;
-}
+  document
+    .getElementById("challengeTitle")
+    .textContent =
+    "🔨 BREAK THE GLASS";
 
-ctx();
+  document
+    .getElementById("challengeInstruction")
+    .textContent =
+    "Strike the window three times.";
 
-actionCount++;
+  const stage =
+  document.getElementById("stage");
 
-const glass=
-document
-.getElementById(
-"glass"
-);
+  const frame =
+  document.createElement("div");
 
-const hammer=
-document
-.getElementById(
-"hammer"
-);
+  frame.className =
+  "window-frame";
 
-hammer
-.classList
-.remove(
-"swing"
-);
+  frame.innerHTML = `
+    <div class="glass"></div>
+    <div class="hammer">🔨</div>
+  `;
 
-void hammer.offsetWidth;
+  stage.appendChild(frame);
 
-hammer
-.classList
-.add(
-"swing"
-);
+  const glass =
+  frame.querySelector(".glass");
 
-tone(
-1250+
-actionCount*250,
-.1,
-"triangle",
-.08
-);
+  const hammer =
+  frame.querySelector(".hammer");
 
-vibrate(30);
-
-if(actionCount===1){
-
-glass
-.classList
-.add(
-"crack1"
-);
-
-}
-
-if(actionCount===2){
-
-glass
-.classList
-.add(
-"crack2"
-);
-
-}
-
-if(actionCount>=3){
-
-challengeDone=true;
-
-glassSound();
-
-vibrate([
-80,
-30,
-140
-]);
-
-glass.style.opacity=
-"0";
-
-animateFragments(
-"glass"
-);
-
-setTimeout(
-revealClue,
-1250
-);
-
-}
-
-}
+  let hits = 0;
 
 
-/* =========================
-   BOXING BAG
-========================= */
+  glass.addEventListener(
+    "pointerdown",
+    ()=>{
 
-function punchBag(){
+      hits++;
 
-if(challengeDone){
-return;
-}
+      hammer.classList.remove(
+        "swing"
+      );
 
-ctx();
+      void hammer.offsetWidth;
 
-actionCount++;
+      hammer.classList.add(
+        "swing"
+      );
 
-punchSound();
+      cameraShake();
 
-vibrate(25);
 
-const bag=
-document
-.getElementById(
-"bag"
-);
+      if(hits >= 1){
 
-const glove=
-document
-.getElementById(
-"glove"
-);
+        glass.classList.add(
+          "cracked"
+        );
 
-bag
-.classList
-.remove(
-"left",
-"right"
-);
+      }
 
-glove
-.classList
-.remove(
-"punch"
-);
 
-void bag.offsetWidth;
+      if(hits >= 3){
 
-bag
-.classList
-.add(
-actionCount%2
-?
-"right"
-:
-"left"
-);
+        playEffect(glassAudio);
 
-glove
-.classList
-.add(
-"punch"
-);
+        flashScreen();
 
-document
-.getElementById(
-"challengeHelp"
-)
-.textContent=
-Math.min(
-actionCount,
-5
-)+
-" / 5 punches";
+        cameraShake(true);
 
-if(actionCount>=5){
+        shatterGlass(
+          glass,
+          frame
+        );
 
-challengeDone=true;
+        glass.style.opacity =
+        ".08";
 
-vibrate([
-40,
-20,
-70
-]);
+        setTimeout(
+          unlockClue,
+          1100
+        );
 
-setTimeout(
-revealClue,
-650
-);
+      }
 
-}
+    }
+  );
 
 }
 
 
-/* =========================
+function shatterGlass(
+  glass,
+  frame
+){
+
+  for(let i=0;i<30;i++){
+
+    const piece =
+    document.createElement("div");
+
+    piece.className =
+    "glass-piece";
+
+    piece.style.left =
+    `${Math.random()*220}px`;
+
+    piece.style.top =
+    `${Math.random()*180}px`;
+
+    piece.style.setProperty(
+      "--gx",
+      `${Math.random()*180-90}px`
+    );
+
+    piece.style.setProperty(
+      "--gr",
+      `${Math.random()*700-350}deg`
+    );
+
+    piece.style.clipPath =
+    "polygon(50% 0,100% 100%,0 75%)";
+
+    frame.appendChild(piece);
+
+  }
+
+}
+
+
+/* -------------------------
+   PUNCHING BAG
+------------------------- */
+
+function setupBag(){
+
+  document
+    .getElementById("challengeTitle")
+    .textContent =
+    "🥊 HIT THE BAG";
+
+  document
+    .getElementById("challengeInstruction")
+    .textContent =
+    "Punch the bag five times.";
+
+  const stage =
+  document.getElementById("stage");
+
+  const system =
+  document.createElement("div");
+
+  system.className =
+  "bag-system";
+
+  system.innerHTML = `
+    <div class="chain"></div>
+    <div class="bag"></div>
+    <div class="fist">👊</div>
+  `;
+
+  stage.appendChild(system);
+
+  const bag =
+  system.querySelector(".bag");
+
+  let hits = 0;
+
+
+  bag.addEventListener(
+    "pointerdown",
+    ()=>{
+
+      hits++;
+
+      playEffect(punchAudio);
+
+      cameraShake();
+
+      bag.classList.remove(
+        "punched-left",
+        "punched-right"
+      );
+
+      void bag.offsetWidth;
+
+      bag.classList.add(
+        hits % 2
+        ? "punched-left"
+        : "punched-right"
+      );
+
+
+      if(hits >= 5){
+
+        flashScreen();
+
+        cameraShake(true);
+
+        setTimeout(
+          unlockClue,
+          500
+        );
+
+      }
+
+    }
+  );
+
+}
+
+
+/* -------------------------
    GRAFFITI
-========================= */
+------------------------- */
 
 function setupGraffiti(){
 
-const wall=
-document
-.getElementById(
-"wall"
-);
+  document
+    .getElementById("challengeTitle")
+    .textContent =
+    "🎨 SPRAY THE WALL";
 
-function point(event){
+  document
+    .getElementById("challengeInstruction")
+    .textContent =
+    "Hold and drag across the wall to cover it in graffiti.";
 
-if(
-!sprayDrawing ||
-challengeDone
+  const stage =
+  document.getElementById("stage");
+
+  const wall =
+  document.createElement("div");
+
+  wall.className =
+  "graffiti-wall";
+
+  const can =
+  document.createElement("div");
+
+  can.className =
+  "spray-can";
+
+  stage.appendChild(wall);
+  stage.appendChild(can);
+
+  let drawing = false;
+  let movement = 0;
+  let finished = false;
+
+
+  function stopSpray(){
+
+    drawing = false;
+
+    sprayAudio.pause();
+    sprayAudio.currentTime = 0;
+
+  }
+
+
+  wall.addEventListener(
+    "pointerdown",
+    e=>{
+
+      if(finished){
+        return;
+      }
+
+      drawing = true;
+
+      wall.setPointerCapture(
+        e.pointerId
+      );
+
+      if(soundEnabled){
+
+        sprayAudio.currentTime = 0;
+        sprayAudio.play().catch(()=>{});
+
+      }
+
+      sprayAt(e);
+
+    }
+  );
+
+
+  wall.addEventListener(
+    "pointermove",
+    e=>{
+
+      if(
+        !drawing ||
+        finished
+      ){
+        return;
+      }
+
+      sprayAt(e);
+
+      movement++;
+
+      if(movement > 30){
+
+        finished = true;
+
+        stopSpray();
+
+        flashScreen();
+
+        setTimeout(
+          unlockClue,
+          450
+        );
+
+      }
+
+    }
+  );
+
+
+  wall.addEventListener(
+    "pointerup",
+    stopSpray
+  );
+
+  wall.addEventListener(
+    "pointercancel",
+    stopSpray
+  );
+
+
+  function sprayAt(e){
+
+    const rect =
+    wall.getBoundingClientRect();
+
+    for(let i=0;i<3;i++){
+
+      const dot =
+      document.createElement("div");
+
+      dot.className =
+      "spray-dot";
+
+      dot.style.left =
+      `${e.clientX - rect.left + (Math.random()*25-12)}px`;
+
+      dot.style.top =
+      `${e.clientY - rect.top + (Math.random()*25-12)}px`;
+
+      const size =
+      13 +
+      Math.random()*25;
+
+      dot.style.width =
+      `${size}px`;
+
+      dot.style.height =
+      `${size}px`;
+
+      dot.style.opacity =
+      `${.4 + Math.random()*.55}`;
+
+      wall.appendChild(dot);
+
+    }
+
+  }
+
+}
+
+
+/* -------------------------
+   BOX
+------------------------- */
+
+function setupBox(){
+
+  document
+    .getElementById("challengeTitle")
+    .textContent =
+    "📦 DESTROY THE BOX";
+
+  document
+    .getElementById("challengeInstruction")
+    .textContent =
+    "Stomp the box until it is destroyed.";
+
+  const stage =
+  document.getElementById("stage");
+
+  const wrap =
+  document.createElement("div");
+
+  wrap.className =
+  "box-wrap";
+
+  wrap.innerHTML = `
+    <div class="boot">🥾</div>
+    <div class="box-object"></div>
+  `;
+
+  stage.appendChild(wrap);
+
+  const box =
+  wrap.querySelector(
+    ".box-object"
+  );
+
+  const boot =
+  wrap.querySelector(
+    ".boot"
+  );
+
+  let stomps = 0;
+
+
+  box.addEventListener(
+    "pointerdown",
+    ()=>{
+
+      stomps++;
+
+      playEffect(
+        cardboardAudio
+      );
+
+      cameraShake();
+
+      boot.classList.remove(
+        "stomp"
+      );
+
+      void boot.offsetWidth;
+
+      boot.classList.add(
+        "stomp"
+      );
+
+
+      if(stomps === 1){
+
+        box.classList.add(
+          "crush1"
+        );
+
+      }
+
+
+      if(stomps === 2){
+
+        box.classList.add(
+          "crush2"
+        );
+
+      }
+
+
+      if(stomps >= 3){
+
+        box.classList.add(
+          "crush3"
+        );
+
+        flashScreen();
+
+        cameraShake(true);
+
+        createCardboardDebris(
+          box
+        );
+
+        setTimeout(
+          unlockClue,
+          800
+        );
+
+      }
+
+    }
+  );
+
+}
+
+
+function createCardboardDebris(
+  box
 ){
-return;
-}
 
-const rect=
-wall.getBoundingClientRect();
+  const stage =
+  document.getElementById("stage");
 
-const touch=
-event.touches
-?
-event.touches[0]
-:
-event;
+  const rect =
+  box.getBoundingClientRect();
 
-const x=
-touch.clientX-
-rect.left;
+  const stageRect =
+  stage.getBoundingClientRect();
 
-const y=
-touch.clientY-
-rect.top;
+  for(let i=0;i<18;i++){
 
-for(
-let i=0;
-i<3;
-i++
-){
+    const piece =
+    document.createElement("div");
 
-const dot=
-document.createElement(
-"div"
-);
+    piece.className =
+    "fragment";
 
-dot.className=
-"spray-dot";
+    piece.style.background =
+    "#b67d3e";
 
-const size=
-18+
-Math.random()*35;
+    piece.style.border =
+    "1px solid #6c4421";
 
-dot.style.width=
-size+"px";
+    piece.style.left =
+    `${rect.left-stageRect.left+rect.width/2}px`;
 
-dot.style.height=
-size+"px";
+    piece.style.top =
+    `${rect.top-stageRect.top+rect.height/2}px`;
 
-dot.style.left=
-(
-x-
-size/2+
-(Math.random()*20-10)
-)+"px";
+    const angle =
+    Math.random() *
+    Math.PI * 2;
 
-dot.style.top=
-(
-y-
-size/2+
-(Math.random()*20-10)
-)+"px";
+    const distance =
+    80 +
+    Math.random()*160;
 
-const colors=[
-"#ff3fb4",
-"#00e5ff",
-"#ffcc00"
-];
+    piece.style.setProperty(
+      "--x",
+      `${Math.cos(angle)*distance}px`
+    );
 
-dot.style.background=
-colors[
-Math.floor(
-Math.random()*
-colors.length
-)
-];
+    piece.style.setProperty(
+      "--y",
+      `${Math.sin(angle)*distance+120}px`
+    );
 
-wall.appendChild(
-dot
-);
+    piece.style.setProperty(
+      "--r",
+      `${Math.random()*700-350}deg`
+    );
 
-}
+    stage.appendChild(piece);
 
-sprayAmount++;
-
-if(
-sprayAmount>24
-){
-
-challengeDone=true;
-
-sprayDrawing=false;
-
-stopSpray();
-
-vibrate(70);
-
-setTimeout(
-revealClue,
-500
-);
-
-}
+  }
 
 }
 
 
-function down(event){
+/* -------------------------
+   CLUES
+------------------------- */
 
-event.preventDefault();
+function unlockClue(){
 
-ctx();
+  stopAllEffects();
 
-sprayDrawing=true;
+  const mystery =
+  getMysteries()[
+    currentMysteryIndex
+  ];
 
-startSpray();
+  const clue =
+  mystery.clues[
+    currentClueIndex
+  ];
 
-point(event);
+  document
+    .getElementById("clueText")
+    .textContent = clue;
 
-}
+  document
+    .getElementById("clueBox")
+    .classList
+    .add("show");
 
+  document
+    .getElementById("answerArea")
+    .classList
+    .add("show");
 
-function up(){
+  document
+    .getElementById("answerMessage")
+    .textContent = "";
 
-sprayDrawing=false;
+  document
+    .getElementById("answerInput")
+    .value = "";
 
-stopSpray();
+  setTimeout(()=>{
 
-}
+    document
+      .getElementById("answerInput")
+      .focus();
 
-
-wall.addEventListener(
-"mousedown",
-down
-);
-
-wall.addEventListener(
-"mousemove",
-point
-);
-
-window.addEventListener(
-"mouseup",
-up
-);
-
-wall.addEventListener(
-"touchstart",
-down,
-{
-passive:false
-}
-);
-
-wall.addEventListener(
-"touchmove",
-point,
-{
-passive:false
-}
-);
-
-wall.addEventListener(
-"touchend",
-up
-);
+  },250);
 
 }
 
 
-function startSpray(){
-
-if(sprayNode){
-return;
-}
-
-const c=ctx();
-
-if(!c){
-return;
-}
-
-const len=
-c.sampleRate;
-
-const buffer=
-c.createBuffer(
-1,
-len,
-c.sampleRate
-);
-
-const data=
-buffer
-.getChannelData(0);
-
-for(
-let i=0;
-i<len;
-i++
-){
-
-data[i]=
-Math.random()*2-1;
-
-}
-
-const source=
-c.createBufferSource();
-
-const filter=
-c.createBiquadFilter();
-
-const gain=
-c.createGain();
-
-source.buffer=
-buffer;
-
-source.loop=true;
-
-filter.type=
-"bandpass";
-
-filter.frequency.value=
-3500;
-
-gain.gain.value=
-.06;
-
-source
-.connect(filter)
-.connect(gain)
-.connect(c.destination);
-
-source.start();
-
-sprayNode={
-source,
-gain
-};
-
-}
-
-
-function stopSpray(){
-
-if(sprayNode){
-
-try{
-
-sprayNode
-.source
-.stop();
-
-}catch(error){}
-
-sprayNode=null;
-
-}
-
-}
-
-
-/* =========================
-   STOMP BOX
-========================= */
-
-function stompBox(){
-
-if(challengeDone){
-return;
-}
-
-ctx();
-
-actionCount++;
-
-cardboardSound();
-
-vibrate(35);
-
-const box=
-document
-.getElementById(
-"boxThing"
-);
-
-const shoe=
-document
-.getElementById(
-"shoe"
-);
-
-shoe
-.classList
-.remove(
-"stomp"
-);
-
-void shoe.offsetWidth;
-
-shoe
-.classList
-.add(
-"stomp"
-);
-
-box
-.classList
-.remove(
-"step1",
-"step2",
-"step3"
-);
-
-box
-.classList
-.add(
-"step"+
-Math.min(
-actionCount,
-3
-)
-);
-
-if(actionCount>=3){
-
-challengeDone=true;
-
-noise(
-.45,
-.25,
-120
-);
-
-vibrate([
-60,
-30,
-100
-]);
-
-setTimeout(
-revealClue,
-750
-);
-
-}
-
-}
-
-
-/* =========================
-   REVEAL CLUE
-========================= */
-
-function revealClue(){
-
-stopSpray();
-
-const mystery=
-currentRoom
-.mysteries[
-currentMysteryIndex
-];
-
-const clue=
-mystery
-.clues[
-currentClueIndex
-];
-
-document
-.getElementById(
-"clueLabel"
-)
-.textContent=
-"CLUE "+
-(currentClueIndex+1);
-
-document
-.getElementById(
-"clueText"
-)
-.textContent=
-clue;
-
-document
-.getElementById(
-"clueBox"
-)
-.style.display=
-"block";
-
-document
-.getElementById(
-"challengeSection"
-)
-.style.display=
-"none";
-
-document
-.getElementById(
-"guessInput"
-)
-.focus();
-
-}
-
-
-/* =========================
-   CHECK ANSWER
-========================= */
+/* -------------------------
+   ANSWER
+------------------------- */
 
 function normalize(text){
 
-return text
-.trim()
-.toLowerCase()
-.normalize("NFD")
-.replace(
-/[\u0300-\u036f]/g,
-""
-)
-.replace(
-/[^\p{L}\p{N}\s]/gu,
-""
-)
-.replace(
-/\s+/g,
-" "
-);
+  return text
+    .trim()
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(
+      /[\u0300-\u036f]/g,
+      ""
+    );
 
 }
 
 
-function checkGuess(){
+function submitAnswer(){
 
-const guess=
-document
-.getElementById(
-"guessInput"
-)
-.value;
+  const mystery =
+  getMysteries()[
+    currentMysteryIndex
+  ];
 
-const mystery=
-currentRoom
-.mysteries[
-currentMysteryIndex
-];
+  const input =
+  document
+    .getElementById("answerInput")
+    .value;
 
-if(
-!guess.trim()
-){
-
-document
-.getElementById(
-"guessFeedback"
-)
-.textContent=
-"Type your answer first.";
-
-return;
-
-}
-
-if(
-normalize(guess)
-===
-normalize(
-mystery.answer
-)
-){
-
-mysterySolved();
-
-}else{
-
-document
-.getElementById(
-"guessFeedback"
-)
-.textContent=
-"🔒 Not quite. Need another clue?";
-
-if(
-currentClueIndex
-<
-mystery.clues.length-1
-){
-
-document
-.getElementById(
-"nextClueButton"
-)
-.style.display=
-"block";
-
-}else{
-
-document
-.getElementById(
-"guessFeedback"
-)
-.textContent=
-"🔒 Not quite. Look at all your clues and try again.";
-
-}
-
-}
-
-}
+  const message =
+  document
+    .getElementById("answerMessage");
 
 
-/* =========================
-   NEXT CLUE
-========================= */
+  if(!input.trim()){
 
-function prepareNextClue(){
+    message.textContent =
+    "Type an answer first.";
 
-currentClueIndex++;
+    message.className =
+    "message wrong";
 
-document
-.getElementById(
-"clueBox"
-)
-.style.display=
-"none";
+    return;
 
-document
-.getElementById(
-"nextClueButton"
-)
-.style.display=
-"none";
+  }
 
-document
-.getElementById(
-"guessFeedback"
-)
-.textContent=
-"";
 
-document
-.getElementById(
-"guessInput"
-)
-.value=
-"";
+  if(
+    normalize(input) ===
+    normalize(mystery.answer)
+  ){
 
-startChallenge();
+    message.innerHTML =
+    `<span class="key-pop">🔑</span>
+     <br>
+     CORRECT! KEY UNLOCKED.`;
+
+    message.className =
+    "message correct";
+
+    currentMysteryIndex++;
+
+
+    if(
+      currentMysteryIndex >=
+      getMysteries().length
+    ){
+
+      setTimeout(
+        finishGame,
+        1200
+      );
+
+      return;
+
+    }
+
+
+    setTimeout(()=>{
+
+      loadMystery();
+
+    },1200);
+
+  }else{
+
+    message.textContent =
+    "Not quite. Smash your way to another clue! 💥";
+
+    message.className =
+    "message wrong";
+
+
+    if(
+      currentClueIndex <
+      mystery.clues.length - 1
+    ){
+
+      currentClueIndex++;
+
+      setTimeout(()=>{
+
+        document
+          .getElementById("clueBox")
+          .classList
+          .remove("show");
+
+        document
+          .getElementById("answerArea")
+          .classList
+          .remove("show");
+
+        startChallenge();
+
+      },900);
+
+    }else{
+
+      message.textContent =
+      "That was the final clue. Try another answer!";
+
+    }
+
+  }
 
 }
 
 
-/* =========================
-   MYSTERY SOLVED
-========================= */
+/* -------------------------
+   ESCAPE
+------------------------- */
 
-function mysterySolved(){
+function finishGame(){
 
-stopSpray();
+  stopAllEffects();
 
-document
-.getElementById(
-"challengeSection"
-)
-.style.display=
-"none";
+  showScreen(
+    "escapeScreen"
+  );
 
-document
-.getElementById(
-"clueBox"
-)
-.style.display=
-"none";
+  if(
+    navigator.vibrate
+  ){
 
-document
-.getElementById(
-"guessArea"
-)
-.style.display=
-"none";
+    navigator.vibrate(
+      [100,50,100,50,200]
+    );
 
-document
-.getElementById(
-"successArea"
-)
-.style.display=
-"block";
-
-const button=
-document
-.getElementById(
-"nextMysteryButton"
-);
-
-if(
-currentMysteryIndex
-===
-currentRoom.mysteries.length-1
-){
-
-button.textContent=
-"🚪 Use the final key";
-
-}else{
-
-button.textContent=
-"🔓 Unlock the next mystery";
-
-}
-
-}
-
-
-/* =========================
-   NEXT MYSTERY
-========================= */
-
-function nextMystery(){
-
-if(
-currentMysteryIndex
-<
-currentRoom.mysteries.length-1
-){
-
-currentMysteryIndex++;
-
-loadMystery();
-
-window.scrollTo({
-top:0,
-behavior:"smooth"
-});
-
-}else{
-
-finalEscape();
-
-}
-
-}
-
-
-/* =========================
-   FINAL ESCAPE
-========================= */
-
-function finalEscape(){
-
-hideAll();
-
-document
-.getElementById(
-"escapeScreen"
-)
-.style.display=
-"block";
-
-const door=
-document
-.getElementById(
-"door"
-);
-
-door
-.classList
-.remove(
-"open"
-);
-
-document
-.getElementById(
-"escapeTitle"
-)
-.style.display=
-"none";
-
-document
-.getElementById(
-"escapeMessage"
-)
-.style.display=
-"none";
-
-document
-.getElementById(
-"homeButton"
-)
-.style.display=
-"none";
-
-setTimeout(
-()=>{
-
-door
-.classList
-.add(
-"open"
-);
-
-},
-700
-);
-
-setTimeout(
-()=>{
-
-document
-.getElementById(
-"escapeTitle"
-)
-.style.display=
-"block";
-
-document
-.getElementById(
-"escapeMessage"
-)
-.style.display=
-"block";
-
-document
-.getElementById(
-"homeButton"
-)
-.style.display=
-"block";
-
-},
-1900
-);
+  }
 
 }
 
