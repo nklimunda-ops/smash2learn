@@ -3,103 +3,102 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Smash2Learn</title>
 
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 
 body{
-  font-family:Arial,Helvetica,sans-serif;
-  min-height:100vh;
-  background:
-    radial-gradient(circle at 20% 20%,#27305c 0%,transparent 30%),
-    radial-gradient(circle at 80% 70%,#4b175f 0%,transparent 35%),
-    #101426;
-  color:white;
+font-family:Arial,Helvetica,sans-serif;
+min-height:100vh;
+background:
+radial-gradient(circle at 20% 20%,#27305c 0%,transparent 30%),
+radial-gradient(circle at 80% 70%,#4b175f 0%,transparent 35%),
+#101426;
+color:white;
 }
 
 nav{
-  width:100%;
-  padding:25px 7%;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
+width:100%;
+padding:25px 7%;
+display:flex;
+justify-content:space-between;
+align-items:center;
 }
 
 .logo{font-size:30px;font-weight:900}
 .logo span{color:#ffcc00}
 
 .badge{
-  background:rgba(255,255,255,.1);
-  padding:9px 15px;
-  border-radius:20px;
-  font-size:14px;
+background:rgba(255,255,255,.1);
+padding:9px 15px;
+border-radius:20px;
+font-size:14px;
 }
 
 main{
-  min-height:78vh;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  padding:40px 20px;
+min-height:78vh;
+display:flex;
+justify-content:center;
+align-items:center;
+padding:40px 20px;
 }
 
 .hero{max-width:900px;text-align:center}
 
 .small-title{
-  color:#ffcc00;
-  font-weight:bold;
-  letter-spacing:3px;
-  margin-bottom:18px;
-  font-size:14px;
+color:#ffcc00;
+font-weight:bold;
+letter-spacing:3px;
+margin-bottom:18px;
+font-size:14px;
 }
 
 h1{
-  font-size:clamp(55px,9vw,105px);
-  line-height:.95;
-  margin-bottom:25px;
-  font-weight:900;
+font-size:clamp(55px,9vw,105px);
+line-height:.95;
+margin-bottom:25px;
+font-weight:900;
 }
 
 h1 span{color:#ffcc00}
 
 h2{
-  font-size:clamp(24px,4vw,38px);
-  margin-bottom:20px;
+font-size:clamp(24px,4vw,38px);
+margin-bottom:20px;
 }
 
 .description{
-  color:#c8cbe0;
-  font-size:18px;
-  line-height:1.6;
-  max-width:700px;
-  margin:0 auto 40px;
+color:#c8cbe0;
+font-size:18px;
+line-height:1.6;
+max-width:700px;
+margin:0 auto 40px;
 }
 
 .buttons{
-  display:flex;
-  justify-content:center;
-  gap:18px;
-  flex-wrap:wrap;
+display:flex;
+justify-content:center;
+gap:18px;
+flex-wrap:wrap;
 }
 
 button{
-  border:none;
-  padding:18px 32px;
-  border-radius:14px;
-  font-size:17px;
-  font-weight:bold;
-  cursor:pointer;
-  transition:.2s;
+border:none;
+padding:18px 32px;
+border-radius:14px;
+font-size:17px;
+font-weight:bold;
+cursor:pointer;
+transition:.2s;
 }
 
 button:hover{transform:translateY(-3px)}
 
 button:disabled{
-  opacity:.55;
-  cursor:not-allowed;
-  transform:none;
+opacity:.55;
+cursor:not-allowed;
+transform:none;
 }
 
 .yellow{background:#ffcc00;color:#101426}
@@ -108,487 +107,728 @@ button:disabled{
 .full{width:100%}
 
 .cards{
-  margin:55px auto 0;
-  display:flex;
-  justify-content:center;
-  gap:25px;
-  flex-wrap:wrap;
+margin:55px auto 0;
+display:flex;
+justify-content:center;
+gap:25px;
+flex-wrap:wrap;
 }
 
 .card{
-  width:190px;
-  padding:22px;
-  border:1px solid rgba(255,255,255,.12);
-  background:rgba(255,255,255,.06);
-  border-radius:18px;
+width:190px;
+padding:22px;
+border:1px solid rgba(255,255,255,.12);
+background:rgba(255,255,255,.06);
+border-radius:18px;
 }
 
-.card-icon{font-size:34px;margin-bottom:10px}
+.card-icon{
+font-size:34px;
+margin-bottom:10px;
+}
 
 .card p{
-  color:#aeb2ca;
-  font-size:13px;
-  line-height:1.4;
-  margin-top:7px;
+color:#aeb2ca;
+font-size:13px;
+line-height:1.4;
+margin-top:7px;
 }
 
 .screen{
-  display:none;
-  width:100%;
-  max-width:850px;
+display:none;
+width:100%;
+max-width:850px;
 }
 
 .box{
-  background:rgba(255,255,255,.07);
-  border:1px solid rgba(255,255,255,.12);
-  border-radius:22px;
-  padding:30px;
-  margin-bottom:25px;
+background:rgba(255,255,255,.07);
+border:1px solid rgba(255,255,255,.12);
+border-radius:22px;
+padding:30px;
+margin-bottom:25px;
 }
 
 .back{
-  background:transparent;
-  color:#c8cbe0;
-  padding-left:0;
-  margin-bottom:20px;
+background:transparent;
+color:#c8cbe0;
+padding-left:0;
+margin-bottom:20px;
 }
 
 label{
-  display:block;
-  font-weight:bold;
-  margin-bottom:8px;
+display:block;
+font-weight:bold;
+margin-bottom:8px;
 }
 
 input{
-  width:100%;
-  padding:15px;
-  border-radius:10px;
-  border:1px solid rgba(255,255,255,.15);
-  background:#181d34;
-  color:white;
-  font-size:16px;
-  margin-bottom:16px;
+width:100%;
+padding:15px;
+border-radius:10px;
+border:1px solid rgba(255,255,255,.15);
+background:#181d34;
+color:white;
+font-size:16px;
+margin-bottom:16px;
 }
 
 input:focus{outline:2px solid #ffcc00}
 
 .section-title{
-  color:#ffcc00;
-  font-weight:bold;
-  letter-spacing:2px;
-  margin-bottom:15px;
+color:#ffcc00;
+font-weight:bold;
+letter-spacing:2px;
+margin-bottom:15px;
 }
 
 .clue-row{
-  display:flex;
-  gap:10px;
-  align-items:center;
+display:flex;
+gap:10px;
+align-items:center;
 }
 
 .clue-row input{flex:1}
 
 .remove{
-  background:#47243a;
-  color:white;
-  padding:14px;
-  margin-bottom:16px;
+background:#47243a;
+color:white;
+padding:14px;
+margin-bottom:16px;
 }
 
 .add{
-  background:#282e4a;
-  color:white;
-  width:100%;
-  margin-bottom:15px;
+background:#282e4a;
+color:white;
+width:100%;
+margin-bottom:15px;
 }
 
 .message{
-  display:none;
-  text-align:center;
-  padding:25px;
-  background:rgba(67,214,137,.12);
-  border:1px solid rgba(67,214,137,.4);
-  border-radius:15px;
-  margin-top:20px;
+display:none;
+text-align:center;
+padding:25px;
+background:rgba(67,214,137,.12);
+border:1px solid rgba(67,214,137,.4);
+border-radius:15px;
+margin-top:20px;
 }
 
 .game-code{
-  color:#ffcc00;
-  font-size:38px;
-  font-weight:900;
-  letter-spacing:5px;
-  margin:15px 0;
+color:#ffcc00;
+font-size:38px;
+font-weight:900;
+letter-spacing:5px;
+margin:15px 0;
 }
 
 .error{
-  color:#ff7587;
-  margin-top:15px;
-  font-weight:bold;
+color:#ff7587;
+margin-top:15px;
+font-weight:bold;
 }
 
 .join{
-  max-width:550px;
-  margin:auto;
-  text-align:center;
+max-width:550px;
+margin:auto;
+text-align:center;
 }
 
 .code-input{
-  text-align:center;
-  text-transform:uppercase;
-  font-size:28px;
-  letter-spacing:5px;
-  font-weight:bold;
+text-align:center;
+text-transform:uppercase;
+font-size:28px;
+letter-spacing:5px;
+font-weight:bold;
 }
 
 .room-top{
-  display:flex;
-  justify-content:space-between;
-  gap:20px;
-  align-items:center;
-  margin-bottom:20px;
+display:flex;
+justify-content:space-between;
+gap:20px;
+align-items:center;
+margin-bottom:20px;
 }
 
 .room-progress{
-  color:#ffcc00;
-  font-weight:bold;
+color:#ffcc00;
+font-weight:bold;
 }
 
 .lock{font-size:28px}
 
 .room{
-  text-align:center;
-  min-height:520px;
-  position:relative;
-  overflow:hidden;
-  background:
-    linear-gradient(rgba(10,13,27,.72),rgba(10,13,27,.85)),
-    radial-gradient(circle at center,#414867,#171b30);
+text-align:center;
+min-height:560px;
+position:relative;
+overflow:hidden;
+background:
+linear-gradient(rgba(10,13,27,.72),rgba(10,13,27,.85)),
+radial-gradient(circle at center,#414867,#171b30);
 }
 
 .room-text{
-  color:#c8cbe0;
-  line-height:1.6;
-  margin-bottom:25px;
+color:#c8cbe0;
+line-height:1.6;
+margin-bottom:25px;
 }
 
-/* ==========================
-   PLATE
-========================== */
+/* CHALLENGES */
 
-.plate-area{
-  min-height:270px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  position:relative;
-  overflow:visible;
+.challenge-title{
+color:#ffcc00;
+font-weight:900;
+letter-spacing:2px;
+margin-bottom:14px;
 }
+
+.challenge-stage{
+height:280px;
+position:relative;
+display:flex;
+align-items:center;
+justify-content:center;
+overflow:hidden;
+border-radius:18px;
+background:rgba(0,0,0,.12);
+touch-action:none;
+}
+
+.challenge-help{
+margin-top:12px;
+color:#c8cbe0;
+}
+
+/* PLATE */
 
 .plate{
-  width:180px;
-  height:180px;
-  border-radius:50%;
-  background:
-    radial-gradient(circle,
-      #f7f7f7 0%,
-      #f7f7f7 43%,
-      #d5d8df 46%,
-      #fff 61%,
-      #c3c7cf 64%,
-      #eef0f4 100%);
-  box-shadow:
-    0 20px 38px rgba(0,0,0,.45),
-    inset 0 0 16px rgba(0,0,0,.16);
-  cursor:pointer;
-  position:relative;
-  z-index:5;
-  user-select:none;
-  -webkit-tap-highlight-color:transparent;
+width:170px;
+height:170px;
+border-radius:50%;
+background:
+radial-gradient(circle,
+#fafafa 0 43%,
+#d5d8df 46%,
+#fff 61%,
+#c3c7cf 64%,
+#eef0f4 100%);
+box-shadow:
+0 20px 38px rgba(0,0,0,.45),
+inset 0 0 16px rgba(0,0,0,.16);
+cursor:pointer;
+position:relative;
+z-index:3;
 }
 
-.plate.hit1{
-  animation:hitOne .18s;
+.plate.cracked:after{
+content:"";
+position:absolute;
+left:50%;
+top:12px;
+width:4px;
+height:145px;
+background:#555;
+transform:rotate(21deg);
+box-shadow:
+30px 35px 0 -1px #555,
+-28px 65px 0 -1px #555;
 }
 
-.plate.hit2{
-  animation:hitTwo .23s;
+.shake{
+animation:shake .2s;
 }
 
-@keyframes hitOne{
-  0%{transform:rotate(0) translateX(0)}
-  30%{transform:rotate(-5deg) translateX(-7px)}
-  60%{transform:rotate(5deg) translateX(7px)}
-  100%{transform:rotate(0) translateX(0)}
+@keyframes shake{
+25%{transform:translateX(-10px) rotate(-5deg)}
+50%{transform:translateX(10px) rotate(5deg)}
+100%{transform:none}
 }
 
-@keyframes hitTwo{
-  0%{transform:rotate(0)}
-  20%{transform:rotate(7deg) translateX(9px)}
-  45%{transform:rotate(-7deg) translateX(-9px)}
-  70%{transform:rotate(4deg)}
-  100%{transform:rotate(0)}
+.fragment{
+position:absolute;
+left:50%;
+top:50%;
+width:38px;
+height:48px;
+background:linear-gradient(135deg,#fff,#cfd2da);
+border:1px solid #aaa;
+clip-path:polygon(0 0,100% 15%,75% 100%,12% 78%);
+z-index:5;
+pointer-events:none;
 }
 
-.crack{
-  display:none;
-  position:absolute;
-  left:50%;
-  top:16px;
-  width:3px;
-  height:145px;
-  background:#52545a;
-  transform:rotate(18deg);
+/* HORN */
+
+.horn{
+position:relative;
+width:220px;
+height:150px;
+cursor:pointer;
+user-select:none;
 }
 
-.crack:before{
-  content:"";
-  position:absolute;
-  width:72px;
-  height:3px;
-  background:#52545a;
-  top:52px;
-  left:-13px;
-  transform:rotate(-42deg);
+.horn-bell{
+position:absolute;
+right:0;
+top:28px;
+width:125px;
+height:95px;
+background:linear-gradient(90deg,#d5a900,#ffdf4d);
+clip-path:polygon(0 30%,100% 0,100% 100%,0 70%);
+filter:drop-shadow(0 12px 10px rgba(0,0,0,.3));
 }
 
-.crack:after{
-  content:"";
-  position:absolute;
-  width:62px;
-  height:3px;
-  background:#52545a;
-  top:92px;
-  left:-42px;
-  transform:rotate(44deg);
+.horn-body{
+position:absolute;
+left:25px;
+top:55px;
+width:95px;
+height:42px;
+background:#e6b900;
+border-radius:22px 5px 5px 22px;
 }
 
-.plate.hit2 .crack{
-  display:block;
+.horn-button{
+position:absolute;
+left:0;
+top:59px;
+width:48px;
+height:34px;
+background:#ffcc00;
+border-radius:15px;
+box-shadow:inset 0 -5px 0 rgba(0,0,0,.18);
 }
 
-.plate.smashed{
-  opacity:0;
-  transform:scale(.3);
-  pointer-events:none;
-  transition:.08s;
+.horn.honking{
+animation:hornShake .12s infinite alternate;
 }
 
-.shard{
-  position:absolute;
-  left:50%;
-  top:50%;
-  width:48px;
-  height:60px;
-  background:linear-gradient(135deg,#fff,#d2d5dc);
-  border:1px solid #aeb2ba;
-  box-shadow:0 7px 12px rgba(0,0,0,.35);
-  z-index:8;
-  pointer-events:none;
-  clip-path:polygon(7% 4%,96% 15%,71% 98%,18% 76%);
-  animation:shardFly 1.35s cubic-bezier(.15,.65,.28,1) forwards;
+@keyframes hornShake{
+to{transform:rotate(3deg) scale(1.04)}
 }
 
-.shard.small{
-  width:29px;
-  height:37px;
+.soundwave{
+position:absolute;
+border:4px solid #ffcc00;
+border-left:0;
+border-radius:0 100% 100% 0;
+width:55px;
+height:90px;
+right:18px;
+opacity:0;
 }
 
-.shard.tiny{
-  width:15px;
-  height:21px;
+.soundwave.go{
+animation:wave .7s ease-out;
 }
 
-@keyframes shardFly{
-  0%{
-    transform:translate(-50%,-50%) translate(0,0) rotate(0);
-    opacity:1;
-  }
-
-  58%{
-    transform:
-      translate(-50%,-50%)
-      translate(var(--x),var(--y))
-      rotate(var(--r));
-    opacity:1;
-  }
-
-  100%{
-    transform:
-      translate(-50%,-50%)
-      translate(var(--x2),175px)
-      rotate(var(--r2));
-    opacity:.7;
-  }
+@keyframes wave{
+0%{
+opacity:1;
+transform:translateX(90px) scale(.4);
+}
+100%{
+opacity:0;
+transform:translateX(160px) scale(1.5);
+}
 }
 
-.particle{
-  position:absolute;
-  left:50%;
-  top:50%;
-  width:7px;
-  height:7px;
-  border-radius:50%;
-  background:#fff;
-  pointer-events:none;
-  z-index:9;
-  animation:dust .65s ease-out forwards;
+/* GLASS */
+
+.glass-pane{
+width:280px;
+height:205px;
+background:
+linear-gradient(
+135deg,
+rgba(157,224,255,.34),
+rgba(255,255,255,.08)
+);
+border:7px solid #8895a8;
+box-shadow:
+inset 0 0 30px rgba(255,255,255,.18),
+0 15px 30px rgba(0,0,0,.3);
+position:relative;
+cursor:crosshair;
+overflow:hidden;
 }
 
-@keyframes dust{
-  from{
-    transform:translate(-50%,-50%);
-    opacity:1;
-  }
-  to{
-    transform:
-      translate(
-        calc(-50% + var(--px)),
-        calc(-50% + var(--py))
-      );
-    opacity:0;
-  }
+.glass-pane:before,
+.glass-pane:after{
+content:"";
+position:absolute;
+display:none;
+background:#eefaff;
+transform-origin:left center;
+height:2px;
+width:220px;
+left:50%;
+top:50%;
+box-shadow:0 0 5px white;
 }
 
-.flash{
-  position:absolute;
-  left:50%;
-  top:50%;
-  width:35px;
-  height:35px;
-  background:white;
-  border-radius:50%;
-  transform:translate(-50%,-50%);
-  opacity:0;
-  pointer-events:none;
-  z-index:7;
+.glass-pane.crack1:before{
+display:block;
+transform:rotate(25deg);
 }
 
-.flash.go{
-  animation:flashBoom .3s ease-out;
+.glass-pane.crack2:before,
+.glass-pane.crack2:after{
+display:block;
 }
 
-@keyframes flashBoom{
-  0%{
-    opacity:.9;
-    transform:translate(-50%,-50%) scale(.4);
-  }
-  100%{
-    opacity:0;
-    transform:translate(-50%,-50%) scale(8);
-  }
+.glass-pane.crack2:after{
+transform:rotate(-35deg);
 }
 
-.smash-instruction{
-  color:#ffcc00;
-  font-weight:900;
-  letter-spacing:2px;
-  margin-bottom:20px;
+.hammer{
+position:absolute;
+font-size:70px;
+right:35px;
+bottom:25px;
+transform:rotate(-25deg);
+pointer-events:none;
+}
+
+.hammer.swing{
+animation:hammer .25s;
+}
+
+@keyframes hammer{
+50%{
+transform:
+translate(-65px,-45px)
+rotate(-65deg);
+}
+}
+
+.glass-piece{
+position:absolute;
+left:50%;
+top:50%;
+width:35px;
+height:45px;
+background:rgba(190,235,255,.45);
+border:1px solid rgba(255,255,255,.8);
+clip-path:polygon(10% 0,100% 20%,70% 100%,0 70%);
+pointer-events:none;
+}
+
+/* BOXING BAG */
+
+.bag-wrap{
+height:100%;
+position:relative;
+display:flex;
+align-items:flex-start;
+justify-content:center;
+padding-top:45px;
+}
+
+.chain{
+position:absolute;
+top:0;
+width:5px;
+height:60px;
+background:#aaa;
+}
+
+.bag{
+width:115px;
+height:185px;
+border-radius:48% 48% 40% 40%;
+background:
+linear-gradient(
+90deg,
+#7d1624,
+#c6283e,
+#6f111d
+);
+box-shadow:
+inset -18px 0 20px rgba(0,0,0,.25),
+0 18px 25px rgba(0,0,0,.3);
+cursor:pointer;
+transform-origin:50% -30px;
+position:relative;
+}
+
+.bag:after{
+content:"SMASH";
+position:absolute;
+top:72px;
+left:20px;
+font-weight:900;
+letter-spacing:2px;
+color:rgba(255,255,255,.7);
+transform:rotate(-90deg);
+}
+
+.bag.left{
+animation:bagLeft .45s;
+}
+
+.bag.right{
+animation:bagRight .45s;
+}
+
+@keyframes bagLeft{
+50%{transform:rotate(-24deg)}
+}
+
+@keyframes bagRight{
+50%{transform:rotate(24deg)}
+}
+
+.glove{
+position:absolute;
+font-size:58px;
+left:35px;
+bottom:25px;
+pointer-events:none;
+}
+
+.glove.punch{
+animation:punch .22s;
+}
+
+@keyframes punch{
+50%{
+transform:
+translate(100px,-20px)
+scale(1.15);
+}
+}
+
+/* GRAFFITI */
+
+.wall{
+width:100%;
+height:100%;
+position:relative;
+background:
+linear-gradient(
+90deg,
+rgba(255,255,255,.04) 1px,
+transparent 1px
+),
+linear-gradient(
+rgba(255,255,255,.04) 1px,
+transparent 1px
+),
+#5d6170;
+background-size:55px 28px;
+cursor:crosshair;
+overflow:hidden;
+}
+
+.spray-dot{
+position:absolute;
+width:42px;
+height:42px;
+border-radius:50%;
+background:#ff3fb4;
+filter:blur(2px);
+opacity:.8;
+pointer-events:none;
+}
+
+.spray-can{
+position:absolute;
+right:18px;
+bottom:15px;
+font-size:62px;
+pointer-events:none;
+}
+
+/* BOX */
+
+.cardboard{
+width:190px;
+height:150px;
+background:#a8733e;
+border:4px solid #6c4626;
+position:relative;
+cursor:pointer;
+box-shadow:0 18px 25px rgba(0,0,0,.35);
+transition:.2s;
+}
+
+.cardboard:before{
+content:"FRAGILE";
+position:absolute;
+left:48px;
+top:55px;
+border:3px solid #6c4626;
+padding:8px;
+font-weight:900;
+color:#6c4626;
+transform:rotate(-5deg);
+}
+
+.cardboard.step1{
+transform:scaleY(.82) skewX(4deg);
+}
+
+.cardboard.step2{
+transform:scaleY(.58) skewX(-8deg);
+border-radius:8px;
+}
+
+.cardboard.step3{
+transform:scaleY(.28) rotate(3deg);
+filter:brightness(.85);
+}
+
+.shoe{
+position:absolute;
+font-size:75px;
+top:15px;
+right:60px;
+transform:rotate(25deg);
+pointer-events:none;
+}
+
+.shoe.stomp{
+animation:stomp .3s;
+}
+
+@keyframes stomp{
+50%{
+transform:
+translate(-65px,100px)
+rotate(5deg)
+scale(1.15);
+}
 }
 
 /* CLUES */
 
 .clue-box{
-  display:none;
-  background:rgba(255,204,0,.10);
-  border:1px solid rgba(255,204,0,.5);
-  padding:22px;
-  border-radius:16px;
-  margin:20px 0;
+display:none;
+background:rgba(255,204,0,.10);
+border:1px solid rgba(255,204,0,.5);
+padding:22px;
+border-radius:16px;
+margin:20px 0;
 }
 
 .clue-label{
-  color:#ffcc00;
-  font-size:13px;
-  font-weight:bold;
-  letter-spacing:2px;
-  margin-bottom:10px;
+color:#ffcc00;
+font-size:13px;
+font-weight:bold;
+letter-spacing:2px;
+margin-bottom:10px;
 }
 
 .clue-text{
-  font-size:22px;
-  font-weight:bold;
+font-size:22px;
+font-weight:bold;
 }
 
-.guess-area{margin-top:20px}
+.guess-area{
+margin-top:20px;
+}
 
 .guess-feedback{
-  min-height:35px;
-  margin-top:15px;
-  font-weight:bold;
-  font-size:18px;
+min-height:35px;
+margin-top:15px;
+font-weight:bold;
+font-size:18px;
 }
 
 .next-clue{
-  display:none;
-  margin-top:15px;
+display:none;
+margin-top:15px;
 }
 
 .success{
-  display:none;
-  text-align:center;
-  padding:30px 10px;
+display:none;
+text-align:center;
+padding:30px 10px;
 }
 
 .key{
-  font-size:90px;
-  animation:keypop .6s;
+font-size:90px;
+animation:keypop .6s;
 }
 
 @keyframes keypop{
-  0%{transform:scale(0)}
-  70%{transform:scale(1.2)}
-  100%{transform:scale(1)}
+0%{transform:scale(0)}
+70%{transform:scale(1.2)}
+100%{transform:scale(1)}
 }
+
+/* DOOR */
 
 .door-wrap{text-align:center}
 
 .door{
-  width:220px;
-  height:340px;
-  background:linear-gradient(90deg,#5d3828,#88553b,#5d3828);
-  margin:30px auto;
-  border:10px solid #34251f;
-  border-bottom:none;
-  position:relative;
-  transform-origin:left;
-  transition:1.4s;
-  box-shadow:0 20px 40px rgba(0,0,0,.5);
+width:220px;
+height:340px;
+background:
+linear-gradient(
+90deg,
+#5d3828,
+#88553b,
+#5d3828
+);
+margin:30px auto;
+border:10px solid #34251f;
+border-bottom:none;
+position:relative;
+transform-origin:left;
+transition:1.4s;
+box-shadow:0 20px 40px rgba(0,0,0,.5);
 }
 
 .knob{
-  position:absolute;
-  width:18px;
-  height:18px;
-  border-radius:50%;
-  background:#ffcc00;
-  right:20px;
-  top:165px;
+position:absolute;
+width:18px;
+height:18px;
+border-radius:50%;
+background:#ffcc00;
+right:20px;
+top:165px;
 }
 
 .door.open{
-  transform:perspective(700px) rotateY(-72deg);
+transform:
+perspective(700px)
+rotateY(-72deg);
 }
 
 .escape-title{
-  display:none;
-  color:#ffcc00;
-  font-size:clamp(45px,8vw,80px);
-  font-weight:900;
-  margin-top:25px;
+display:none;
+color:#ffcc00;
+font-size:clamp(45px,8vw,80px);
+font-weight:900;
+margin-top:25px;
 }
 
 footer{
-  text-align:center;
-  padding:25px;
-  color:#747990;
-  font-size:13px;
+text-align:center;
+padding:25px;
+color:#747990;
+font-size:13px;
 }
 
 @media(max-width:600px){
-  .badge{display:none}
-  .room{padding:22px}
-  .plate{width:155px;height:155px}
-  .clue-row{display:block}
-  .remove{width:100%}
+
+.badge{display:none}
+
+.room{padding:20px}
+
+.challenge-stage{
+height:245px;
+}
+
+.clue-row{
+display:block;
+}
+
+.remove{
+width:100%;
+}
+
 }
 </style>
 </head>
@@ -596,283 +836,460 @@ footer{
 <body>
 
 <nav>
-  <div class="logo">SMASH<span>2</span>LEARN</div>
-  <div class="badge">Educational Escape Rooms</div>
+<div class="logo">SMASH<span>2</span>LEARN</div>
+<div class="badge">Educational Escape Rooms</div>
 </nav>
 
 <main>
 
+<!-- HOME -->
+
 <section id="home" class="hero">
 
-  <div class="small-title">LEARN • SMASH • ESCAPE</div>
+<div class="small-title">
+LEARN • SMASH • ESCAPE
+</div>
 
-  <h1>
-    Smash your<br>
-    <span>way out.</span>
-  </h1>
+<h1>
+Smash your<br>
+<span>way out.</span>
+</h1>
 
-  <h2>The educational escape room.</h2>
+<h2>
+The educational escape room.
+</h2>
 
-  <p class="description">
-    Break things. Unlock clues. Solve what you learned.
-    Escape the room.
-  </p>
+<p class="description">
+Break things. Unlock clues.
+Solve what you learned.
+Escape the room.
+</p>
 
-  <div class="buttons">
-    <button class="yellow" onclick="openCreator()">
-      🔐 Create an Escape Room
-    </button>
+<div class="buttons">
 
-    <button class="white" onclick="openJoin()">
-      🚪 Enter a Room
-    </button>
-  </div>
+<button
+class="yellow"
+onclick="openCreator()"
+>
+🔐 Create an Escape Room
+</button>
 
-  <div class="cards">
+<button
+class="white"
+onclick="openJoin()"
+>
+🚪 Enter a Room
+</button>
 
-    <div class="card">
-      <div class="card-icon">💥</div>
-      <h3>Smash</h3>
-      <p>Release some rage through interactive challenges.</p>
-    </div>
+</div>
 
-    <div class="card">
-      <div class="card-icon">🔎</div>
-      <h3>Unlock</h3>
-      <p>Every challenge reveals another clue.</p>
-    </div>
+<div class="cards">
 
-    <div class="card">
-      <div class="card-icon">🚪</div>
-      <h3>Escape</h3>
-      <p>Solve every mystery and unlock the final door.</p>
-    </div>
+<div class="card">
+<div class="card-icon">💥</div>
+<h3>Smash</h3>
+<p>
+Release some rage through
+interactive challenges.
+</p>
+</div>
 
-  </div>
+<div class="card">
+<div class="card-icon">🔎</div>
+<h3>Unlock</h3>
+<p>
+Every challenge reveals
+another clue.
+</p>
+</div>
+
+<div class="card">
+<div class="card-icon">🚪</div>
+<h3>Escape</h3>
+<p>
+Solve every mystery and
+unlock the final door.
+</p>
+</div>
+
+</div>
 
 </section>
 
+
+<!-- CREATOR -->
 
 <section id="creator" class="screen">
 
-  <button class="back" onclick="goHome()">← Back to home</button>
+<button
+class="back"
+onclick="goHome()"
+>
+← Back to home
+</button>
 
-  <div class="small-title">ESCAPE ROOM CREATOR</div>
+<div class="small-title">
+ESCAPE ROOM CREATOR
+</div>
 
-  <h2>Create your escape room.</h2>
+<h2>
+Create your escape room.
+</h2>
 
-  <p class="description" style="margin-left:0;">
-    Add as many mysteries as you want.
-    Students must solve them all to escape.
-  </p>
+<p
+class="description"
+style="margin-left:0"
+>
+Add as many mysteries as you want.
+Students must solve them all to escape.
+</p>
 
-  <div class="box">
-    <label>Escape Room title</label>
-    <input id="roomTitle" placeholder="Example: Biology Final Escape">
-  </div>
+<div class="box">
 
-  <div id="mysteries"></div>
+<label>
+Escape Room title
+</label>
 
-  <button class="add" onclick="addMystery()">
-    + Add another mystery
-  </button>
+<input
+id="roomTitle"
+placeholder="Example: Biology Final Escape"
+>
 
-  <button id="saveButton" class="yellow full" onclick="saveRoom()">
-    🔐 Create Escape Room
-  </button>
+</div>
 
-  <div id="saveMessage" class="message">
-    <h2>🚪 Escape Room created!</h2>
-    <p>Your room code is</p>
-    <div id="roomCode" class="game-code"></div>
-    <p>Give this code to your students.</p>
-  </div>
+<div id="mysteries"></div>
 
-  <div id="saveError" class="error"></div>
+<button
+class="add"
+onclick="addMystery()"
+>
++ Add another mystery
+</button>
 
-</section>
+<button
+id="saveButton"
+class="yellow full"
+onclick="saveRoom()"
+>
+🔐 Create Escape Room
+</button>
 
+<div
+id="saveMessage"
+class="message"
+>
 
-<section id="joinScreen" class="screen">
+<h2>
+🚪 Escape Room created!
+</h2>
 
-  <button class="back" onclick="goHome()">← Back to home</button>
+<p>Your room code is</p>
 
-  <div class="join">
+<div
+id="roomCode"
+class="game-code"
+></div>
 
-    <div class="small-title">ENTER THE ESCAPE ROOM</div>
+<p>
+Give this code to your students.
+</p>
 
-    <h2>You're locked in.</h2>
+</div>
 
-    <p class="description">
-      Enter the room code. Find the clues.
-      Solve the mysteries. Smash your way out.
-    </p>
-
-    <div class="box">
-
-      <label>Room code</label>
-
-      <input
-        id="joinCode"
-        class="code-input"
-        maxlength="6"
-        placeholder="ABC123"
-      >
-
-      <button id="joinButton" class="yellow full" onclick="joinRoom()">
-        🚪 Enter Room
-      </button>
-
-      <div id="joinError" class="error"></div>
-
-    </div>
-
-  </div>
-
-</section>
-
-
-<section id="gameScreen" class="screen">
-
-  <div class="room-top">
-    <div>
-      <div id="gameTitle"></div>
-      <div id="progress" class="room-progress"></div>
-    </div>
-
-    <div class="lock">🔒</div>
-  </div>
-
-  <div class="box room">
-
-    <div class="small-title">FIND THE ANSWER</div>
-
-    <h2 id="mysteryTitle">Mystery locked.</h2>
-
-    <p class="room-text">
-      Destroy something to reveal a clue.
-      Think you know the answer? Try to solve it.
-    </p>
-
-    <div id="smashSection">
-
-      <div class="smash-instruction">
-        🍽️ SMASH THE PLATE
-      </div>
-
-      <div id="plateArea" class="plate-area">
-
-        <div id="smashFlash" class="flash"></div>
-
-        <div id="plate" class="plate" onclick="hitPlate()">
-          <div class="crack"></div>
-        </div>
-
-      </div>
-
-      <p id="hitText">Tap the plate 3 times.</p>
-
-    </div>
-
-    <div id="clueBox" class="clue-box">
-      <div id="clueLabel" class="clue-label">CLUE 1</div>
-      <div id="clueText" class="clue-text"></div>
-    </div>
-
-    <div id="guessArea" class="guess-area">
-
-      <label>What is the answer?</label>
-
-      <input
-        id="guessInput"
-        placeholder="Type your answer..."
-        onkeydown="if(event.key==='Enter') checkGuess()"
-      >
-
-      <button class="yellow full" onclick="checkGuess()">
-        💡 I KNOW IT!
-      </button>
-
-      <div id="guessFeedback" class="guess-feedback"></div>
-
-      <button
-        id="nextClueButton"
-        class="dark full next-clue"
-        onclick="prepareNextClue()"
-      >
-        💥 I need another clue
-      </button>
-
-    </div>
-
-    <div id="successArea" class="success">
-
-      <div class="key">🔑</div>
-
-      <h2>Mystery solved!</h2>
-
-      <p class="room-text">You found a key.</p>
-
-      <button
-        id="nextMysteryButton"
-        class="yellow full"
-        onclick="nextMystery()"
-      >
-        Unlock the next mystery →
-      </button>
-
-    </div>
-
-  </div>
+<div
+id="saveError"
+class="error"
+></div>
 
 </section>
 
 
-<section id="escapeScreen" class="screen">
+<!-- JOIN -->
 
-  <div class="box door-wrap">
+<section
+id="joinScreen"
+class="screen"
+>
 
-    <div class="small-title">ALL MYSTERIES SOLVED</div>
+<button
+class="back"
+onclick="goHome()"
+>
+← Back to home
+</button>
 
-    <h2>You found the final key.</h2>
+<div class="join">
 
-    <div id="door" class="door">
-      <div class="knob"></div>
-    </div>
+<div class="small-title">
+ENTER THE ESCAPE ROOM
+</div>
 
-    <div id="escapeTitle" class="escape-title">
-      YOU ESCAPED! 💥
-    </div>
+<h2>
+You're locked in.
+</h2>
 
-    <p id="escapeMessage" class="description" style="display:none;">
-      You smashed. You learned. You escaped.
-    </p>
+<p class="description">
+Enter the room code.
+Find the clues.
+Solve the mysteries.
+Smash your way out.
+</p>
 
-    <button
-      id="homeButton"
-      class="yellow full"
-      style="display:none;"
-      onclick="goHome()"
-    >
-      Play another room
-    </button>
+<div class="box">
 
-  </div>
+<label>
+Room code
+</label>
+
+<input
+id="joinCode"
+class="code-input"
+maxlength="6"
+placeholder="ABC123"
+>
+
+<button
+id="joinButton"
+class="yellow full"
+onclick="joinRoom()"
+>
+🚪 Enter Room
+</button>
+
+<div
+id="joinError"
+class="error"
+></div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- GAME -->
+
+<section
+id="gameScreen"
+class="screen"
+>
+
+<div class="room-top">
+
+<div>
+
+<div id="gameTitle"></div>
+
+<div
+id="progress"
+class="room-progress"
+></div>
+
+</div>
+
+<div class="lock">
+🔒
+</div>
+
+</div>
+
+<div class="box room">
+
+<div class="small-title">
+FIND THE ANSWER
+</div>
+
+<h2 id="mysteryTitle">
+Mystery locked.
+</h2>
+
+<p class="room-text">
+Complete the challenge to reveal a clue.
+Think you know the answer?
+Try to solve it.
+</p>
+
+<div id="challengeSection">
+
+<div
+id="challengeTitle"
+class="challenge-title"
+></div>
+
+<div
+id="challengeStage"
+class="challenge-stage"
+></div>
+
+<p
+id="challengeHelp"
+class="challenge-help"
+></p>
+
+</div>
+
+<div
+id="clueBox"
+class="clue-box"
+>
+
+<div
+id="clueLabel"
+class="clue-label"
+>
+CLUE 1
+</div>
+
+<div
+id="clueText"
+class="clue-text"
+></div>
+
+</div>
+
+<div
+id="guessArea"
+class="guess-area"
+>
+
+<label>
+What is the answer?
+</label>
+
+<input
+id="guessInput"
+placeholder="Type your answer..."
+onkeydown="
+if(event.key==='Enter')
+checkGuess()
+"
+>
+
+<button
+class="yellow full"
+onclick="checkGuess()"
+>
+💡 I KNOW IT!
+</button>
+
+<div
+id="guessFeedback"
+class="guess-feedback"
+></div>
+
+<button
+id="nextClueButton"
+class="dark full next-clue"
+onclick="prepareNextClue()"
+>
+💥 I need another clue
+</button>
+
+</div>
+
+<div
+id="successArea"
+class="success"
+>
+
+<div class="key">
+🔑
+</div>
+
+<h2>
+Mystery solved!
+</h2>
+
+<p class="room-text">
+You found a key.
+</p>
+
+<button
+id="nextMysteryButton"
+class="yellow full"
+onclick="nextMystery()"
+>
+Unlock the next mystery →
+</button>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ESCAPE -->
+
+<section
+id="escapeScreen"
+class="screen"
+>
+
+<div class="box door-wrap">
+
+<div class="small-title">
+ALL MYSTERIES SOLVED
+</div>
+
+<h2>
+You found the final key.
+</h2>
+
+<div
+id="door"
+class="door"
+>
+<div class="knob"></div>
+</div>
+
+<div
+id="escapeTitle"
+class="escape-title"
+>
+YOU ESCAPED! 💥
+</div>
+
+<p
+id="escapeMessage"
+class="description"
+style="display:none"
+>
+You smashed.
+You learned.
+You escaped.
+</p>
+
+<button
+id="homeButton"
+class="yellow full"
+style="display:none"
+onclick="goHome()"
+>
+Play another room
+</button>
+
+</div>
 
 </section>
 
 </main>
 
 <footer>
-  Smash2Learn • Learn. Smash. Escape.
+Smash2Learn • Learn. Smash. Escape.
 </footer>
 
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script
+src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+></script>
 
 <script>
 
-/* SUPABASE */
+/* =========================
+   SUPABASE
+========================= */
 
 const SUPABASE_URL =
 "https://ygbagqdzjqhnevedxdjj.supabase.co";
@@ -882,955 +1299,2356 @@ const SUPABASE_KEY =
 
 const db =
 window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_KEY
+SUPABASE_URL,
+SUPABASE_KEY
 );
 
 
-/* STATE */
+/* =========================
+   STATE
+========================= */
 
 let mysteryCount=0;
 
 let currentRoom=null;
+
 let currentMysteryIndex=0;
+
 let currentClueIndex=0;
 
-let plateHits=0;
-let clueUnlocked=false;
+let challengeDone=false;
 
-
-/* AUDIO */
+let actionCount=0;
 
 let audioContext=null;
 
-function getAudioContext(){
+let sprayDrawing=false;
 
-  if(!audioContext){
+let sprayAmount=0;
 
-    const AudioCtx=
-      window.AudioContext ||
-      window.webkitAudioContext;
+let sprayNode=null;
 
-    if(AudioCtx){
-      audioContext=new AudioCtx();
-    }
 
-  }
+/* =========================
+   AUDIO ENGINE
+========================= */
 
-  if(audioContext && audioContext.state==="suspended"){
-    audioContext.resume();
-  }
+function ctx(){
 
-  return audioContext;
+if(!audioContext){
+
+const AudioCtx =
+window.AudioContext ||
+window.webkitAudioContext;
+
+if(AudioCtx){
+audioContext =
+new AudioCtx();
+}
+
+}
+
+if(
+audioContext &&
+audioContext.state==="suspended"
+){
+audioContext.resume();
+}
+
+return audioContext;
+
 }
 
 
-function ceramicHit(strength=1){
+function tone(
+freq,
+dur=.12,
+type="triangle",
+vol=.12
+){
 
-  const ctx=getAudioContext();
-  if(!ctx)return;
+const c=ctx();
 
-  const now=ctx.currentTime;
+if(!c)return;
 
-  const osc=ctx.createOscillator();
-  const gain=ctx.createGain();
+const o=
+c.createOscillator();
 
-  osc.type="triangle";
+const g=
+c.createGain();
 
-  osc.frequency.setValueAtTime(
-    900+Math.random()*500,
-    now
-  );
+const now=
+c.currentTime;
 
-  osc.frequency.exponentialRampToValueAtTime(
-    400,
-    now+.1
-  );
+o.type=type;
 
-  gain.gain.setValueAtTime(.13*strength,now);
+o.frequency
+.setValueAtTime(
+freq,
+now
+);
 
-  gain.gain.exponentialRampToValueAtTime(
-    .001,
-    now+.13
-  );
+g.gain
+.setValueAtTime(
+vol,
+now
+);
 
-  osc.connect(gain);
-  gain.connect(ctx.destination);
+g.gain
+.exponentialRampToValueAtTime(
+.001,
+now+dur
+);
 
-  osc.start(now);
-  osc.stop(now+.14);
+o.connect(g)
+.connect(c.destination);
+
+o.start(now);
+
+o.stop(
+now+dur
+);
+
 }
 
 
-function ceramicCrash(){
+function noise(
+dur=.3,
+vol=.18,
+high=500
+){
 
-  const ctx=getAudioContext();
-  if(!ctx)return;
+const c=ctx();
 
-  const now=ctx.currentTime;
+if(!c)return;
 
-  /* THUD */
+const len=
+Math.floor(
+c.sampleRate*dur
+);
 
-  const impact=ctx.createOscillator();
-  const impactGain=ctx.createGain();
+const buffer=
+c.createBuffer(
+1,
+len,
+c.sampleRate
+);
 
-  impact.type="triangle";
+const data=
+buffer.getChannelData(0);
 
-  impact.frequency.setValueAtTime(190,now);
-  impact.frequency.exponentialRampToValueAtTime(50,now+.2);
+for(
+let i=0;
+i<len;
+i++
+){
 
-  impactGain.gain.setValueAtTime(.5,now);
-  impactGain.gain.exponentialRampToValueAtTime(.001,now+.23);
+data[i]=
+(Math.random()*2-1) *
+(1-i/len);
 
-  impact.connect(impactGain);
-  impactGain.connect(ctx.destination);
+}
 
-  impact.start(now);
-  impact.stop(now+.24);
+const source=
+c.createBufferSource();
 
+const filter=
+c.createBiquadFilter();
 
-  /* CERAMIC PIECES */
+const gain=
+c.createGain();
 
-  for(let i=0;i<16;i++){
+source.buffer=
+buffer;
 
-    const osc=ctx.createOscillator();
-    const gain=ctx.createGain();
+filter.type=
+"highpass";
 
-    const start=now+Math.random()*.28;
+filter.frequency.value=
+high;
 
-    osc.type=Math.random()>.5 ? "triangle" : "square";
+gain.gain
+.setValueAtTime(
+vol,
+c.currentTime
+);
 
-    osc.frequency.setValueAtTime(
-      600+Math.random()*2000,
-      start
-    );
+gain.gain
+.exponentialRampToValueAtTime(
+.001,
+c.currentTime+dur
+);
 
-    osc.frequency.exponentialRampToValueAtTime(
-      250+Math.random()*600,
-      start+.1
-    );
+source
+.connect(filter)
+.connect(gain)
+.connect(c.destination);
 
-    gain.gain.setValueAtTime(
-      .025+Math.random()*.055,
-      start
-    );
+source.start();
 
-    gain.gain.exponentialRampToValueAtTime(
-      .001,
-      start+.18
-    );
-
-    osc.connect(gain);
-    gain.connect(ctx.destination);
-
-    osc.start(start);
-    osc.stop(start+.22);
-
-  }
-
-
-  /* CRASH NOISE */
-
-  const bufferSize=Math.floor(ctx.sampleRate*.45);
-
-  const buffer=ctx.createBuffer(
-    1,
-    bufferSize,
-    ctx.sampleRate
-  );
-
-  const data=buffer.getChannelData(0);
-
-  for(let i=0;i<bufferSize;i++){
-
-    data[i]=
-      (Math.random()*2-1) *
-      Math.pow(1-i/bufferSize,1.7);
-
-  }
-
-  const noise=ctx.createBufferSource();
-  const filter=ctx.createBiquadFilter();
-  const noiseGain=ctx.createGain();
-
-  noise.buffer=buffer;
-
-  filter.type="highpass";
-  filter.frequency.value=750;
-
-  noiseGain.gain.setValueAtTime(.27,now);
-  noiseGain.gain.exponentialRampToValueAtTime(.001,now+.45);
-
-  noise.connect(filter);
-  filter.connect(noiseGain);
-  noiseGain.connect(ctx.destination);
-
-  noise.start(now);
 }
 
 
-/* NAVIGATION */
+/* CERAMIC */
+
+function ceramic(){
+
+noise(
+.5,
+.27,
+700
+);
+
+[
+500,
+750,
+1050,
+1450,
+1900,
+2400
+]
+.forEach(
+(freq,index)=>{
+
+setTimeout(
+()=>tone(
+freq,
+.16,
+"triangle",
+.09
+),
+index*28
+);
+
+}
+);
+
+}
+
+
+/* HORN */
+
+function hornSound(){
+
+const c=ctx();
+
+if(!c)return;
+
+[
+220,
+277,
+330
+]
+.forEach(freq=>{
+
+const o=
+c.createOscillator();
+
+const g=
+c.createGain();
+
+const now=
+c.currentTime;
+
+o.type=
+"sawtooth";
+
+o.frequency.value=
+freq;
+
+g.gain
+.setValueAtTime(
+.06,
+now
+);
+
+g.gain
+.exponentialRampToValueAtTime(
+.001,
+now+.75
+);
+
+o.connect(g)
+.connect(c.destination);
+
+o.start();
+
+o.stop(
+now+.78
+);
+
+});
+
+}
+
+
+/* GLASS */
+
+function glassSound(){
+
+noise(
+.65,
+.32,
+1500
+);
+
+for(
+let i=0;
+i<12;
+i++
+){
+
+setTimeout(
+()=>tone(
+900+
+Math.random()*2500,
+.12,
+"triangle",
+.04+
+Math.random()*.05
+),
+Math.random()*350
+);
+
+}
+
+}
+
+
+/* PUNCH */
+
+function punchSound(){
+
+noise(
+.11,
+.16,
+80
+);
+
+tone(
+90,
+.12,
+"sine",
+.18
+);
+
+}
+
+
+/* CARDBOARD */
+
+function cardboardSound(){
+
+noise(
+.25,
+.2,
+180
+);
+
+tone(
+120,
+.12,
+"triangle",
+.08
+);
+
+}
+
+
+function vibrate(pattern){
+
+if(navigator.vibrate){
+
+navigator.vibrate(
+pattern
+);
+
+}
+
+}
+
+
+/* =========================
+   NAVIGATION
+========================= */
 
 function hideAll(){
 
-  document.getElementById("home").style.display="none";
-  document.getElementById("creator").style.display="none";
-  document.getElementById("joinScreen").style.display="none";
-  document.getElementById("gameScreen").style.display="none";
-  document.getElementById("escapeScreen").style.display="none";
+[
+"home",
+"creator",
+"joinScreen",
+"gameScreen",
+"escapeScreen"
+]
+.forEach(id=>{
+
+document
+.getElementById(id)
+.style.display=
+"none";
+
+});
 
 }
+
 
 function goHome(){
-  hideAll();
-  document.getElementById("home").style.display="block";
+
+stopSpray();
+
+hideAll();
+
+document
+.getElementById("home")
+.style.display=
+"block";
+
 }
+
 
 function openCreator(){
 
-  hideAll();
-  document.getElementById("creator").style.display="block";
+hideAll();
 
-  if(mysteryCount===0){
-    addMystery();
-  }
+document
+.getElementById("creator")
+.style.display=
+"block";
+
+if(!mysteryCount){
+
+addMystery();
 
 }
+
+}
+
 
 function openJoin(){
 
-  hideAll();
-  document.getElementById("joinScreen").style.display="block";
-  document.getElementById("joinError").textContent="";
+hideAll();
+
+document
+.getElementById("joinScreen")
+.style.display=
+"block";
+
+document
+.getElementById("joinError")
+.textContent=
+"";
 
 }
 
 
-/* CREATOR */
+/* =========================
+   CREATOR
+========================= */
 
 function addMystery(){
 
-  mysteryCount++;
+mysteryCount++;
 
-  const wrapper=document.createElement("div");
+const wrapper=
+document.createElement(
+"div"
+);
 
-  wrapper.className="box mystery";
+wrapper.className=
+"box mystery";
 
-  wrapper.innerHTML=`
+wrapper.innerHTML=`
 
-    <div class="section-title">
-      🔒 MYSTERY ${mysteryCount}
-    </div>
+<div class="section-title">
+🔒 MYSTERY ${mysteryCount}
+</div>
 
-    <label>Correct answer</label>
+<label>
+Correct answer
+</label>
 
-    <input
-      class="answer"
-      placeholder="Example: Photosynthesis"
-    >
+<input
+class="answer"
+placeholder="Example: Photosynthesis"
+>
 
-    <label>Clues</label>
+<label>
+Clues
+</label>
 
-    <div class="clues">
+<div class="clues">
 
-      <div class="clue-row">
-        <input class="clue" placeholder="Clue 1">
-      </div>
+<div class="clue-row">
+<input
+class="clue"
+placeholder="Clue 1"
+>
+</div>
 
-      <div class="clue-row">
-        <input class="clue" placeholder="Clue 2">
-      </div>
+<div class="clue-row">
+<input
+class="clue"
+placeholder="Clue 2"
+>
+</div>
 
-      <div class="clue-row">
-        <input class="clue" placeholder="Clue 3">
-      </div>
+<div class="clue-row">
+<input
+class="clue"
+placeholder="Clue 3"
+>
+</div>
 
-    </div>
+</div>
 
-    <button
-      class="dark full"
-      onclick="addClue(this)"
-    >
-      + Add clue
-    </button>
+<button
+class="dark full"
+onclick="addClue(this)"
+>
++ Add clue
+</button>
 
-  `;
+`;
 
-  document.getElementById("mysteries").appendChild(wrapper);
+document
+.getElementById("mysteries")
+.appendChild(
+wrapper
+);
 
 }
 
 
 function addClue(button){
 
-  const clues=
-    button.parentElement.querySelector(".clues");
+const clues=
+button
+.parentElement
+.querySelector(
+".clues"
+);
 
-  const number=
-    clues.querySelectorAll(".clue").length+1;
+const number=
+clues
+.querySelectorAll(
+".clue"
+)
+.length+1;
 
-  const row=document.createElement("div");
+const row=
+document.createElement(
+"div"
+);
 
-  row.className="clue-row";
+row.className=
+"clue-row";
 
-  row.innerHTML=`
+row.innerHTML=`
 
-    <input class="clue" placeholder="Clue ${number}">
+<input
+class="clue"
+placeholder="Clue ${number}"
+>
 
-    <button
-      class="remove"
-      onclick="this.parentElement.remove()"
-    >
-      ✕
-    </button>
+<button
+class="remove"
+onclick="
+this.parentElement.remove()
+"
+>
+✕
+</button>
 
-  `;
+`;
 
-  clues.appendChild(row);
+clues.appendChild(
+row
+);
 
 }
 
 
-/* SAVE */
+/* =========================
+   SAVE ROOM
+========================= */
 
 async function saveRoom(){
 
-  const title=
-    document.getElementById("roomTitle").value.trim();
+const title=
+document
+.getElementById("roomTitle")
+.value
+.trim();
 
-  const errorBox=
-    document.getElementById("saveError");
+const errorBox=
+document
+.getElementById("saveError");
 
-  errorBox.textContent="";
+errorBox.textContent=
+"";
 
-  if(!title){
+if(!title){
 
-    alert("Please enter an Escape Room title.");
-    return;
+alert(
+"Please enter an Escape Room title."
+);
 
-  }
+return;
 
-  const boxes=
-    document.querySelectorAll(".mystery");
+}
 
-  const mysteries=[];
+const mysteries=[];
 
-  for(const box of boxes){
+for(
+const box
+of
+document.querySelectorAll(
+".mystery"
+)
+){
 
-    const answer=
-      box.querySelector(".answer").value.trim();
+const answer=
+box
+.querySelector(".answer")
+.value
+.trim();
 
-    const clues=
-      [...box.querySelectorAll(".clue")]
-      .map(x=>x.value.trim())
-      .filter(Boolean);
+const clues=
+[
+...box
+.querySelectorAll(".clue")
+]
+.map(
+item=>
+item.value.trim()
+)
+.filter(Boolean);
 
-    if(!answer){
+if(!answer){
 
-      alert("Please add the correct answer for every mystery.");
-      return;
+alert(
+"Please add the correct answer for every mystery."
+);
 
-    }
+return;
 
-    if(clues.length===0){
+}
 
-      alert("Every mystery needs at least one clue.");
-      return;
+if(!clues.length){
 
-    }
+alert(
+"Every mystery needs at least one clue."
+);
 
-    mysteries.push({answer,clues});
+return;
 
-  }
+}
 
-  const button=document.getElementById("saveButton");
+mysteries.push({
+answer,
+clues
+});
 
-  button.disabled=true;
-  button.textContent="☁️ Creating room...";
+}
 
-  try{
+const button=
+document
+.getElementById(
+"saveButton"
+);
 
-    let code="";
-    let available=false;
+button.disabled=true;
 
-    while(!available){
+button.textContent=
+"☁️ Creating room...";
 
-      code=
-        Math.random()
-        .toString(36)
-        .substring(2,8)
-        .toUpperCase();
+try{
 
-      const {data,error}=
-        await db
-        .from("games")
-        .select("id")
-        .eq("code",code)
-        .limit(1);
+let code="";
 
-      if(error)throw error;
+let available=false;
 
-      if(!data || data.length===0){
-        available=true;
-      }
+while(!available){
 
-    }
+code=
+Math.random()
+.toString(36)
+.substring(2,8)
+.toUpperCase();
 
-    const {error}=
-      await db
-      .from("games")
-      .insert([
-        {
-          code:code,
-          title:title,
-          questions:{
-            type:"escape-room",
-            mysteries:mysteries
-          }
-        }
-      ]);
+const {
+data,
+error
+}=
+await db
+.from("games")
+.select("id")
+.eq("code",code)
+.limit(1);
 
-    if(error)throw error;
+if(error){
+throw error;
+}
 
-    document.getElementById("roomCode").textContent=code;
+if(
+!data ||
+!data.length
+){
 
-    document.getElementById("saveMessage").style.display="block";
+available=true;
 
-    document.getElementById("saveMessage").scrollIntoView({
-      behavior:"smooth"
-    });
+}
 
-  }catch(error){
+}
 
-    console.error(error);
+const {error}=
+await db
+.from("games")
+.insert([
+{
+code,
+title,
+questions:{
+type:"escape-room",
+mysteries
+}
+}
+]);
 
-    errorBox.textContent=
-      "We couldn't create the room. Please try again.";
+if(error){
+throw error;
+}
 
-  }finally{
+document
+.getElementById("roomCode")
+.textContent=
+code;
 
-    button.disabled=false;
-    button.textContent="🔐 Create Escape Room";
+document
+.getElementById("saveMessage")
+.style.display=
+"block";
 
-  }
+document
+.getElementById("saveMessage")
+.scrollIntoView({
+behavior:"smooth"
+});
+
+}catch(error){
+
+console.error(
+error
+);
+
+errorBox.textContent=
+"We couldn't create the room. Please try again.";
+
+}finally{
+
+button.disabled=false;
+
+button.textContent=
+"🔐 Create Escape Room";
+
+}
 
 }
 
 
-/* JOIN */
+/* =========================
+   JOIN ROOM
+========================= */
 
 async function joinRoom(){
 
-  const code=
-    document.getElementById("joinCode")
-    .value
-    .trim()
-    .toUpperCase();
+const code=
+document
+.getElementById("joinCode")
+.value
+.trim()
+.toUpperCase();
 
-  const errorBox=
-    document.getElementById("joinError");
+const errorBox=
+document
+.getElementById("joinError");
 
-  errorBox.textContent="";
+errorBox.textContent=
+"";
 
-  if(!code){
+if(!code){
 
-    errorBox.textContent="Enter a room code.";
-    return;
+errorBox.textContent=
+"Enter a room code.";
 
-  }
+return;
 
-  const button=document.getElementById("joinButton");
+}
 
-  button.disabled=true;
-  button.textContent="🔓 Unlocking room...";
+const button=
+document
+.getElementById(
+"joinButton"
+);
 
-  try{
+button.disabled=true;
 
-    const {data,error}=
-      await db
-      .from("games")
-      .select("code,title,questions")
-      .eq("code",code)
-      .limit(1);
+button.textContent=
+"🔓 Unlocking room...";
 
-    if(error)throw error;
+try{
 
-    if(!data || data.length===0){
+const {
+data,
+error
+}=
+await db
+.from("games")
+.select(
+"code,title,questions"
+)
+.eq(
+"code",
+code
+)
+.limit(1);
 
-      errorBox.textContent=
-        "Room not found. Check the code.";
+if(error){
+throw error;
+}
 
-      return;
+if(
+!data ||
+!data.length
+){
 
-    }
+errorBox.textContent=
+"Room not found. Check the code.";
 
-    const game=data[0];
+return;
 
-    if(
-      !game.questions ||
-      game.questions.type!=="escape-room"
-    ){
+}
 
-      errorBox.textContent=
-        "This code belongs to an older Smash2Learn game.";
+const game=
+data[0];
 
-      return;
+if(
+!game.questions ||
+game.questions.type
+!==
+"escape-room"
+){
 
-    }
+errorBox.textContent=
+"This code belongs to an older Smash2Learn game.";
 
-    currentRoom={
-      title:game.title,
-      code:game.code,
-      mysteries:game.questions.mysteries
-    };
+return;
 
-    currentMysteryIndex=0;
+}
 
-    hideAll();
+currentRoom={
+title:game.title,
+code:game.code,
+mysteries:
+game.questions.mysteries
+};
 
-    document.getElementById("gameScreen").style.display="block";
+currentMysteryIndex=0;
 
-    loadMystery();
+hideAll();
 
-  }catch(error){
+document
+.getElementById("gameScreen")
+.style.display=
+"block";
 
-    console.error(error);
+loadMystery();
 
-    errorBox.textContent=
-      "We couldn't connect to the room.";
+}catch(error){
 
-  }finally{
+console.error(
+error
+);
 
-    button.disabled=false;
-    button.textContent="🚪 Enter Room";
+errorBox.textContent=
+"We couldn't connect to the room.";
 
-  }
+}finally{
+
+button.disabled=false;
+
+button.textContent=
+"🚪 Enter Room";
+
+}
 
 }
 
 
-/* MYSTERY */
+/* =========================
+   LOAD MYSTERY
+========================= */
 
 function loadMystery(){
 
-  currentClueIndex=0;
-  plateHits=0;
-  clueUnlocked=false;
+currentClueIndex=0;
 
-  document.getElementById("gameTitle").textContent=
-    currentRoom.title;
+document
+.getElementById("gameTitle")
+.textContent=
+currentRoom.title;
 
-  document.getElementById("progress").textContent=
-    "LOCK "+
-    (currentMysteryIndex+1)+
-    " OF "+
-    currentRoom.mysteries.length;
+document
+.getElementById("progress")
+.textContent=
+"LOCK "+
+(currentMysteryIndex+1)+
+" OF "+
+currentRoom.mysteries.length;
 
-  document.getElementById("mysteryTitle").textContent=
-    "Mystery locked.";
+document
+.getElementById("mysteryTitle")
+.textContent=
+"Mystery locked.";
 
-  document.getElementById("smashSection").style.display="block";
-  document.getElementById("clueBox").style.display="none";
-  document.getElementById("guessArea").style.display="block";
-  document.getElementById("successArea").style.display="none";
+document
+.getElementById("clueBox")
+.style.display=
+"none";
 
-  document.getElementById("guessInput").value="";
-  document.getElementById("guessFeedback").textContent="";
-  document.getElementById("nextClueButton").style.display="none";
+document
+.getElementById("guessArea")
+.style.display=
+"block";
 
-  resetPlate();
+document
+.getElementById("successArea")
+.style.display=
+"none";
 
-}
+document
+.getElementById("guessInput")
+.value=
+"";
 
+document
+.getElementById("guessFeedback")
+.textContent=
+"";
 
-/* PLATE */
+document
+.getElementById("nextClueButton")
+.style.display=
+"none";
 
-function clearDebris(){
-
-  document
-    .querySelectorAll(".shard,.particle")
-    .forEach(el=>el.remove());
-
-}
-
-
-function resetPlate(){
-
-  plateHits=0;
-
-  clearDebris();
-
-  const plate=document.getElementById("plate");
-
-  plate.className="plate";
-
-  document.getElementById("hitText").textContent=
-    "Tap the plate 3 times.";
+startChallenge();
 
 }
 
 
-function createPlateDebris(){
+/* =========================
+   CHALLENGE SELECTOR
+========================= */
 
-  const area=document.getElementById("plateArea");
+function startChallenge(){
 
-  const directions=[
-    [-150,-120,-220],
-    [-110,-155,-170],
-    [-60,-165,-120],
-    [-20,-145,-70],
-    [30,-160,90],
-    [75,-150,140],
-    [125,-125,210],
-    [160,-70,270],
-    [-165,-55,-310],
-    [-135,5,-240],
-    [135,5,250],
-    [-100,45,-160],
-    [100,50,170],
-    [-50,70,-100],
-    [50,75,120]
-  ];
+challengeDone=false;
 
-  directions.forEach((d,index)=>{
+actionCount=0;
 
-    const shard=document.createElement("div");
+sprayAmount=0;
 
-    shard.className="shard";
+sprayDrawing=false;
 
-    if(index>7)shard.classList.add("small");
-    if(index>12)shard.classList.add("tiny");
+stopSpray();
 
-    shard.style.setProperty("--x",d[0]+"px");
-    shard.style.setProperty("--y",d[1]+"px");
-    shard.style.setProperty("--x2",(d[0]*1.18)+"px");
-    shard.style.setProperty("--r",d[2]+"deg");
-    shard.style.setProperty("--r2",(d[2]*2)+"deg");
+document
+.getElementById("challengeSection")
+.style.display=
+"block";
 
-    area.appendChild(shard);
+document
+.getElementById("clueBox")
+.style.display=
+"none";
 
-  });
+const type=
+currentClueIndex % 6;
 
+const stage=
+document
+.getElementById(
+"challengeStage"
+);
 
-  for(let i=0;i<30;i++){
+const title=
+document
+.getElementById(
+"challengeTitle"
+);
 
-    const particle=document.createElement("div");
+const help=
+document
+.getElementById(
+"challengeHelp"
+);
 
-    particle.className="particle";
-
-    particle.style.setProperty(
-      "--px",
-      (Math.random()*360-180)+"px"
-    );
-
-    particle.style.setProperty(
-      "--py",
-      (Math.random()*300-190)+"px"
-    );
-
-    area.appendChild(particle);
-
-  }
-
-}
+stage.innerHTML="";
 
 
-function doFlash(){
+/* CLUE 1 — PLATE */
 
-  const flash=document.getElementById("smashFlash");
+if(type===0){
 
-  flash.classList.remove("go");
+title.textContent=
+"🍽️ SMASH THE PLATE";
 
-  void flash.offsetWidth;
+help.textContent=
+"Hit the plate 3 times.";
 
-  flash.classList.add("go");
+stage.innerHTML=`
+
+<div
+id="plate"
+class="plate"
+onclick="plateHit()"
+></div>
+
+`;
 
 }
 
 
-function hitPlate(){
+/* CLUE 2 — HORN */
 
-  if(clueUnlocked)return;
+if(type===1){
 
-  getAudioContext();
+title.textContent=
+"📣 HONK THE HORN";
 
-  plateHits++;
+help.textContent=
+"Press the horn.";
 
-  const plate=document.getElementById("plate");
+stage.innerHTML=`
 
-  if(plateHits===1){
+<div
+class="horn"
+id="horn"
+onclick="honk()"
+>
 
-    ceramicHit(.75);
+<div
+class="horn-button"
+></div>
 
-    plate.classList.remove("hit1");
+<div
+class="horn-body"
+></div>
 
-    void plate.offsetWidth;
+<div
+class="horn-bell"
+></div>
 
-    plate.classList.add("hit1");
+</div>
 
-    document.getElementById("hitText").textContent=
-      "Again! 💥";
+<div
+id="wave"
+class="soundwave"
+></div>
 
-    if(navigator.vibrate){
-      navigator.vibrate(25);
-    }
-
-  }
-
-
-  if(plateHits===2){
-
-    ceramicHit(1);
-
-    plate.classList.remove("hit1");
-    plate.classList.remove("hit2");
-
-    void plate.offsetWidth;
-
-    plate.classList.add("hit2");
-
-    document.getElementById("hitText").textContent=
-      "ONE MORE! 💥";
-
-    if(navigator.vibrate){
-      navigator.vibrate(45);
-    }
-
-  }
-
-
-  if(plateHits>=3){
-
-    clueUnlocked=true;
-
-    ceramicCrash();
-
-    doFlash();
-
-    createPlateDebris();
-
-    plate.classList.add("smashed");
-
-    document.getElementById("hitText").textContent=
-      "CRASH! 💥";
-
-    if(navigator.vibrate){
-
-      navigator.vibrate([
-        80,
-        35,
-        140
-      ]);
-
-    }
-
-    setTimeout(
-      revealClue,
-      1350
-    );
-
-  }
+`;
 
 }
 
 
-/* CLUES */
+/* CLUE 3 — GLASS */
+
+if(type===2){
+
+title.textContent=
+"🔨 BREAK THE GLASS";
+
+help.textContent=
+"Hit the glass with the hammer 3 times.";
+
+stage.innerHTML=`
+
+<div
+id="glass"
+class="glass-pane"
+onclick="hitGlass()"
+></div>
+
+<div
+id="hammer"
+class="hammer"
+>
+🔨
+</div>
+
+`;
+
+}
+
+
+/* CLUE 4 — BOXING */
+
+if(type===3){
+
+title.textContent=
+"🥊 PUNCH THE BAG";
+
+help.textContent=
+"Land 5 punches.";
+
+stage.innerHTML=`
+
+<div class="bag-wrap">
+
+<div class="chain"></div>
+
+<div
+id="bag"
+class="bag"
+onclick="punchBag()"
+></div>
+
+</div>
+
+<div
+id="glove"
+class="glove"
+>
+🥊
+</div>
+
+`;
+
+}
+
+
+/* CLUE 5 — GRAFFITI */
+
+if(type===4){
+
+title.textContent=
+"🎨 MAKE SOME GRAFFITI";
+
+help.textContent=
+"Drag your mouse or finger across the wall.";
+
+stage.innerHTML=`
+
+<div
+id="wall"
+class="wall"
+></div>
+
+<div class="spray-can">
+🧴
+</div>
+
+`;
+
+setupGraffiti();
+
+}
+
+
+/* CLUE 6 — BOX */
+
+if(type===5){
+
+title.textContent=
+"📦 STOMP THE BOX";
+
+help.textContent=
+"Stomp it 3 times until it's crushed.";
+
+stage.innerHTML=`
+
+<div
+id="boxThing"
+class="cardboard"
+onclick="stompBox()"
+></div>
+
+<div
+id="shoe"
+class="shoe"
+>
+👟
+</div>
+
+`;
+
+}
+
+}
+
+
+/* =========================
+   FLYING PIECES
+========================= */
+
+function animateFragments(
+kind
+){
+
+const stage=
+document
+.getElementById(
+"challengeStage"
+);
+
+for(
+let i=0;
+i<16;
+i++
+){
+
+const fragment=
+document.createElement(
+"div"
+);
+
+fragment.className=
+kind==="glass"
+?
+"glass-piece"
+:
+"fragment";
+
+stage.appendChild(
+fragment
+);
+
+const x=
+Math.random()*360-180;
+
+const y=
+Math.random()*-170-20;
+
+const rotation=
+Math.random()*700-350;
+
+fragment.animate(
+[
+{
+transform:
+"translate(-50%,-50%) translate(0,0) rotate(0)",
+opacity:1
+},
+{
+transform:
+`translate(-50%,-50%) translate(${x}px,${y}px) rotate(${rotation}deg)`,
+opacity:1,
+offset:.5
+},
+{
+transform:
+`translate(-50%,-50%) translate(${x*1.2}px,190px) rotate(${rotation*2}deg)`,
+opacity:.15
+}
+],
+{
+duration:
+1100+
+Math.random()*350,
+easing:
+"cubic-bezier(.2,.7,.2,1)",
+fill:
+"forwards"
+}
+);
+
+}
+
+}
+
+
+/* =========================
+   PLATE
+========================= */
+
+function plateHit(){
+
+if(challengeDone){
+return;
+}
+
+ctx();
+
+actionCount++;
+
+tone(
+900+
+actionCount*170,
+.1,
+"triangle",
+.1
+);
+
+const plate=
+document
+.getElementById(
+"plate"
+);
+
+plate
+.classList
+.remove(
+"shake"
+);
+
+void plate.offsetWidth;
+
+plate
+.classList
+.add(
+"shake"
+);
+
+if(actionCount===2){
+
+plate
+.classList
+.add(
+"cracked"
+);
+
+}
+
+if(actionCount>=3){
+
+challengeDone=true;
+
+ceramic();
+
+vibrate([
+60,
+25,
+120
+]);
+
+plate.style.opacity=
+"0";
+
+animateFragments(
+"plate"
+);
+
+setTimeout(
+revealClue,
+1200
+);
+
+}
+
+}
+
+
+/* =========================
+   HORN
+========================= */
+
+function honk(){
+
+if(challengeDone){
+return;
+}
+
+challengeDone=true;
+
+hornSound();
+
+vibrate(80);
+
+const horn=
+document
+.getElementById(
+"horn"
+);
+
+const wave=
+document
+.getElementById(
+"wave"
+);
+
+horn
+.classList
+.add(
+"honking"
+);
+
+wave
+.classList
+.add(
+"go"
+);
+
+setTimeout(
+()=>{
+
+horn
+.classList
+.remove(
+"honking"
+);
+
+},
+700
+);
+
+setTimeout(
+revealClue,
+850
+);
+
+}
+
+
+/* =========================
+   GLASS
+========================= */
+
+function hitGlass(){
+
+if(challengeDone){
+return;
+}
+
+ctx();
+
+actionCount++;
+
+const glass=
+document
+.getElementById(
+"glass"
+);
+
+const hammer=
+document
+.getElementById(
+"hammer"
+);
+
+hammer
+.classList
+.remove(
+"swing"
+);
+
+void hammer.offsetWidth;
+
+hammer
+.classList
+.add(
+"swing"
+);
+
+tone(
+1250+
+actionCount*250,
+.1,
+"triangle",
+.08
+);
+
+vibrate(30);
+
+if(actionCount===1){
+
+glass
+.classList
+.add(
+"crack1"
+);
+
+}
+
+if(actionCount===2){
+
+glass
+.classList
+.add(
+"crack2"
+);
+
+}
+
+if(actionCount>=3){
+
+challengeDone=true;
+
+glassSound();
+
+vibrate([
+80,
+30,
+140
+]);
+
+glass.style.opacity=
+"0";
+
+animateFragments(
+"glass"
+);
+
+setTimeout(
+revealClue,
+1250
+);
+
+}
+
+}
+
+
+/* =========================
+   BOXING BAG
+========================= */
+
+function punchBag(){
+
+if(challengeDone){
+return;
+}
+
+ctx();
+
+actionCount++;
+
+punchSound();
+
+vibrate(25);
+
+const bag=
+document
+.getElementById(
+"bag"
+);
+
+const glove=
+document
+.getElementById(
+"glove"
+);
+
+bag
+.classList
+.remove(
+"left",
+"right"
+);
+
+glove
+.classList
+.remove(
+"punch"
+);
+
+void bag.offsetWidth;
+
+bag
+.classList
+.add(
+actionCount%2
+?
+"right"
+:
+"left"
+);
+
+glove
+.classList
+.add(
+"punch"
+);
+
+document
+.getElementById(
+"challengeHelp"
+)
+.textContent=
+Math.min(
+actionCount,
+5
+)+
+" / 5 punches";
+
+if(actionCount>=5){
+
+challengeDone=true;
+
+vibrate([
+40,
+20,
+70
+]);
+
+setTimeout(
+revealClue,
+650
+);
+
+}
+
+}
+
+
+/* =========================
+   GRAFFITI
+========================= */
+
+function setupGraffiti(){
+
+const wall=
+document
+.getElementById(
+"wall"
+);
+
+function point(event){
+
+if(
+!sprayDrawing ||
+challengeDone
+){
+return;
+}
+
+const rect=
+wall.getBoundingClientRect();
+
+const touch=
+event.touches
+?
+event.touches[0]
+:
+event;
+
+const x=
+touch.clientX-
+rect.left;
+
+const y=
+touch.clientY-
+rect.top;
+
+for(
+let i=0;
+i<3;
+i++
+){
+
+const dot=
+document.createElement(
+"div"
+);
+
+dot.className=
+"spray-dot";
+
+const size=
+18+
+Math.random()*35;
+
+dot.style.width=
+size+"px";
+
+dot.style.height=
+size+"px";
+
+dot.style.left=
+(
+x-
+size/2+
+(Math.random()*20-10)
+)+"px";
+
+dot.style.top=
+(
+y-
+size/2+
+(Math.random()*20-10)
+)+"px";
+
+const colors=[
+"#ff3fb4",
+"#00e5ff",
+"#ffcc00"
+];
+
+dot.style.background=
+colors[
+Math.floor(
+Math.random()*
+colors.length
+)
+];
+
+wall.appendChild(
+dot
+);
+
+}
+
+sprayAmount++;
+
+if(
+sprayAmount>24
+){
+
+challengeDone=true;
+
+sprayDrawing=false;
+
+stopSpray();
+
+vibrate(70);
+
+setTimeout(
+revealClue,
+500
+);
+
+}
+
+}
+
+
+function down(event){
+
+event.preventDefault();
+
+ctx();
+
+sprayDrawing=true;
+
+startSpray();
+
+point(event);
+
+}
+
+
+function up(){
+
+sprayDrawing=false;
+
+stopSpray();
+
+}
+
+
+wall.addEventListener(
+"mousedown",
+down
+);
+
+wall.addEventListener(
+"mousemove",
+point
+);
+
+window.addEventListener(
+"mouseup",
+up
+);
+
+wall.addEventListener(
+"touchstart",
+down,
+{
+passive:false
+}
+);
+
+wall.addEventListener(
+"touchmove",
+point,
+{
+passive:false
+}
+);
+
+wall.addEventListener(
+"touchend",
+up
+);
+
+}
+
+
+function startSpray(){
+
+if(sprayNode){
+return;
+}
+
+const c=ctx();
+
+if(!c){
+return;
+}
+
+const len=
+c.sampleRate;
+
+const buffer=
+c.createBuffer(
+1,
+len,
+c.sampleRate
+);
+
+const data=
+buffer
+.getChannelData(0);
+
+for(
+let i=0;
+i<len;
+i++
+){
+
+data[i]=
+Math.random()*2-1;
+
+}
+
+const source=
+c.createBufferSource();
+
+const filter=
+c.createBiquadFilter();
+
+const gain=
+c.createGain();
+
+source.buffer=
+buffer;
+
+source.loop=true;
+
+filter.type=
+"bandpass";
+
+filter.frequency.value=
+3500;
+
+gain.gain.value=
+.06;
+
+source
+.connect(filter)
+.connect(gain)
+.connect(c.destination);
+
+source.start();
+
+sprayNode={
+source,
+gain
+};
+
+}
+
+
+function stopSpray(){
+
+if(sprayNode){
+
+try{
+
+sprayNode
+.source
+.stop();
+
+}catch(error){}
+
+sprayNode=null;
+
+}
+
+}
+
+
+/* =========================
+   STOMP BOX
+========================= */
+
+function stompBox(){
+
+if(challengeDone){
+return;
+}
+
+ctx();
+
+actionCount++;
+
+cardboardSound();
+
+vibrate(35);
+
+const box=
+document
+.getElementById(
+"boxThing"
+);
+
+const shoe=
+document
+.getElementById(
+"shoe"
+);
+
+shoe
+.classList
+.remove(
+"stomp"
+);
+
+void shoe.offsetWidth;
+
+shoe
+.classList
+.add(
+"stomp"
+);
+
+box
+.classList
+.remove(
+"step1",
+"step2",
+"step3"
+);
+
+box
+.classList
+.add(
+"step"+
+Math.min(
+actionCount,
+3
+)
+);
+
+if(actionCount>=3){
+
+challengeDone=true;
+
+noise(
+.45,
+.25,
+120
+);
+
+vibrate([
+60,
+30,
+100
+]);
+
+setTimeout(
+revealClue,
+750
+);
+
+}
+
+}
+
+
+/* =========================
+   REVEAL CLUE
+========================= */
 
 function revealClue(){
 
-  const mystery=
-    currentRoom.mysteries[currentMysteryIndex];
+stopSpray();
 
-  const clue=
-    mystery.clues[currentClueIndex];
+const mystery=
+currentRoom
+.mysteries[
+currentMysteryIndex
+];
 
-  document.getElementById("clueLabel").textContent=
-    "CLUE "+(currentClueIndex+1);
+const clue=
+mystery
+.clues[
+currentClueIndex
+];
 
-  document.getElementById("clueText").textContent=
-    clue;
+document
+.getElementById(
+"clueLabel"
+)
+.textContent=
+"CLUE "+
+(currentClueIndex+1);
 
-  document.getElementById("clueBox").style.display="block";
+document
+.getElementById(
+"clueText"
+)
+.textContent=
+clue;
 
-  document.getElementById("smashSection").style.display="none";
+document
+.getElementById(
+"clueBox"
+)
+.style.display=
+"block";
 
-  document.getElementById("guessInput").focus();
+document
+.getElementById(
+"challengeSection"
+)
+.style.display=
+"none";
+
+document
+.getElementById(
+"guessInput"
+)
+.focus();
 
 }
 
 
-/* ANSWERS */
+/* =========================
+   CHECK ANSWER
+========================= */
 
 function normalize(text){
 
-  return text
-    .trim()
-    .toLowerCase()
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g,"")
-    .replace(/[^\p{L}\p{N}\s]/gu,"")
-    .replace(/\s+/g," ");
+return text
+.trim()
+.toLowerCase()
+.normalize("NFD")
+.replace(
+/[\u0300-\u036f]/g,
+""
+)
+.replace(
+/[^\p{L}\p{N}\s]/gu,
+""
+)
+.replace(
+/\s+/g,
+" "
+);
 
 }
 
 
 function checkGuess(){
 
-  const guess=
-    document.getElementById("guessInput").value;
+const guess=
+document
+.getElementById(
+"guessInput"
+)
+.value;
 
-  const mystery=
-    currentRoom.mysteries[currentMysteryIndex];
+const mystery=
+currentRoom
+.mysteries[
+currentMysteryIndex
+];
 
-  if(!guess.trim()){
+if(
+!guess.trim()
+){
 
-    document.getElementById("guessFeedback").textContent=
-      "Type your answer first.";
+document
+.getElementById(
+"guessFeedback"
+)
+.textContent=
+"Type your answer first.";
 
-    return;
+return;
 
-  }
+}
 
-  if(
-    normalize(guess)===
-    normalize(mystery.answer)
-  ){
+if(
+normalize(guess)
+===
+normalize(
+mystery.answer
+)
+){
 
-    mysterySolved();
+mysterySolved();
 
-  }else{
+}else{
 
-    document.getElementById("guessFeedback").textContent=
-      "🔒 Not quite. Need another clue?";
+document
+.getElementById(
+"guessFeedback"
+)
+.textContent=
+"🔒 Not quite. Need another clue?";
 
-    if(
-      currentClueIndex <
-      mystery.clues.length-1
-    ){
+if(
+currentClueIndex
+<
+mystery.clues.length-1
+){
 
-      document.getElementById("nextClueButton").style.display=
-        "block";
+document
+.getElementById(
+"nextClueButton"
+)
+.style.display=
+"block";
 
-    }else{
+}else{
 
-      document.getElementById("guessFeedback").textContent=
-        "🔒 Not quite. Look at all your clues and try again.";
+document
+.getElementById(
+"guessFeedback"
+)
+.textContent=
+"🔒 Not quite. Look at all your clues and try again.";
 
-    }
+}
 
-  }
+}
 
 }
 
 
-/* NEXT CLUE */
+/* =========================
+   NEXT CLUE
+========================= */
 
 function prepareNextClue(){
 
-  currentClueIndex++;
+currentClueIndex++;
 
-  clueUnlocked=false;
-  plateHits=0;
+document
+.getElementById(
+"clueBox"
+)
+.style.display=
+"none";
 
-  document.getElementById("clueBox").style.display="none";
+document
+.getElementById(
+"nextClueButton"
+)
+.style.display=
+"none";
 
-  document.getElementById("nextClueButton").style.display="none";
+document
+.getElementById(
+"guessFeedback"
+)
+.textContent=
+"";
 
-  document.getElementById("guessFeedback").textContent="";
+document
+.getElementById(
+"guessInput"
+)
+.value=
+"";
 
-  document.getElementById("guessInput").value="";
-
-  document.getElementById("smashSection").style.display="block";
-
-  resetPlate();
+startChallenge();
 
 }
 
 
-/* SOLVED */
+/* =========================
+   MYSTERY SOLVED
+========================= */
 
 function mysterySolved(){
 
-  document.getElementById("smashSection").style.display="none";
-  document.getElementById("clueBox").style.display="none";
-  document.getElementById("guessArea").style.display="none";
-  document.getElementById("successArea").style.display="block";
+stopSpray();
 
-  const button=
-    document.getElementById("nextMysteryButton");
+document
+.getElementById(
+"challengeSection"
+)
+.style.display=
+"none";
 
-  if(
-    currentMysteryIndex===
-    currentRoom.mysteries.length-1
-  ){
+document
+.getElementById(
+"clueBox"
+)
+.style.display=
+"none";
 
-    button.textContent="🚪 Use the final key";
+document
+.getElementById(
+"guessArea"
+)
+.style.display=
+"none";
 
-  }else{
+document
+.getElementById(
+"successArea"
+)
+.style.display=
+"block";
 
-    button.textContent="🔓 Unlock the next mystery";
+const button=
+document
+.getElementById(
+"nextMysteryButton"
+);
 
-  }
+if(
+currentMysteryIndex
+===
+currentRoom.mysteries.length-1
+){
+
+button.textContent=
+"🚪 Use the final key";
+
+}else{
+
+button.textContent=
+"🔓 Unlock the next mystery";
+
+}
 
 }
 
 
-/* NEXT MYSTERY */
+/* =========================
+   NEXT MYSTERY
+========================= */
 
 function nextMystery(){
 
-  if(
-    currentMysteryIndex <
-    currentRoom.mysteries.length-1
-  ){
+if(
+currentMysteryIndex
+<
+currentRoom.mysteries.length-1
+){
 
-    currentMysteryIndex++;
+currentMysteryIndex++;
 
-    loadMystery();
+loadMystery();
 
-    window.scrollTo({
-      top:0,
-      behavior:"smooth"
-    });
+window.scrollTo({
+top:0,
+behavior:"smooth"
+});
 
-  }else{
+}else{
 
-    finalEscape();
+finalEscape();
 
-  }
+}
 
 }
 
 
-/* FINAL ESCAPE */
+/* =========================
+   FINAL ESCAPE
+========================= */
 
 function finalEscape(){
 
-  hideAll();
+hideAll();
 
-  document.getElementById("escapeScreen").style.display="block";
+document
+.getElementById(
+"escapeScreen"
+)
+.style.display=
+"block";
 
-  const door=document.getElementById("door");
+const door=
+document
+.getElementById(
+"door"
+);
 
-  door.classList.remove("open");
+door
+.classList
+.remove(
+"open"
+);
 
-  document.getElementById("escapeTitle").style.display="none";
-  document.getElementById("escapeMessage").style.display="none";
-  document.getElementById("homeButton").style.display="none";
+document
+.getElementById(
+"escapeTitle"
+)
+.style.display=
+"none";
 
-  setTimeout(()=>{
+document
+.getElementById(
+"escapeMessage"
+)
+.style.display=
+"none";
 
-    door.classList.add("open");
+document
+.getElementById(
+"homeButton"
+)
+.style.display=
+"none";
 
-  },700);
+setTimeout(
+()=>{
 
-  setTimeout(()=>{
+door
+.classList
+.add(
+"open"
+);
 
-    document.getElementById("escapeTitle").style.display="block";
-    document.getElementById("escapeMessage").style.display="block";
-    document.getElementById("homeButton").style.display="block";
+},
+700
+);
 
-  },1900);
+setTimeout(
+()=>{
+
+document
+.getElementById(
+"escapeTitle"
+)
+.style.display=
+"block";
+
+document
+.getElementById(
+"escapeMessage"
+)
+.style.display=
+"block";
+
+document
+.getElementById(
+"homeButton"
+)
+.style.display=
+"block";
+
+},
+1900
+);
 
 }
 
