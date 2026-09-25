@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Smash2Learn v3 • Rage Room Brick Wall Edition • 2026-09-25 -->
+<!-- Smash2Learn v4 • First-Person Persistent Damage Edition • 2026-09-25 -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -863,6 +863,31 @@ footer{
 .escape-light{position:absolute;inset:0;background:radial-gradient(circle,#fff7b0 0,#75c8ff 38%,#17304d 75%);z-index:1}
 .final-instruction{color:#ffd36b!important;font-weight:900;font-size:18px}
 @media(max-width:600px){.stage{min-height:390px}.egg-object,.wine-object,.balloon-object,.ice-object,.can-object,.wood-object{font-size:115px}.final-hammer{font-size:82px}.final-wall::after{white-space:normal;text-align:center;width:80%}}
+
+
+/* ===== SMASH2LEARN V4: FIRST-PERSON + PERSISTENT WALL DAMAGE ===== */
+.first-person-hand{position:absolute;right:8%;bottom:-18px;z-index:30;font-size:100px;filter:drop-shadow(0 12px 10px rgba(0,0,0,.55));pointer-events:none;transform-origin:70% 85%}
+.first-person-hand.throw{animation:v4HandThrow .42s cubic-bezier(.2,.8,.2,1)}
+.first-person-hand.hit{animation:v4HandHit .24s ease}
+@keyframes v4HandThrow{0%{transform:translate(0,0) rotate(-12deg)}45%{transform:translate(-70px,-55px) rotate(-42deg)}100%{transform:translate(-18px,-12px) rotate(12deg)}}
+@keyframes v4HandHit{50%{transform:translate(-75px,-55px) rotate(-35deg)}}
+.v4-wall-damage{position:absolute;inset:0;z-index:3;pointer-events:none;overflow:hidden}
+.v4-splat{position:absolute;width:92px;height:68px;border-radius:48% 52% 45% 55%;background:radial-gradient(circle at 48% 45%,#f7bd19 0 22%,#ffd84b 23% 31%,rgba(255,248,205,.96) 32% 55%,rgba(255,255,255,.70) 56% 68%,transparent 70%);filter:drop-shadow(0 4px 3px rgba(0,0,0,.25));transform:translate(-50%,-50%) scale(0);animation:v4Splat .18s ease-out forwards}
+.v4-splat::before,.v4-splat::after{content:'';position:absolute;background:rgba(255,250,218,.86);border-radius:50%;width:24px;height:11px}.v4-splat::before{left:-18px;top:18px;transform:rotate(-24deg)}.v4-splat::after{right:-20px;bottom:10px;transform:rotate(22deg)}
+@keyframes v4Splat{to{transform:translate(-50%,-50%) scale(1)}}
+.v4-mark{position:absolute;width:34px;height:34px;border:3px solid rgba(35,18,14,.55);border-radius:50%;transform:translate(-50%,-50%);box-shadow:0 0 18px rgba(0,0,0,.35),inset 0 0 10px rgba(0,0,0,.25)}
+.v4-crack{position:absolute;color:#24130f;font-size:55px;font-weight:900;transform:translate(-50%,-50%) rotate(var(--rot));text-shadow:1px 1px 0 rgba(255,255,255,.08)}
+.v4-can{width:108px;height:180px;border-radius:20px 20px 28px 28px;position:relative;z-index:8;cursor:pointer;background:linear-gradient(90deg,#aab0b6 0,#f1f4f6 18%,#bdc4ca 43%,#f8fafb 60%,#8d949b 100%);border:3px solid #656b70;box-shadow:inset 0 0 18px rgba(0,0,0,.2),0 22px 20px rgba(0,0,0,.45);transition:transform .18s}
+.v4-can::before{content:'';position:absolute;left:8px;right:8px;top:-7px;height:17px;border-radius:50%;background:radial-gradient(ellipse at center,#60666b 0 12%,#d8dde0 14% 45%,#70777d 47% 53%,#c5cbd0 55%);border:2px solid #555b60}
+.v4-can::after{content:'SMASH';position:absolute;left:14px;right:14px;top:62px;text-align:center;padding:8px 0;border-radius:8px;background:#e5352e;color:white;font-weight:1000;letter-spacing:1px;box-shadow:inset 0 -5px 0 rgba(0,0,0,.14)}
+.v4-board-wrap{position:relative;z-index:8;width:min(520px,78%);height:155px;cursor:pointer;filter:drop-shadow(0 20px 15px rgba(0,0,0,.5))}
+.v4-board{position:absolute;inset:25px 0;background:linear-gradient(8deg,#7c461f,#c47b35 22%,#9a5926 45%,#d18b43 67%,#75401e);border:5px solid #4e2b16;border-radius:10px;box-shadow:inset 0 8px 12px rgba(255,255,255,.12),inset 0 -8px 12px rgba(0,0,0,.22)}
+.v4-board::before{content:'';position:absolute;inset:10px;background:repeating-linear-gradient(3deg,transparent 0 13px,rgba(70,35,14,.25) 14px 16px);border-radius:6px}
+.v4-board.crack1::after,.v4-board.crack2::after{content:'⚡';position:absolute;left:48%;top:10px;font-size:74px;color:#3a1c0c;filter:grayscale(1) brightness(.45)}
+.v4-board.crack2{transform:rotate(-2deg)}
+.v4-board.broken{animation:v4BoardBreak .45s ease forwards}@keyframes v4BoardBreak{50%{transform:scale(1.04) rotate(2deg)}100%{transform:scale(.84) rotate(-7deg);opacity:.25}}
+.v4-throwable{position:relative;z-index:8;cursor:pointer;filter:drop-shadow(0 18px 14px rgba(0,0,0,.5))}
+.v4-throwable.fly{animation:v4Fly .34s cubic-bezier(.18,.8,.25,1) forwards}@keyframes v4Fly{to{transform:translate(var(--tx),var(--ty)) scale(.28) rotate(400deg);opacity:.15}}
 
 </style>
 </head>
@@ -1748,6 +1773,7 @@ async function joinRoom(){
   solvedCount = 0;
   attemptsThisMystery = 0;
   resultSaved = false;
+  wallDamage = [];
   document.getElementById("playerDisplay").textContent = playerName;
   updateScore();
   startGameTimer();
@@ -2722,219 +2748,33 @@ function submitAnswer(){
 
     currentMysteryIndex++;
 
-    if(currentMysteryIndex >= getMysteries().length){
-      setTimeout(finishGame,1200);
-      return;
-    }
+    if(currentMysteryIndex >= getMysteries().lengt/* ===== SMASH2LEARN V4: FIRST-PERSON + PERSISTENT WALL DAMAGE ===== */
+const eggAudioV3=document.getElementById("eggAudio"),canAudioV3=document.getElementById("canAudio"),balloonAudioV3=document.getElementById("balloonAudio"),iceAudioV3=document.getElementById("iceAudio"),woodAudioV3=document.getElementById("woodAudio"),wineGlassAudioV3=document.getElementById("wineGlassAudio"),brickAudioV3=document.getElementById("brickAudio"),wallCollapseAudioV3=document.getElementById("wallCollapseAudio");
+[eggAudioV3,canAudioV3,balloonAudioV3,iceAudioV3,woodAudioV3,wineGlassAudioV3,brickAudioV3,wallCollapseAudioV3].forEach(a=>{if(a)a.volume=1});
+let wallDamage=[];
+function instantEffect(audio){if(!soundEnabled||!audio)return;try{audio.pause();audio.currentTime=0;const p=audio.play();if(p&&p.catch)p.catch(()=>{})}catch(e){}}
+function addDamage(type,x=50+Math.random()*22-11,y=43+Math.random()*18-9){wallDamage.push({type,x,y,rot:Math.random()*70-35});renderDamage()}
+function renderDamage(){const stage=document.getElementById('stage');if(!stage)return;let layer=stage.querySelector('.v4-wall-damage');if(!layer){layer=document.createElement('div');layer.className='v4-wall-damage';stage.prepend(layer)}layer.innerHTML='';wallDamage.forEach(d=>{const m=document.createElement('div');m.style.left=d.x+'%';m.style.top=d.y+'%';if(d.type==='egg')m.className='v4-splat';else if(d.type==='crack'){m.className='v4-crack';m.textContent='╱╲';m.style.setProperty('--rot',d.rot+'deg')}else m.className='v4-mark';layer.appendChild(m)})}
+function prepStage(){const stage=document.getElementById('stage');stage.innerHTML='<div id="flash" class="flash"></div><div class="v4-wall-damage"></div>';renderDamage();return stage}
+function hand(kind='✋'){const stage=document.getElementById('stage');const h=document.createElement('div');h.className='first-person-hand';h.textContent=kind;stage.appendChild(h);return h}
+function handMove(h,cls){h.classList.remove('throw','hit');void h.offsetWidth;h.classList.add(cls)}
+function debris(symbol,count=16){const stage=document.getElementById('stage');for(let i=0;i<count;i++){const d=document.createElement('div');d.className='debris-v3';d.textContent=symbol;d.style.left=(45+Math.random()*10)+'%';d.style.top=(36+Math.random()*13)+'%';d.style.fontSize=(10+Math.random()*22)+'px';d.style.setProperty('--dx',(Math.random()*360-180)+'px');d.style.setProperty('--dy',(60+Math.random()*240)+'px');d.style.setProperty('--rot',(Math.random()*900-450)+'deg');stage.appendChild(d);setTimeout(()=>d.remove(),950)}}
+function finishMechanic(delay=520){setTimeout(unlockClue,delay)}
+function startChallenge(){stopAllEffects();const type=globalChallengeIndex%7;globalChallengeIndex++;[setupPlateV4,setupEggV4,setupWineGlassV4,setupCanV4,setupBalloonsV4,setupIceV4,setupWoodV4][type]()}
+function makeThrowRow(items,size,impact){const stage=document.getElementById('stage');const row=document.createElement('div');row.style.cssText='display:flex;gap:16px;z-index:8;align-items:center;justify-content:center;flex-wrap:wrap';let hits=0;items.forEach((symbol,i)=>{const o=document.createElement('div');o.className='v4-throwable';o.textContent=symbol;o.style.fontSize=size+'px';row.appendChild(o);o.onpointerdown=()=>{if(o.dataset.done)return;o.dataset.done=1;const h=stage.querySelector('.first-person-hand');if(h)handMove(h,'throw');const tx=(Math.random()*80-40)+'px',ty=(-85-Math.random()*35)+'px';o.style.setProperty('--tx',tx);o.style.setProperty('--ty',ty);o.classList.add('fly');setTimeout(()=>{impact(i);o.style.visibility='hidden';hits++;if(hits===items.length)finishMechanic(520)},300)}});stage.appendChild(row);hand('🫱')}
+function setupPlateV4(){document.getElementById('challengeTitle').textContent='🍽️ THROW THE PLATES';document.getElementById('challengeInstruction').textContent='Throw three plates at the brick wall.';prepStage();makeThrowRow(['🍽️','🍽️','🍽️'],104,()=>{instantEffect(plateAudio);addDamage('mark');flashScreen();cameraShake(true);debris('◻',12)})}
+function setupEggV4(){document.getElementById('challengeTitle').textContent='🥚 EGG THE WALL';document.getElementById('challengeInstruction').textContent='Throw three whole eggs at the wall and make a mess.';prepStage();makeThrowRow(['🥚','🥚','🥚'],112,()=>{instantEffect(eggAudioV3);addDamage('egg');cameraShake();debris('◽',7)})}
+function setupWineGlassV4(){document.getElementById('challengeTitle').textContent='🍷 THROW THE GLASSES';document.getElementById('challengeInstruction').textContent='Throw three glasses against the brick wall.';prepStage();makeThrowRow(['🍷','🍷','🍷'],118,()=>{instantEffect(wineGlassAudioV3);addDamage('mark');flashScreen();cameraShake(true);debris('◇',20)})}
+function setupCanV4(){document.getElementById('challengeTitle').textContent='🥫 CRUSH THE CAN';document.getElementById('challengeInstruction').textContent='Crush the soda can until it is completely flat.';const stage=prepStage(),c=document.createElement('div');c.className='v4-can';stage.appendChild(c);const h=hand('✊');let hits=0;c.onpointerdown=()=>{if(hits>=3)return;hits++;instantEffect(canAudioV3);handMove(h,'hit');cameraShake();c.style.transform=`scaleY(${1-hits*.23}) scaleX(${1+hits*.12}) rotate(${hits*3}deg)`;if(hits===3){flashScreen();finishMechanic(480)}}}
+function setupBalloonsV4(){document.getElementById('challengeTitle').textContent='🎈 POP THE BALLOONS';document.getElementById('challengeInstruction').textContent='Pop every balloon to unlock the clue.';const stage=prepStage(),row=document.createElement('div');row.style.cssText='display:flex;gap:4px;z-index:8;flex-wrap:wrap;justify-content:center';let pops=0;['🎈','🎈','🎈','🎈','🎈'].forEach((x,i)=>{const b=document.createElement('div');b.className='rage-object balloon-object';b.textContent=x;b.style.filter=`hue-rotate(${i*55}deg) drop-shadow(0 20px 16px rgba(0,0,0,.55))`;row.appendChild(b);b.onpointerdown=()=>{if(b.dataset.done)return;b.dataset.done=1;instantEffect(balloonAudioV3);cameraShake();b.classList.add('balloon-pop');if(++pops>=5){flashScreen();finishMechanic(420)}}});stage.appendChild(row);hand('☝️')}
+function setupIceV4(){document.getElementById('challengeTitle').textContent='🧊 BREAK THE ICE';document.getElementById('challengeInstruction').textContent='Smash the ice block with the hammer.';const stage=prepStage(),ice=document.createElement('div');ice.className='rage-object ice-object';ice.textContent='🧊';stage.appendChild(ice);const h=hand('🔨');let hits=0;ice.onpointerdown=()=>{if(hits>=3)return;hits++;handMove(h,'hit');cameraShake();if(hits===3){instantEffect(iceAudioV3);ice.classList.add('ice-cracked');addDamage('crack');flashScreen();debris('❄',22);finishMechanic(620)}}}
+function setupWoodV4(){document.getElementById('challengeTitle').textContent='🪵 BREAK THE BOARD';document.getElementById('challengeInstruction').textContent='Strike the wooden board until it snaps in two.';const stage=prepStage(),wrap=document.createElement('div');wrap.className='v4-board-wrap';wrap.innerHTML='<div class="v4-board"></div>';stage.appendChild(wrap);const board=wrap.firstElementChild,h=hand('🔨');let hits=0;wrap.onpointerdown=()=>{if(hits>=3)return;hits++;handMove(h,'hit');cameraShake();if(hits===1)board.classList.add('crack1');if(hits===2)board.classList.add('crack2');if(hits===3){instantEffect(woodAudioV3);board.classList.add('broken');addDamage('crack');flashScreen();debris('▰',18);finishMechanic(600)}}}
+let finalWallActive=false;
+async function finishGame(){if(finalWallActive)return;finalWallActive=true;stopAllEffects();document.getElementById('clueBox').classList.remove('show');document.getElementById('progressText').textContent='🔨 FINAL ESCAPE • BREAK THROUGH THE WALL';document.getElementById('attemptsDisplay').textContent='One last smash stands between you and freedom.';document.getElementById('challengeTitle').textContent='🧱 FINAL SMASH';document.getElementById('challengeInstruction').textContent='Hammer your damaged wall until it collapses!';document.getElementById('challengeInstruction').classList.add('final-instruction');const stage=prepStage();const light=document.createElement('div');light.className='escape-light';stage.prepend(light);const wall=document.createElement('div');wall.className='final-wall-wrap';wall.innerHTML='<div id="finalWall" class="final-wall"></div><div id="wallCrack" class="wall-crack"></div>';stage.appendChild(wall);renderDamage();const h=hand('🔨'),fw=document.getElementById('finalWall'),crack=document.getElementById('wallCrack');let hits=0,done=false;fw.onpointerdown=()=>{if(done)return;hits++;instantEffect(brickAudioV3);handMove(h,'hit');cameraShake(hits>4);addDamage('crack',48+Math.random()*10-5,45+Math.random()*10-5);crack.textContent=hits<3?'╱╲':hits<6?'✳':'💥';crack.style.fontSize=(95+hits*17)+'px';debris('▪',5+hits*2);if(hits>=7){done=true;instantEffect(wallCollapseAudioV3);flashScreen();cameraShake(true);fw.classList.add('wall-collapse');debris('🧱',35);setTimeout(completeEscapeV4,1200)}}}
+async function completeEscapeV4(){stopAllEffects();stopGameTimer();clock.pause();clock.currentTime=0;const total=getMysteries().length;document.getElementById('escapeMessage').textContent=solvedCount===total?'You smashed through the wall and solved every mystery!':`You smashed through the wall with ${solvedCount} of ${total} mysteries solved.`;document.getElementById('finalSummary').innerHTML=`<div class="stat-pill">👤 ${escapeHtml(playerName)}</div><div class="stat-pill">🔑 ${solvedCount}/${total}</div><div class="stat-pill">🏆 ${score.toLocaleString()} pts</div><div class="stat-pill">⏱️ ${formatTime(finalTimeSeconds)}</div>`;showScreen('escapeScreen');finalWallActive=false;if(navigator.vibrate)navigator.vibrate([100,50,100,50,220]);await saveResultAndLoadLeaderboard()}
+console.log('Smash2Learn v4 First-Person Persistent Damage Edition loaded');
 
-    setTimeout(loadMystery,1200);
-    return;
-  }
-
-  if(attemptsThisMystery >= 3){
-    message.innerHTML = `Third attempt. The answer was:<div class="reveal-answer"><strong>${escapeHtml(mystery.answer)}</strong></div>Moving to the next mystery...`;
-    message.className = "message wrong";
-    currentMysteryIndex++;
-
-    if(currentMysteryIndex >= getMysteries().length){
-      setTimeout(finishGame,1800);
-      return;
-    }
-
-    setTimeout(loadMystery,1800);
-    return;
-  }
-
-  message.textContent = "Not quite. Smash your way to another clue! 💥";
-  message.className = "message wrong";
-  currentClueIndex = Math.min(currentClueIndex+1,2,mystery.clues.length-1);
-  updateAttempts();
-
-  setTimeout(()=>{
-    document.getElementById("clueBox").classList.remove("show");
-    document.getElementById("answerArea").classList.remove("show");
-    startChallenge();
-  },900);
-}
-
-function escapeHtml(value){
-  return String(value)
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
-}
-
-
-/* ESCAPE */
-
-async function finishGame(){
-
-  stopAllEffects();
-  stopGameTimer();
-  clock.pause();
-  clock.currentTime = 0;
-
-  const total = getMysteries().length;
-  document.getElementById("escapeMessage").textContent =
-    solvedCount === total
-      ? "You solved every mystery and unlocked the final door!"
-      : `You reached the final door with ${solvedCount} of ${total} mysteries solved.`;
-
-  document.getElementById("finalSummary").innerHTML = `
-    <div class="stat-pill">👤 ${escapeHtml(playerName)}</div>
-    <div class="stat-pill">🔑 ${solvedCount}/${total}</div>
-    <div class="stat-pill">🏆 ${score.toLocaleString()} pts</div>
-    <div class="stat-pill">⏱️ ${formatTime(finalTimeSeconds)}</div>`;
-
-  showScreen("escapeScreen");
-
-  if(navigator.vibrate){
-    navigator.vibrate([100,50,100,50,200]);
-  }
-
-  await saveResultAndLoadLeaderboard();
-}
-
-async function saveResultAndLoadLeaderboard(){
-  const boardMessage = document.getElementById("leaderboardMessage");
-  const body = document.getElementById("leaderboardBody");
-  boardMessage.textContent = "Saving result...";
-  body.innerHTML = "";
-
-  if(!resultSaved){
-    const {error:insertError} = await db.from("results").insert({
-      game_code: currentGame.code,
-      player_name: playerName,
-      solved: solvedCount,
-      total_mysteries: getMysteries().length,
-      score: score,
-      time_seconds: finalTimeSeconds
-    });
-
-    if(insertError){
-      console.error(insertError);
-      boardMessage.textContent = "Your game finished, but the result could not be saved.";
-      return;
-    }
-    resultSaved = true;
-  }
-
-  const {data,error} = await db
-    .from("results")
-    .select("player_name,solved,total_mysteries,score,time_seconds,created_at")
-    .eq("game_code",currentGame.code)
-    .order("solved",{ascending:false})
-    .order("score",{ascending:false})
-    .order("time_seconds",{ascending:true})
-    .limit(50);
-
-  if(error){
-    console.error(error);
-    boardMessage.textContent = "Result saved, but the leaderboard could not be loaded.";
-    return;
-  }
-
-  boardMessage.textContent = data && data.length ? "Best results for this room" : "No results yet.";
-
-  (data || []).forEach((row,index)=>{
-    const tr = document.createElement("tr");
-    const isMe = row.player_name === playerName && row.score === score && row.time_seconds === finalTimeSeconds;
-    if(isMe) tr.classList.add("me");
-    tr.innerHTML = `
-      <td>${index+1}</td>
-      <td>${escapeHtml(row.player_name)}</td>
-      <td>${row.solved}/${row.total_mysteries}</td>
-      <td>${Number(row.score).toLocaleString()}</td>
-      <td>${formatTime(Number(row.time_seconds)||0)}</td>`;
-    body.appendChild(tr);
-  });
-}
-
-
-
-/* ===== SMASH2LEARN V3: NEW RAGE ROOM MECHANICS ===== */
-const eggAudioV3 = document.getElementById("eggAudio");
-const canAudioV3 = document.getElementById("canAudio");
-const balloonAudioV3 = document.getElementById("balloonAudio");
-const iceAudioV3 = document.getElementById("iceAudio");
-const woodAudioV3 = document.getElementById("woodAudio");
-const wineGlassAudioV3 = document.getElementById("wineGlassAudio");
-const brickAudioV3 = document.getElementById("brickAudio");
-const wallCollapseAudioV3 = document.getElementById("wallCollapseAudio");
-[eggAudioV3,canAudioV3,balloonAudioV3,iceAudioV3,woodAudioV3,wineGlassAudioV3,brickAudioV3,wallCollapseAudioV3].forEach(a=>{if(a)a.volume=1;});
-
-function addTarget(){
-  const stage=document.getElementById("stage");
-  const target=document.createElement("div"); target.className="wall-target"; stage.appendChild(target);
-}
-function v3Debris(symbol,count=18){
-  const stage=document.getElementById("stage");
-  for(let i=0;i<count;i++){
-    const d=document.createElement("div"); d.className="debris-v3"; d.textContent=symbol;
-    d.style.left=(45+Math.random()*10)+"%"; d.style.top=(38+Math.random()*12)+"%";
-    d.style.fontSize=(10+Math.random()*25)+"px";
-    d.style.setProperty("--dx",(Math.random()*360-180)+"px");
-    d.style.setProperty("--dy",(60+Math.random()*250)+"px");
-    d.style.setProperty("--rot",(Math.random()*900-450)+"deg");
-    stage.appendChild(d); setTimeout(()=>d.remove(),950);
-  }
-}
-function finishMechanic(delay=650){ setTimeout(unlockClue,delay); }
-
-/* New global rotation: no horn, no punching bag. */
-function startChallenge(){
-  stopAllEffects();
-  const stage=document.getElementById("stage");
-  stage.innerHTML='<div id="flash" class="flash"></div>';
-  const type=globalChallengeIndex%8; globalChallengeIndex++;
-  [setupPlateV3,setupEggV3,setupWineGlassV3,setupCanV3,setupBalloonsV3,setupIceV3,setupWoodV3,setupGraffitiV3][type]();
-}
-
-function setupPlateV3(){
-  document.getElementById("challengeTitle").textContent="🍽️ SMASH THE PLATES";
-  document.getElementById("challengeInstruction").textContent="Smash three plates against the brick wall.";
-  const stage=document.getElementById("stage"); addTarget();
-  const row=document.createElement("div"); row.style.cssText="display:flex;gap:12px;z-index:6;align-items:center";
-  for(let i=0;i<3;i++){const p=document.createElement("div");p.className="rage-object";p.textContent="🍽️";p.style.fontSize="105px";row.appendChild(p);p.onclick=()=>{if(p.dataset.done)return;p.dataset.done=1;p.classList.add("throw-fly");setTimeout(()=>{playEffect(plateAudio);flashScreen();cameraShake(true);v3Debris("◻",12);p.style.visibility="hidden";if(++row.dataset.hits>=3)finishMechanic();},380)}}
-  row.dataset.hits=0;stage.appendChild(row);
-}
-
-function setupEggV3(){
-  document.getElementById("challengeTitle").textContent="🥚 EGG THE WALL";
-  document.getElementById("challengeInstruction").textContent="Throw three eggs at the target wall.";
-  const stage=document.getElementById("stage");addTarget();
-  const row=document.createElement("div");row.style.cssText="display:flex;gap:12px;z-index:6";let hits=0;
-  for(let i=0;i<3;i++){const e=document.createElement("div");e.className="rage-object egg-object";e.textContent="🥚";row.appendChild(e);e.onclick=()=>{if(e.dataset.done)return;e.dataset.done=1;e.classList.add("throw-fly");setTimeout(()=>{playEffect(eggAudioV3);cameraShake();const spl=document.createElement("div");spl.className="splat";spl.textContent="🍳";stage.appendChild(spl);e.style.visibility="hidden";if(++hits>=3){flashScreen();finishMechanic(700)}},380)}}stage.appendChild(row);
-}
-
-function setupWineGlassV3(){
-  document.getElementById("challengeTitle").textContent="🍷 THROW THE GLASSES";
-  document.getElementById("challengeInstruction").textContent="Throw three glasses against the brick wall.";
-  const stage=document.getElementById("stage");addTarget();
-  const row=document.createElement("div");row.style.cssText="display:flex;gap:20px;z-index:6";let hits=0;
-  for(let i=0;i<3;i++){const g=document.createElement("div");g.className="rage-object wine-object";g.textContent="🍷";row.appendChild(g);g.onclick=()=>{if(g.dataset.done)return;g.dataset.done=1;g.classList.add("throw-fly");setTimeout(()=>{playEffect(wineGlassAudioV3);flashScreen();cameraShake(true);v3Debris("◇",22);g.style.visibility="hidden";if(++hits>=3)finishMechanic(700)},380)}}stage.appendChild(row);
-}
-
-function setupCanV3(){
-  document.getElementById("challengeTitle").textContent="🥫 CRUSH THE CAN";
-  document.getElementById("challengeInstruction").textContent="Crush the can three times until it is flat.";
-  const stage=document.getElementById("stage");addTarget();const c=document.createElement("div");c.className="rage-object can-object";c.textContent="🥫";stage.appendChild(c);let hits=0;
-  c.onclick=()=>{if(hits>=3)return;hits++;playEffect(canAudioV3);cameraShake();c.style.transform=`scaleY(${1-hits*.22}) scaleX(${1+hits*.12}) rotate(${hits*4}deg)`;if(hits>=3){c.classList.add("crush-can");flashScreen();cameraShake(true);finishMechanic()}};
-}
-
-function setupBalloonsV3(){
-  document.getElementById("challengeTitle").textContent="🎈 POP THE BALLOONS";
-  document.getElementById("challengeInstruction").textContent="Pop every balloon to unlock the clue.";
-  const stage=document.getElementById("stage");addTarget();const row=document.createElement("div");row.style.cssText="display:flex;gap:4px;z-index:6;flex-wrap:wrap;justify-content:center";let pops=0;
-  ["🎈","🎈","🎈","🎈","🎈"].forEach((x,i)=>{const b=document.createElement("div");b.className="rage-object balloon-object";b.textContent=x;b.style.filter=`hue-rotate(${i*55}deg) drop-shadow(0 20px 16px rgba(0,0,0,.55))`;row.appendChild(b);b.onclick=()=>{if(b.dataset.done)return;b.dataset.done=1;playEffect(balloonAudioV3);cameraShake();b.classList.add("balloon-pop");if(++pops>=5){flashScreen();cameraShake(true);finishMechanic(500)}}});stage.appendChild(row);
-}
-
-function setupIceV3(){
-  document.getElementById("challengeTitle").textContent="🧊 BREAK THE ICE";
-  document.getElementById("challengeInstruction").textContent="Hammer the ice block until it shatters.";
-  const stage=document.getElementById("stage");addTarget();const ice=document.createElement("div");ice.className="rage-object ice-object";ice.textContent="🧊";stage.appendChild(ice);const ham=document.createElement("div");ham.className="hammer";ham.textContent="🔨";stage.appendChild(ham);let hits=0;
+lassName="rage-object ice-object";ice.textContent="🧊";stage.appendChild(ice);const ham=document.createElement("div");ham.className="hammer";ham.textContent="🔨";stage.appendChild(ham);let hits=0;
   ice.onclick=()=>{if(hits>=3)return;hits++;ham.classList.remove("swing");void ham.offsetWidth;ham.classList.add("swing");cameraShake();if(hits>=3){playEffect(iceAudioV3);ice.classList.add("ice-cracked");flashScreen();cameraShake(true);v3Debris("❄",22);finishMechanic(750)}};
 }
 
