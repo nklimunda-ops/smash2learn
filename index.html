@@ -7,9 +7,7 @@
 <title>Smash2Learn</title>
 
 <style>
-*{
-  box-sizing:border-box;
-}
+*{box-sizing:border-box}
 
 body{
   margin:0;
@@ -40,9 +38,7 @@ nav{
   cursor:pointer;
 }
 
-.logo span{
-  color:#ff3b30;
-}
+.logo span{color:#ff3b30}
 
 .sound-button{
   border:1px solid rgba(255,255,255,.18);
@@ -60,13 +56,8 @@ main{
   padding:40px 0 80px;
 }
 
-section{
-  display:none;
-}
-
-section.active{
-  display:block;
-}
+section{display:none}
+section.active{display:block}
 
 .hero{
   min-height:72vh;
@@ -94,9 +85,7 @@ h1{
   line-height:.95;
 }
 
-.red{
-  color:#ff3b30;
-}
+.red{color:#ff3b30}
 
 .subtitle{
   font-size:21px;
@@ -104,12 +93,9 @@ h1{
   margin:20px 0 34px;
 }
 
-button{
-  font:inherit;
-}
+button{font:inherit}
 
-.primary,
-.secondary{
+.primary,.secondary{
   border:none;
   border-radius:13px;
   padding:15px 23px;
@@ -123,9 +109,7 @@ button{
   color:white;
 }
 
-.primary:hover{
-  background:#ff5148;
-}
+.primary:hover{background:#ff5148}
 
 .secondary{
   background:#1b2433;
@@ -153,13 +137,9 @@ input{
   font-size:16px;
 }
 
-input:focus{
-  outline:2px solid rgba(255,59,48,.45);
-}
+input:focus{outline:2px solid rgba(255,59,48,.45)}
 
-label{
-  font-weight:bold;
-}
+label{font-weight:bold}
 
 .small{
   color:#98a5b8;
@@ -178,9 +158,7 @@ label{
   align-items:center;
 }
 
-.clue-row input{
-  flex:1;
-}
+.clue-row input{flex:1}
 
 .remove{
   background:#31191c;
@@ -208,9 +186,7 @@ label{
   font-weight:bold;
 }
 
-.challenge-card{
-  overflow:hidden;
-}
+.challenge-card{overflow:hidden}
 
 .challenge-title{
   text-align:center;
@@ -266,18 +242,14 @@ label{
   z-index:50;
 }
 
-.flash.go{
-  animation:flash .25s ease;
-}
+.flash.go{animation:flash .25s ease}
 
 @keyframes flash{
   0%{opacity:.9}
   100%{opacity:0}
 }
 
-.shake{
-  animation:shake .27s linear;
-}
+.shake{animation:shake .27s linear}
 
 @keyframes shake{
   0%{transform:translate(0,0)}
@@ -303,7 +275,7 @@ label{
   position:relative;
   background:
     radial-gradient(circle at 42% 34%,
-      #ffffff 0 12%,
+      #fff 0 12%,
       #f5f3eb 35%,
       #d8d6cf 60%,
       #faf8ef 68%,
@@ -317,8 +289,7 @@ label{
   transition:.1s;
 }
 
-.plate::before,
-.plate::after{
+.plate::before,.plate::after{
   content:"";
   position:absolute;
   width:4px;
@@ -364,9 +335,7 @@ label{
 
 @keyframes fragmentFly{
   to{
-    transform:
-      translate(var(--x),var(--y))
-      rotate(var(--r));
+    transform:translate(var(--x),var(--y)) rotate(var(--r));
     opacity:0;
   }
 }
@@ -415,9 +384,7 @@ label{
   border-radius:8px;
 }
 
-.horn.pressed{
-  transform:scale(.95);
-}
+.horn.pressed{transform:scale(.95)}
 
 .soundwaves{
   position:absolute;
@@ -475,9 +442,7 @@ label{
     linear-gradient(150deg,transparent 49%,white 50%,transparent 51%);
 }
 
-.glass.cracked::before{
-  opacity:.75;
-}
+.glass.cracked::before{opacity:.75}
 
 .hammer{
   position:absolute;
@@ -490,9 +455,7 @@ label{
   filter:drop-shadow(0 8px 7px rgba(0,0,0,.4));
 }
 
-.hammer.swing{
-  animation:hammerSwing .25s ease;
-}
+.hammer.swing{animation:hammerSwing .25s ease}
 
 @keyframes hammerSwing{
   50%{transform:rotate(-75deg) translate(-25px,-10px)}
@@ -515,7 +478,7 @@ label{
   }
 }
 
-/* BAG */
+/* PUNCHING BAG */
 
 .bag-system{
   position:relative;
@@ -530,10 +493,7 @@ label{
   left:50%;
   width:5px;
   height:65px;
-  background:repeating-linear-gradient(
-    #aaa 0 7px,
-    #333 7px 12px
-  );
+  background:repeating-linear-gradient(#aaa 0 7px,#333 7px 12px);
 }
 
 .bag{
@@ -565,13 +525,8 @@ label{
   opacity:.7;
 }
 
-.bag.punched-left{
-  animation:punchLeft .42s ease;
-}
-
-.bag.punched-right{
-  animation:punchRight .42s ease;
-}
+.bag.punched-left{animation:punchLeft .42s ease}
+.bag.punched-right{animation:punchRight .42s ease}
 
 @keyframes punchLeft{
   50%{transform:rotate(12deg) translateX(18px)}
@@ -588,7 +543,6 @@ label{
   font-size:82px;
   z-index:10;
   pointer-events:none;
-  opacity:.95;
 }
 
 /* GRAFFITI */
@@ -695,8 +649,6 @@ label{
   width:24px;
   transform:translateX(-50%);
   background:rgba(225,191,132,.45);
-  border-left:2px solid rgba(80,50,20,.2);
-  border-right:2px solid rgba(80,50,20,.2);
 }
 
 .box-object::after{
@@ -736,9 +688,7 @@ label{
   transform:rotate(90deg);
 }
 
-.boot.stomp{
-  animation:stomp .25s ease;
-}
+.boot.stomp{animation:stomp .25s ease}
 
 @keyframes stomp{
   50%{transform:rotate(90deg) translateX(70px)}
@@ -782,9 +732,7 @@ label{
   margin-top:20px;
 }
 
-.answer-area.show{
-  display:block;
-}
+.answer-area.show{display:block}
 
 .message{
   min-height:24px;
@@ -792,13 +740,8 @@ label{
   font-weight:bold;
 }
 
-.correct{
-  color:#62e899;
-}
-
-.wrong{
-  color:#ff817a;
-}
+.correct{color:#62e899}
+.wrong{color:#ff817a}
 
 .key-pop{
   font-size:70px;
@@ -847,9 +790,7 @@ label{
 }
 
 @keyframes doorOpen{
-  to{
-    transform:perspective(700px) rotateY(-72deg);
-  }
+  to{transform:perspective(700px) rotateY(-72deg)}
 }
 
 .escape-title{
@@ -878,12 +819,7 @@ footer{
 <nav>
   <div class="logo" onclick="goHome()">SMASH<span>2</span>LEARN</div>
 
-  <button
-    id="soundToggle"
-    class="sound-button"
-    onclick="toggleSound()"
-    title="Sound"
-  >
+  <button id="soundToggle" class="sound-button" onclick="toggleSound()">
     🔊
   </button>
 </nav>
@@ -891,6 +827,7 @@ footer{
 <main>
 
 <section id="home" class="active">
+
   <div class="hero">
 
     <div class="badge">💥 EDUCATIONAL ESCAPE ROOMS</div>
@@ -917,210 +854,212 @@ footer{
     </div>
 
   </div>
+
 </section>
 
 
 <section id="creator">
 
-  <h2>🔐 Create an Escape Room</h2>
+<h2>🔐 Create an Escape Room</h2>
 
-  <div class="card">
+<div class="card">
 
-    <label>Room title</label>
-    <input
-      id="roomTitle"
-      placeholder="Example: The Human Body Escape Room"
-    >
+<label>Room title</label>
 
-    <p class="small">
-      Create as many mysteries as you want.
-      Each mystery has one answer and several clues.
-    </p>
+<input
+  id="roomTitle"
+  placeholder="Example: The Human Body Escape Room"
+>
 
-    <div id="mysteries"></div>
+<p class="small">
+Create as many mysteries as you want.
+Each mystery has one answer and several clues.
+</p>
 
-    <button class="secondary" onclick="addMystery()">
-      + Add another mystery
-    </button>
+<div id="mysteries"></div>
 
-    <br><br>
+<button class="secondary" onclick="addMystery()">
++ Add another mystery
+</button>
 
-    <button class="primary" onclick="saveRoom()">
-      🔐 Create Escape Room
-    </button>
+<br><br>
 
-    <div id="creatorMessage" class="message"></div>
+<button class="primary" onclick="saveRoom()">
+🔐 Create Escape Room
+</button>
 
-  </div>
+<div id="creatorMessage" class="message"></div>
+
+</div>
 
 </section>
 
 
 <section id="joinScreen">
 
-  <h2>🚪 Enter a Room</h2>
+<h2>🚪 Enter a Room</h2>
 
-  <div class="card">
+<div class="card">
 
-    <label>Room code</label>
+<label>Room code</label>
 
-    <input
-      id="joinCode"
-      maxlength="6"
-      placeholder="ABC123"
-      style="
-        text-transform:uppercase;
-        font-size:28px;
-        letter-spacing:5px;
-        text-align:center;
-      "
-    >
+<input
+  id="joinCode"
+  maxlength="6"
+  placeholder="ABC123"
+  style="
+  text-transform:uppercase;
+  font-size:28px;
+  letter-spacing:5px;
+  text-align:center;
+  "
+>
 
-    <button class="primary" onclick="joinRoom()">
-      Enter Room
-    </button>
+<button class="primary" onclick="joinRoom()">
+Enter Room
+</button>
 
-    <div id="joinMessage" class="message"></div>
+<div id="joinMessage" class="message"></div>
 
-  </div>
+</div>
 
 </section>
 
 
 <section id="gameScreen">
 
-  <div class="game-header">
+<div class="game-header">
 
-    <h2 id="gameTitle"></h2>
+<h2 id="gameTitle"></h2>
 
-    <div id="progressText" class="progress"></div>
+<div id="progressText" class="progress"></div>
 
-  </div>
+</div>
 
-  <div class="card challenge-card">
+<div class="card challenge-card">
 
-    <h3 id="challengeTitle" class="challenge-title"></h3>
+<h3 id="challengeTitle" class="challenge-title"></h3>
 
-    <div
-      id="challengeInstruction"
-      class="challenge-instruction"
-    ></div>
+<div
+  id="challengeInstruction"
+  class="challenge-instruction">
+</div>
 
-    <div id="stage" class="stage">
+<div id="stage" class="stage">
+<div id="flash" class="flash"></div>
+</div>
 
-      <div id="flash" class="flash"></div>
+<div id="clueBox" class="clue-box">
 
-    </div>
+<div class="clue-label">
+🔎 CLUE UNLOCKED
+</div>
 
-    <div id="clueBox" class="clue-box">
+<div id="clueText" class="clue-text"></div>
 
-      <div class="clue-label">
-        🔎 CLUE UNLOCKED
-      </div>
+<div id="answerArea" class="answer-area">
 
-      <div id="clueText" class="clue-text"></div>
+<input
+  id="answerInput"
+  placeholder="What is the answer?"
+  onkeydown="if(event.key==='Enter'){submitAnswer()}"
+>
 
-      <div id="answerArea" class="answer-area">
+<button class="primary" onclick="submitAnswer()">
+Unlock 🔑
+</button>
 
-        <input
-          id="answerInput"
-          placeholder="What is the answer?"
-          onkeydown="
-            if(event.key==='Enter'){
-              submitAnswer()
-            }
-          "
-        >
+<div id="answerMessage" class="message"></div>
 
-        <button class="primary" onclick="submitAnswer()">
-          Unlock 🔑
-        </button>
+</div>
+</div>
 
-        <div id="answerMessage" class="message"></div>
-
-      </div>
-
-    </div>
-
-  </div>
+</div>
 
 </section>
 
 
 <section id="escapeScreen">
 
-  <div class="door-room">
+<div class="door-room">
 
-    <div class="door"></div>
+<div class="door"></div>
 
-    <h1 class="escape-title">
-      YOU ESCAPED! 💥
-    </h1>
+<h1 class="escape-title">
+YOU ESCAPED! 💥
+</h1>
 
-    <p class="subtitle">
-      You smashed every mystery and unlocked the final door.
-    </p>
+<p class="subtitle">
+You smashed every mystery and unlocked the final door.
+</p>
 
-    <button class="primary" onclick="goHome()">
-      Play Again
-    </button>
+<button class="primary" onclick="goHome()">
+Play Again
+</button>
 
-  </div>
+</div>
 
 </section>
 
 </main>
 
 <footer>
-  SMASH2LEARN • LEARN • SMASH • ESCAPE
+SMASH2LEARN • LEARN • SMASH • ESCAPE
 </footer>
 
 
-<!-- REAL AUDIO FILES -->
+<!-- AUDIO -->
 
 <audio
   id="music"
   src="sounds/mystery.mp3"
   preload="auto"
-  loop
-></audio>
+  loop>
+</audio>
+
+<audio
+  id="clock"
+  src="sounds/clock.mp3"
+  preload="auto"
+  loop>
+</audio>
 
 <audio
   id="plateAudio"
   src="sounds/plate-break.mp3"
-  preload="auto"
-></audio>
+  preload="auto">
+</audio>
 
 <audio
   id="hornAudio"
   src="sounds/horn.mp3"
-  preload="auto"
-></audio>
+  preload="auto">
+</audio>
 
 <audio
   id="glassAudio"
   src="sounds/glass-break.mp3"
-  preload="auto"
-></audio>
+  preload="auto">
+</audio>
 
 <audio
   id="punchAudio"
   src="sounds/punch.mp3"
-  preload="auto"
-></audio>
+  preload="auto">
+</audio>
 
 <audio
   id="sprayAudio"
   src="sounds/spray.mp3"
   preload="auto"
-  loop
-></audio>
+  loop>
+</audio>
 
 <audio
   id="cardboardAudio"
   src="sounds/cardboard.mp3"
-  preload="auto"
-></audio>
+  preload="auto">
+</audio>
 
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -1140,15 +1079,16 @@ window.supabase.createClient(
 );
 
 
-/* -------------------------
-   AUDIO
-------------------------- */
+/* AUDIO */
 
 let soundEnabled = true;
 let musicStarted = false;
 
 const music =
 document.getElementById("music");
+
+const clock =
+document.getElementById("clock");
 
 const plateAudio =
 document.getElementById("plateAudio");
@@ -1169,7 +1109,9 @@ const cardboardAudio =
 document.getElementById("cardboardAudio");
 
 
-music.volume = .28;
+music.volume = .24;
+clock.volume = .16;
+
 plateAudio.volume = 1;
 hornAudio.volume = 1;
 glassAudio.volume = 1;
@@ -1180,18 +1122,14 @@ cardboardAudio.volume = 1;
 
 function startMusic(){
 
-  if(
-    !soundEnabled ||
-    musicStarted
-  ){
+  if(!soundEnabled || musicStarted){
     return;
   }
 
-  music.play()
-    .then(()=>{
-      musicStarted = true;
-    })
-    .catch(()=>{});
+  music.play().catch(()=>{});
+  clock.play().catch(()=>{});
+
+  musicStarted = true;
 
 }
 
@@ -1212,6 +1150,8 @@ function stopAllEffects(){
 
   });
 
+  hornAudio.loop = false;
+
 }
 
 
@@ -1226,17 +1166,17 @@ function toggleSound(){
 
     button.textContent = "🔊";
 
-    music.play()
-      .then(()=>{
-        musicStarted = true;
-      })
-      .catch(()=>{});
+    music.play().catch(()=>{});
+    clock.play().catch(()=>{});
+
+    musicStarted = true;
 
   }else{
 
     button.textContent = "🔇";
 
     music.pause();
+    clock.pause();
 
     stopAllEffects();
 
@@ -1259,10 +1199,6 @@ function playEffect(audio){
 }
 
 
-/* Browser requires user interaction
-   before autoplaying audio.
-*/
-
 document.addEventListener(
   "pointerdown",
   ()=>{
@@ -1272,21 +1208,19 @@ document.addEventListener(
 );
 
 
-/* -------------------------
-   SCREENS
-------------------------- */
+/* SCREENS */
 
 function showScreen(id){
 
   document
-    .querySelectorAll("main section")
-    .forEach(section=>{
-      section.classList.remove("active");
-    });
+  .querySelectorAll("main section")
+  .forEach(section=>{
+    section.classList.remove("active");
+  });
 
   document
-    .getElementById(id)
-    .classList.add("active");
+  .getElementById(id)
+  .classList.add("active");
 
   window.scrollTo({
     top:0,
@@ -1311,9 +1245,7 @@ function openCreator(){
 
   showScreen("creator");
 
-  if(
-    document.querySelectorAll(".mystery").length === 0
-  ){
+  if(document.querySelectorAll(".mystery").length === 0){
     addMystery();
   }
 
@@ -1329,9 +1261,7 @@ function openJoin(){
 }
 
 
-/* -------------------------
-   CREATOR
-------------------------- */
+/* CREATOR */
 
 let mysteryCount = 0;
 
@@ -1366,39 +1296,29 @@ function addMystery(){
     <div class="clues">
 
       <div class="clue-row">
-        <input
-          class="clue"
-          placeholder="Clue 1"
-        >
+        <input class="clue" placeholder="Clue 1">
       </div>
 
       <div class="clue-row">
-        <input
-          class="clue"
-          placeholder="Clue 2"
-        >
+        <input class="clue" placeholder="Clue 2">
       </div>
 
       <div class="clue-row">
-        <input
-          class="clue"
-          placeholder="Clue 3"
-        >
+        <input class="clue" placeholder="Clue 3">
       </div>
 
     </div>
 
     <button
       class="secondary"
-      onclick="addClue(this)"
-    >
+      onclick="addClue(this)">
       + Add clue
     </button>
   `;
 
   document
-    .getElementById("mysteries")
-    .appendChild(wrapper);
+  .getElementById("mysteries")
+  .appendChild(wrapper);
 
 }
 
@@ -1406,8 +1326,7 @@ function addMystery(){
 function addClue(button){
 
   const clues =
-  button.parentElement
-    .querySelector(".clues");
+  button.parentElement.querySelector(".clues");
 
   const number =
   clues.querySelectorAll(".clue").length + 1;
@@ -1425,8 +1344,7 @@ function addClue(button){
 
     <button
       class="remove"
-      onclick="this.parentElement.remove()"
-    >
+      onclick="this.parentElement.remove()">
       ×
     </button>
   `;
@@ -1445,9 +1363,10 @@ function randomCode(){
 
   for(let i=0;i<6;i++){
 
-    code += chars[
+    code +=
+    chars[
       Math.floor(
-        Math.random() * chars.length
+        Math.random()*chars.length
       )
     ];
 
@@ -1462,13 +1381,13 @@ async function saveRoom(){
 
   const title =
   document
-    .getElementById("roomTitle")
-    .value
-    .trim();
+  .getElementById("roomTitle")
+  .value
+  .trim();
 
   const message =
   document
-    .getElementById("creatorMessage");
+  .getElementById("creatorMessage");
 
   if(!title){
 
@@ -1487,29 +1406,22 @@ async function saveRoom(){
 
   const mysteries = [];
 
-  for(
-    const mysteryElement
-    of mysteryElements
-  ){
+  for(const mysteryElement of mysteryElements){
 
     const answer =
     mysteryElement
-      .querySelector(".answer")
-      .value
-      .trim();
+    .querySelector(".answer")
+    .value
+    .trim();
 
     const clues =
     Array.from(
-      mysteryElement
-        .querySelectorAll(".clue")
+      mysteryElement.querySelectorAll(".clue")
     )
     .map(input=>input.value.trim())
     .filter(Boolean);
 
-    if(
-      !answer ||
-      clues.length === 0
-    ){
+    if(!answer || clues.length === 0){
 
       message.textContent =
       "Every mystery needs an answer and at least one clue.";
@@ -1554,14 +1466,11 @@ async function saveRoom(){
 
     code = randomCode();
 
-    const {
-      data,
-      error
-    } =
+    const {data,error} =
     await db
-      .from("games")
-      .select("id")
-      .eq("code",code);
+    .from("games")
+    .select("id")
+    .eq("code",code);
 
     if(error){
 
@@ -1577,29 +1486,24 @@ async function saveRoom(){
 
     }
 
-    if(
-      !data ||
-      data.length === 0
-    ){
+    if(!data || data.length === 0){
       unique = true;
     }
 
   }
 
 
-  const {
-    error
-  } =
+  const {error} =
   await db
-    .from("games")
-    .insert({
-      code,
-      title,
-      questions:{
-        type:"escape-room",
-        mysteries
-      }
-    });
+  .from("games")
+  .insert({
+    code,
+    title,
+    questions:{
+      type:"escape-room",
+      mysteries
+    }
+  });
 
 
   if(error){
@@ -1638,14 +1542,16 @@ async function saveRoom(){
 }
 
 
-/* -------------------------
-   JOIN ROOM
-------------------------- */
+/* JOIN */
 
 let currentGame = null;
 
 let currentMysteryIndex = 0;
 let currentClueIndex = 0;
+
+/* THIS CONTINUES THE CHALLENGE ROTATION
+   THROUGH THE WHOLE GAME */
+let globalChallengeIndex = 0;
 
 
 async function joinRoom(){
@@ -1654,14 +1560,14 @@ async function joinRoom(){
 
   const code =
   document
-    .getElementById("joinCode")
-    .value
-    .trim()
-    .toUpperCase();
+  .getElementById("joinCode")
+  .value
+  .trim()
+  .toUpperCase();
 
   const message =
   document
-    .getElementById("joinMessage");
+  .getElementById("joinMessage");
 
   if(!code){
 
@@ -1682,15 +1588,12 @@ async function joinRoom(){
   "message";
 
 
-  const {
-    data,
-    error
-  } =
+  const {data,error} =
   await db
-    .from("games")
-    .select("code,title,questions")
-    .eq("code",code)
-    .maybeSingle();
+  .from("games")
+  .select("code,title,questions")
+  .eq("code",code)
+  .maybeSingle();
 
 
   if(error){
@@ -1741,10 +1644,11 @@ async function joinRoom(){
 
   currentMysteryIndex = 0;
   currentClueIndex = 0;
+  globalChallengeIndex = 0;
 
   document
-    .getElementById("gameTitle")
-    .textContent = data.title;
+  .getElementById("gameTitle")
+  .textContent = data.title;
 
   showScreen("gameScreen");
 
@@ -1753,15 +1657,11 @@ async function joinRoom(){
 }
 
 
-/* -------------------------
-   GAME
-------------------------- */
+/* GAME */
 
 function getMysteries(){
 
-  return currentGame
-    .questions
-    .mysteries;
+  return currentGame.questions.mysteries;
 
 }
 
@@ -1773,22 +1673,22 @@ function loadMystery(){
   currentClueIndex = 0;
 
   document
-    .getElementById("clueBox")
-    .classList
-    .remove("show");
+  .getElementById("clueBox")
+  .classList
+  .remove("show");
 
   document
-    .getElementById("answerArea")
-    .classList
-    .remove("show");
+  .getElementById("answerArea")
+  .classList
+  .remove("show");
 
   document
-    .getElementById("answerMessage")
-    .textContent = "";
+  .getElementById("answerMessage")
+  .textContent = "";
 
   document
-    .getElementById("answerInput")
-    .value = "";
+  .getElementById("answerInput")
+  .value = "";
 
   updateProgress();
 
@@ -1803,23 +1703,23 @@ function updateProgress(){
   getMysteries();
 
   document
-    .getElementById("progressText")
-    .textContent =
-    `🔑 ${currentMysteryIndex} / ${mysteries.length} keys collected • Mystery ${currentMysteryIndex + 1}`;
+  .getElementById("progressText")
+  .textContent =
+  `🔑 ${currentMysteryIndex} / ${mysteries.length} keys collected • Mystery ${currentMysteryIndex+1}`;
 
 }
 
 
-/* -------------------------
-   CHALLENGE SELECTOR
-------------------------- */
+/* GLOBAL CHALLENGE ROTATION */
 
 function startChallenge(){
 
   stopAllEffects();
 
   const type =
-  currentClueIndex % 6;
+  globalChallengeIndex % 6;
+
+  globalChallengeIndex++;
 
   const stage =
   document.getElementById("stage");
@@ -1854,9 +1754,7 @@ function startChallenge(){
 }
 
 
-/* -------------------------
-   IMPACT FX
-------------------------- */
+/* IMPACT */
 
 function cameraShake(strong=false){
 
@@ -1869,20 +1767,12 @@ function cameraShake(strong=false){
 
   stage.classList.add("shake");
 
-  if(
-    navigator.vibrate
-  ){
+  if(navigator.vibrate){
 
     if(strong){
-
-      navigator.vibrate(
-        [80,35,140]
-      );
-
+      navigator.vibrate([80,35,140]);
     }else{
-
       navigator.vibrate(55);
-
     }
 
   }
@@ -1908,21 +1798,15 @@ function flashScreen(){
 }
 
 
-/* -------------------------
-   PLATE
-------------------------- */
+/* PLATE */
 
 function setupPlate(){
 
-  document
-    .getElementById("challengeTitle")
-    .textContent =
-    "🍽️ SMASH THE PLATE";
+  document.getElementById("challengeTitle").textContent =
+  "🍽️ SMASH THE PLATE";
 
-  document
-    .getElementById("challengeInstruction")
-    .textContent =
-    "Hit the plate three times to release the clue.";
+  document.getElementById("challengeInstruction").textContent =
+  "Hit the plate three times to release the clue.";
 
   const stage =
   document.getElementById("stage");
@@ -1930,8 +1814,7 @@ function setupPlate(){
   const wrap =
   document.createElement("div");
 
-  wrap.className =
-  "plate-wrap";
+  wrap.className = "plate-wrap";
 
   wrap.innerHTML =
   `<div class="plate"></div>`;
@@ -1944,61 +1827,47 @@ function setupPlate(){
   let hits = 0;
 
 
-  plate.addEventListener(
-    "pointerdown",
-    ()=>{
+  plate.addEventListener("pointerdown",()=>{
 
-      hits++;
+    hits++;
 
-      cameraShake();
+    cameraShake();
 
-      plate.classList.add("hit");
+    plate.classList.add("hit");
 
-      setTimeout(()=>{
-        plate.classList.remove("hit");
-      },100);
+    setTimeout(()=>{
+      plate.classList.remove("hit");
+    },100);
 
 
-      if(hits === 1){
-
-        plate.classList.add(
-          "crack1"
-        );
-
-      }
+    if(hits === 1){
+      plate.classList.add("crack1");
+    }
 
 
-      if(hits === 2){
-
-        plate.classList.add(
-          "crack2"
-        );
-
-      }
+    if(hits === 2){
+      plate.classList.add("crack2");
+    }
 
 
-      if(hits >= 3){
+    if(hits >= 3){
 
-        playEffect(plateAudio);
+      playEffect(plateAudio);
 
-        flashScreen();
+      flashScreen();
 
-        cameraShake(true);
+      cameraShake(true);
 
-        explodePlate(plate);
+      explodePlate(plate);
 
-        plate.style.visibility =
-        "hidden";
+      plate.style.visibility =
+      "hidden";
 
-        setTimeout(
-          unlockClue,
-          1050
-        );
-
-      }
+      setTimeout(unlockClue,1050);
 
     }
-  );
+
+  });
 
 }
 
@@ -2030,8 +1899,7 @@ function explodePlate(plate){
     const piece =
     document.createElement("div");
 
-    piece.className =
-    "fragment";
+    piece.className = "fragment";
 
     piece.style.left =
     `${centerX}px`;
@@ -2040,12 +1908,10 @@ function explodePlate(plate){
     `${centerY}px`;
 
     const angle =
-    Math.random() *
-    Math.PI * 2;
+    Math.random()*Math.PI*2;
 
     const distance =
-    100 +
-    Math.random()*220;
+    100+Math.random()*220;
 
     piece.style.setProperty(
       "--x",
@@ -2054,20 +1920,13 @@ function explodePlate(plate){
 
     piece.style.setProperty(
       "--y",
-      `${Math.sin(angle)*distance + 130}px`
+      `${Math.sin(angle)*distance+130}px`
     );
 
     piece.style.setProperty(
       "--r",
       `${Math.random()*800-400}deg`
     );
-
-    piece.style.clipPath =
-    `polygon(
-      0 ${Math.random()*60}%,
-      100% 0,
-      ${50+Math.random()*50}% 100%
-    )`;
 
     stage.appendChild(piece);
 
@@ -2080,21 +1939,15 @@ function explodePlate(plate){
 }
 
 
-/* -------------------------
-   HORN
-------------------------- */
+/* HORN */
 
 function setupHorn(){
 
-  document
-    .getElementById("challengeTitle")
-    .textContent =
-    "📣 MAKE SOME NOISE";
+  document.getElementById("challengeTitle").textContent =
+  "📣 MAKE SOME NOISE";
 
-  document
-    .getElementById("challengeInstruction")
-    .textContent =
-    "Hold the horn down until the clue unlocks.";
+  document.getElementById("challengeInstruction").textContent =
+  "Hold the horn down until the clue unlocks.";
 
   const stage =
   document.getElementById("stage");
@@ -2102,8 +1955,7 @@ function setupHorn(){
   const horn =
   document.createElement("div");
 
-  horn.className =
-  "horn";
+  horn.className = "horn";
 
   horn.innerHTML = `
     <div class="horn-bell"></div>
@@ -2115,9 +1967,7 @@ function setupHorn(){
   stage.appendChild(horn);
 
   const waves =
-  horn.querySelector(
-    ".soundwaves"
-  );
+  horn.querySelector(".soundwaves");
 
   let timer = null;
   let finished = false;
@@ -2129,13 +1979,8 @@ function setupHorn(){
       return;
     }
 
-    horn.classList.add(
-      "pressed"
-    );
-
-    waves.classList.add(
-      "on"
-    );
+    horn.classList.add("pressed");
+    waves.classList.add("on");
 
     cameraShake();
 
@@ -2153,18 +1998,13 @@ function setupHorn(){
       finished = true;
 
       hornAudio.pause();
+      hornAudio.currentTime = 0;
       hornAudio.loop = false;
 
-      horn.classList.remove(
-        "pressed"
-      );
-
-      waves.classList.remove(
-        "on"
-      );
+      horn.classList.remove("pressed");
+      waves.classList.remove("on");
 
       flashScreen();
-
       cameraShake(true);
 
       unlockClue();
@@ -2180,13 +2020,8 @@ function setupHorn(){
       return;
     }
 
-    horn.classList.remove(
-      "pressed"
-    );
-
-    waves.classList.remove(
-      "on"
-    );
+    horn.classList.remove("pressed");
+    waves.classList.remove("on");
 
     clearTimeout(timer);
 
@@ -2197,44 +2032,23 @@ function setupHorn(){
   };
 
 
-  horn.addEventListener(
-    "pointerdown",
-    startHorn
-  );
-
-  horn.addEventListener(
-    "pointerup",
-    stopHorn
-  );
-
-  horn.addEventListener(
-    "pointerleave",
-    stopHorn
-  );
-
-  horn.addEventListener(
-    "pointercancel",
-    stopHorn
-  );
+  horn.addEventListener("pointerdown",startHorn);
+  horn.addEventListener("pointerup",stopHorn);
+  horn.addEventListener("pointerleave",stopHorn);
+  horn.addEventListener("pointercancel",stopHorn);
 
 }
 
 
-/* -------------------------
-   GLASS
-------------------------- */
+/* GLASS */
 
 function setupGlass(){
 
-  document
-    .getElementById("challengeTitle")
-    .textContent =
-    "🔨 BREAK THE GLASS";
+  document.getElementById("challengeTitle").textContent =
+  "🔨 BREAK THE GLASS";
 
-  document
-    .getElementById("challengeInstruction")
-    .textContent =
-    "Strike the window three times.";
+  document.getElementById("challengeInstruction").textContent =
+  "Strike the window three times.";
 
   const stage =
   document.getElementById("stage");
@@ -2242,8 +2056,7 @@ function setupGlass(){
   const frame =
   document.createElement("div");
 
-  frame.className =
-  "window-frame";
+  frame.className = "window-frame";
 
   frame.innerHTML = `
     <div class="glass"></div>
@@ -2261,67 +2074,46 @@ function setupGlass(){
   let hits = 0;
 
 
-  glass.addEventListener(
-    "pointerdown",
-    ()=>{
+  glass.addEventListener("pointerdown",()=>{
 
-      hits++;
+    hits++;
 
-      hammer.classList.remove(
-        "swing"
-      );
+    hammer.classList.remove("swing");
 
-      void hammer.offsetWidth;
+    void hammer.offsetWidth;
 
-      hammer.classList.add(
-        "swing"
-      );
+    hammer.classList.add("swing");
 
-      cameraShake();
+    cameraShake();
 
 
-      if(hits >= 1){
-
-        glass.classList.add(
-          "cracked"
-        );
-
-      }
+    if(hits >= 1){
+      glass.classList.add("cracked");
+    }
 
 
-      if(hits >= 3){
+    if(hits >= 3){
 
-        playEffect(glassAudio);
+      playEffect(glassAudio);
 
-        flashScreen();
+      flashScreen();
 
-        cameraShake(true);
+      cameraShake(true);
 
-        shatterGlass(
-          glass,
-          frame
-        );
+      shatterGlass(frame);
 
-        glass.style.opacity =
-        ".08";
+      glass.style.opacity = ".08";
 
-        setTimeout(
-          unlockClue,
-          1100
-        );
-
-      }
+      setTimeout(unlockClue,1100);
 
     }
-  );
+
+  });
 
 }
 
 
-function shatterGlass(
-  glass,
-  frame
-){
+function shatterGlass(frame){
 
   for(let i=0;i<30;i++){
 
@@ -2357,21 +2149,15 @@ function shatterGlass(
 }
 
 
-/* -------------------------
-   PUNCHING BAG
-------------------------- */
+/* BAG */
 
 function setupBag(){
 
-  document
-    .getElementById("challengeTitle")
-    .textContent =
-    "🥊 HIT THE BAG";
+  document.getElementById("challengeTitle").textContent =
+  "🥊 HIT THE BAG";
 
-  document
-    .getElementById("challengeInstruction")
-    .textContent =
-    "Punch the bag five times.";
+  document.getElementById("challengeInstruction").textContent =
+  "Punch the bag five times.";
 
   const stage =
   document.getElementById("stage");
@@ -2396,64 +2182,52 @@ function setupBag(){
   let hits = 0;
 
 
-  bag.addEventListener(
-    "pointerdown",
-    ()=>{
+  bag.addEventListener("pointerdown",()=>{
 
-      hits++;
+    hits++;
 
-      playEffect(punchAudio);
+    playEffect(punchAudio);
 
-      cameraShake();
+    cameraShake();
 
-      bag.classList.remove(
-        "punched-left",
-        "punched-right"
-      );
+    bag.classList.remove(
+      "punched-left",
+      "punched-right"
+    );
 
-      void bag.offsetWidth;
+    void bag.offsetWidth;
 
-      bag.classList.add(
-        hits % 2
-        ? "punched-left"
-        : "punched-right"
-      );
+    bag.classList.add(
+      hits % 2
+      ? "punched-left"
+      : "punched-right"
+    );
 
 
-      if(hits >= 5){
+    if(hits >= 5){
 
-        flashScreen();
+      flashScreen();
 
-        cameraShake(true);
+      cameraShake(true);
 
-        setTimeout(
-          unlockClue,
-          500
-        );
-
-      }
+      setTimeout(unlockClue,500);
 
     }
-  );
+
+  });
 
 }
 
 
-/* -------------------------
-   GRAFFITI
-------------------------- */
+/* GRAFFITI */
 
 function setupGraffiti(){
 
-  document
-    .getElementById("challengeTitle")
-    .textContent =
-    "🎨 SPRAY THE WALL";
+  document.getElementById("challengeTitle").textContent =
+  "🎨 SPRAY THE WALL";
 
-  document
-    .getElementById("challengeInstruction")
-    .textContent =
-    "Hold and drag across the wall to cover it in graffiti.";
+  document.getElementById("challengeInstruction").textContent =
+  "Hold and drag across the wall to cover it in graffiti.";
 
   const stage =
   document.getElementById("stage");
@@ -2488,76 +2262,60 @@ function setupGraffiti(){
   }
 
 
-  wall.addEventListener(
-    "pointerdown",
-    e=>{
+  wall.addEventListener("pointerdown",e=>{
 
-      if(finished){
-        return;
-      }
+    if(finished){
+      return;
+    }
 
-      drawing = true;
+    drawing = true;
 
-      wall.setPointerCapture(
-        e.pointerId
-      );
+    try{
+      wall.setPointerCapture(e.pointerId);
+    }catch(err){}
 
-      if(soundEnabled){
+    if(soundEnabled){
 
-        sprayAudio.currentTime = 0;
-        sprayAudio.play().catch(()=>{});
-
-      }
-
-      sprayAt(e);
+      sprayAudio.currentTime = 0;
+      sprayAudio.loop = true;
+      sprayAudio.play().catch(()=>{});
 
     }
-  );
+
+    sprayAt(e);
+
+  });
 
 
-  wall.addEventListener(
-    "pointermove",
-    e=>{
+  wall.addEventListener("pointermove",e=>{
 
-      if(
-        !drawing ||
-        finished
-      ){
-        return;
-      }
+    if(!drawing || finished){
+      return;
+    }
 
-      sprayAt(e);
+    sprayAt(e);
 
-      movement++;
+    movement++;
 
-      if(movement > 30){
+    if(movement > 30){
 
-        finished = true;
+      finished = true;
 
-        stopSpray();
+      stopSpray();
 
-        flashScreen();
+      flashScreen();
 
-        setTimeout(
-          unlockClue,
-          450
-        );
+      cameraShake(true);
 
-      }
+      setTimeout(unlockClue,450);
 
     }
-  );
+
+  });
 
 
-  wall.addEventListener(
-    "pointerup",
-    stopSpray
-  );
-
-  wall.addEventListener(
-    "pointercancel",
-    stopSpray
-  );
+  wall.addEventListener("pointerup",stopSpray);
+  wall.addEventListener("pointercancel",stopSpray);
 
 
   function sprayAt(e){
@@ -2574,14 +2332,13 @@ function setupGraffiti(){
       "spray-dot";
 
       dot.style.left =
-      `${e.clientX - rect.left + (Math.random()*25-12)}px`;
+      `${e.clientX-rect.left+(Math.random()*25-12)}px`;
 
       dot.style.top =
-      `${e.clientY - rect.top + (Math.random()*25-12)}px`;
+      `${e.clientY-rect.top+(Math.random()*25-12)}px`;
 
       const size =
-      13 +
-      Math.random()*25;
+      13+Math.random()*25;
 
       dot.style.width =
       `${size}px`;
@@ -2590,7 +2347,7 @@ function setupGraffiti(){
       `${size}px`;
 
       dot.style.opacity =
-      `${.4 + Math.random()*.55}`;
+      `${.4+Math.random()*.55}`;
 
       wall.appendChild(dot);
 
@@ -2601,21 +2358,15 @@ function setupGraffiti(){
 }
 
 
-/* -------------------------
-   BOX
-------------------------- */
+/* BOX */
 
 function setupBox(){
 
-  document
-    .getElementById("challengeTitle")
-    .textContent =
-    "📦 DESTROY THE BOX";
+  document.getElementById("challengeTitle").textContent =
+  "📦 DESTROY THE BOX";
 
-  document
-    .getElementById("challengeInstruction")
-    .textContent =
-    "Stomp the box until it is destroyed.";
+  document.getElementById("challengeInstruction").textContent =
+  "Stomp the box until it is destroyed.";
 
   const stage =
   document.getElementById("stage");
@@ -2634,89 +2385,59 @@ function setupBox(){
   stage.appendChild(wrap);
 
   const box =
-  wrap.querySelector(
-    ".box-object"
-  );
+  wrap.querySelector(".box-object");
 
   const boot =
-  wrap.querySelector(
-    ".boot"
-  );
+  wrap.querySelector(".boot");
 
   let stomps = 0;
 
 
-  box.addEventListener(
-    "pointerdown",
-    ()=>{
+  box.addEventListener("pointerdown",()=>{
 
-      stomps++;
+    stomps++;
 
-      playEffect(
-        cardboardAudio
-      );
+    playEffect(cardboardAudio);
 
-      cameraShake();
+    cameraShake();
 
-      boot.classList.remove(
-        "stomp"
-      );
+    boot.classList.remove("stomp");
 
-      void boot.offsetWidth;
+    void boot.offsetWidth;
 
-      boot.classList.add(
-        "stomp"
-      );
+    boot.classList.add("stomp");
 
 
-      if(stomps === 1){
-
-        box.classList.add(
-          "crush1"
-        );
-
-      }
+    if(stomps === 1){
+      box.classList.add("crush1");
+    }
 
 
-      if(stomps === 2){
-
-        box.classList.add(
-          "crush2"
-        );
-
-      }
+    if(stomps === 2){
+      box.classList.add("crush2");
+    }
 
 
-      if(stomps >= 3){
+    if(stomps >= 3){
 
-        box.classList.add(
-          "crush3"
-        );
+      box.classList.add("crush3");
 
-        flashScreen();
+      flashScreen();
 
-        cameraShake(true);
+      cameraShake(true);
 
-        createCardboardDebris(
-          box
-        );
+      createCardboardDebris(box);
 
-        setTimeout(
-          unlockClue,
-          800
-        );
-
-      }
+      setTimeout(unlockClue,800);
 
     }
-  );
+
+  });
 
 }
 
 
-function createCardboardDebris(
-  box
-){
+function createCardboardDebris(box){
 
   const stage =
   document.getElementById("stage");
@@ -2726,6 +2447,7 @@ function createCardboardDebris(
 
   const stageRect =
   stage.getBoundingClientRect();
+
 
   for(let i=0;i<18;i++){
 
@@ -2748,12 +2470,10 @@ function createCardboardDebris(
     `${rect.top-stageRect.top+rect.height/2}px`;
 
     const angle =
-    Math.random() *
-    Math.PI * 2;
+    Math.random()*Math.PI*2;
 
     const distance =
-    80 +
-    Math.random()*160;
+    80+Math.random()*160;
 
     piece.style.setProperty(
       "--x",
@@ -2777,71 +2497,60 @@ function createCardboardDebris(
 }
 
 
-/* -------------------------
-   CLUES
-------------------------- */
+/* CLUES */
 
 function unlockClue(){
 
   stopAllEffects();
 
   const mystery =
-  getMysteries()[
-    currentMysteryIndex
-  ];
+  getMysteries()[currentMysteryIndex];
 
   const clue =
-  mystery.clues[
-    currentClueIndex
-  ];
+  mystery.clues[currentClueIndex];
 
   document
-    .getElementById("clueText")
-    .textContent = clue;
+  .getElementById("clueText")
+  .textContent = clue;
 
   document
-    .getElementById("clueBox")
-    .classList
-    .add("show");
+  .getElementById("clueBox")
+  .classList
+  .add("show");
 
   document
-    .getElementById("answerArea")
-    .classList
-    .add("show");
+  .getElementById("answerArea")
+  .classList
+  .add("show");
 
   document
-    .getElementById("answerMessage")
-    .textContent = "";
+  .getElementById("answerMessage")
+  .textContent = "";
 
   document
-    .getElementById("answerInput")
-    .value = "";
+  .getElementById("answerInput")
+  .value = "";
 
   setTimeout(()=>{
 
     document
-      .getElementById("answerInput")
-      .focus();
+    .getElementById("answerInput")
+    .focus();
 
   },250);
 
 }
 
 
-/* -------------------------
-   ANSWER
-------------------------- */
+/* ANSWERS */
 
 function normalize(text){
 
   return text
-    .trim()
-    .toLowerCase()
-    .normalize("NFD")
-    .replace(
-      /[\u0300-\u036f]/g,
-      ""
-    );
+  .trim()
+  .toLowerCase()
+  .normalize("NFD")
+  .replace(/[\u0300-\u036f]/g,"");
 
 }
 
@@ -2849,18 +2558,16 @@ function normalize(text){
 function submitAnswer(){
 
   const mystery =
-  getMysteries()[
-    currentMysteryIndex
-  ];
+  getMysteries()[currentMysteryIndex];
 
   const input =
   document
-    .getElementById("answerInput")
-    .value;
+  .getElementById("answerInput")
+  .value;
 
   const message =
   document
-    .getElementById("answerMessage");
+  .getElementById("answerMessage");
 
 
   if(!input.trim()){
@@ -2883,8 +2590,8 @@ function submitAnswer(){
 
     message.innerHTML =
     `<span class="key-pop">🔑</span>
-     <br>
-     CORRECT! KEY UNLOCKED.`;
+    <br>
+    CORRECT! KEY UNLOCKED.`;
 
     message.className =
     "message correct";
@@ -2897,10 +2604,7 @@ function submitAnswer(){
       getMysteries().length
     ){
 
-      setTimeout(
-        finishGame,
-        1200
-      );
+      setTimeout(finishGame,1200);
 
       return;
 
@@ -2924,7 +2628,7 @@ function submitAnswer(){
 
     if(
       currentClueIndex <
-      mystery.clues.length - 1
+      mystery.clues.length-1
     ){
 
       currentClueIndex++;
@@ -2932,14 +2636,14 @@ function submitAnswer(){
       setTimeout(()=>{
 
         document
-          .getElementById("clueBox")
-          .classList
-          .remove("show");
+        .getElementById("clueBox")
+        .classList
+        .remove("show");
 
         document
-          .getElementById("answerArea")
-          .classList
-          .remove("show");
+        .getElementById("answerArea")
+        .classList
+        .remove("show");
 
         startChallenge();
 
@@ -2957,21 +2661,19 @@ function submitAnswer(){
 }
 
 
-/* -------------------------
-   ESCAPE
-------------------------- */
+/* ESCAPE */
 
 function finishGame(){
 
   stopAllEffects();
 
-  showScreen(
-    "escapeScreen"
-  );
+  /* Stop the ticking clock when the player escapes */
+  clock.pause();
+  clock.currentTime = 0;
 
-  if(
-    navigator.vibrate
-  ){
+  showScreen("escapeScreen");
+
+  if(navigator.vibrate){
 
     navigator.vibrate(
       [100,50,100,50,200]
