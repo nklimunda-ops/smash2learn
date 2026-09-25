@@ -805,6 +805,18 @@ footer{
   padding:30px;
 }
 
+
+/* SCORE / TIMER / LEADERBOARD */
+.game-stats{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:12px}
+.stat-pill{background:#0b111b;border:1px solid #354156;border-radius:999px;padding:9px 14px;font-weight:900}
+.attempts{margin-top:10px;color:#aab4c5;font-weight:bold}
+.result-summary{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:18px 0 24px}
+.leaderboard{width:min(720px,100%);margin:18px auto 28px;text-align:left;border-collapse:collapse;background:#0b111b;border-radius:14px;overflow:hidden}
+.leaderboard th,.leaderboard td{padding:12px 10px;border-bottom:1px solid #263246}
+.leaderboard th{color:#aab4c5;font-size:13px;text-transform:uppercase;letter-spacing:.5px}
+.leaderboard tr.me{background:rgba(255,59,48,.12)}
+.reveal-answer{margin-top:12px;padding:12px;border:1px solid #6a3b3b;border-radius:10px;background:#261315;color:#ffd0cd}
+
 @media(max-width:600px){
   nav{padding:0 15px}
   main{padding-top:25px}
@@ -873,7 +885,7 @@ footer{
 
 <p class="small">
 Create as many mysteries as you want.
-Each mystery has one answer and several clues.
+Each mystery has one answer and at least 3 clues. Players get a maximum of 3 attempts.
 </p>
 
 <div id="mysteries"></div>
@@ -901,6 +913,10 @@ Each mystery has one answer and several clues.
 
 <div class="card">
 
+<label>Your name or nickname</label>
+<input id="playerName" maxlength="24" placeholder="Example: Tina or Dragon23">
+
+<br><br>
 <label>Room code</label>
 
 <input
@@ -933,6 +949,12 @@ Enter Room
 <h2 id="gameTitle"></h2>
 
 <div id="progressText" class="progress"></div>
+<div class="game-stats">
+  <div class="stat-pill">👤 <span id="playerDisplay">Player</span></div>
+  <div class="stat-pill">🏆 <span id="scoreDisplay">0</span></div>
+  <div class="stat-pill">⏱️ <span id="timerDisplay">00:00</span></div>
+</div>
+<div id="attemptsDisplay" class="attempts">Attempt 1 of 3</div>
 
 </div>
 
@@ -989,9 +1011,18 @@ Unlock 🔑
 YOU ESCAPED! 💥
 </h1>
 
-<p class="subtitle">
-You smashed every mystery and unlocked the final door.
+<p id="escapeMessage" class="subtitle">
+You reached the final door.
 </p>
+
+<div id="finalSummary" class="result-summary"></div>
+
+<h2>🏆 Leaderboard</h2>
+<div id="leaderboardMessage" class="small">Loading results...</div>
+<table class="leaderboard">
+  <thead><tr><th>#</th><th>Player</th><th>Solved</th><th>Score</th><th>Time</th></tr></thead>
+  <tbody id="leaderboardBody"></tbody>
+</table>
 
 <button class="primary" onclick="goHome()">
 Play Again
@@ -1421,10 +1452,10 @@ async function saveRoom(){
     .map(input=>input.value.trim())
     .filter(Boolean);
 
-    if(!answer || clues.length === 0){
+    if(!answer || clues.length < 3){
 
       message.textContent =
-      "Every mystery needs an answer and at least one clue.";
+      "Every mystery needs an answer and at least 3 clues.";
 
       message.className =
       "message wrong";
@@ -1552,6 +1583,14 @@ let currentClueIndex = 0;
 /* THIS CONTINUES THE CHALLENGE ROTATION
    THROUGH THE WHOLE GAME */
 let globalChallengeIndex = 0;
+let playerName = "";
+let score = 0;
+let solvedCount = 0;
+let attemptsThisMystery = 0;
+let gameStartTime = 0;
+let timerInterval = null;
+let finalTimeSeconds = 0;
+let resultSaved = false;
 
 
 async function joinRoom(){
@@ -1565,9 +1604,17 @@ async function joinRoom(){
   .trim()
   .toUpperCase();
 
+  const name = document.getElementById("playerName").value.trim();
+
   const message =
   document
   .getElementById("joinMessage");
+
+  if(!name){
+    message.textContent = "Enter your name or nickname.";
+    message.className = "message wrong";
+    return;
+  }
 
   if(!code){
 
@@ -1645,6 +1692,14 @@ async function joinRoom(){
   currentMysteryIndex = 0;
   currentClueIndex = 0;
   globalChallengeIndex = 0;
+  playerName = name.slice(0,24);
+  score = 0;
+  solvedCount = 0;
+  attemptsThisMystery = 0;
+  resultSaved = false;
+  document.getElementById("playerDisplay").textContent = playerName;
+  updateScore();
+  startGameTimer();
 
   document
   .getElementById("gameTitle")
@@ -1656,6 +1711,38 @@ async function joinRoom(){
 
 }
 
+
+function formatTime(totalSeconds){
+  const mins = Math.floor(totalSeconds/60);
+  const secs = totalSeconds%60;
+  return `${String(mins).padStart(2,"0")}:${String(secs).padStart(2,"0")}`;
+}
+
+function startGameTimer(){
+  clearInterval(timerInterval);
+  gameStartTime = Date.now();
+  finalTimeSeconds = 0;
+  document.getElementById("timerDisplay").textContent = "00:00";
+  timerInterval = setInterval(()=>{
+    const elapsed = Math.floor((Date.now()-gameStartTime)/1000);
+    document.getElementById("timerDisplay").textContent = formatTime(elapsed);
+  },250);
+}
+
+function stopGameTimer(){
+  clearInterval(timerInterval);
+  timerInterval = null;
+  finalTimeSeconds = Math.max(0,Math.floor((Date.now()-gameStartTime)/1000));
+  document.getElementById("timerDisplay").textContent = formatTime(finalTimeSeconds);
+}
+
+function updateScore(){
+  document.getElementById("scoreDisplay").textContent = score.toLocaleString();
+}
+
+function updateAttempts(){
+  document.getElementById("attemptsDisplay").textContent = `Attempt ${Math.min(attemptsThisMystery+1,3)} of 3`;
+}
 
 /* GAME */
 
@@ -1671,6 +1758,8 @@ function loadMystery(){
   stopAllEffects();
 
   currentClueIndex = 0;
+  attemptsThisMystery = 0;
+  updateAttempts();
 
   document
   .getElementById("clueBox")
@@ -2507,7 +2596,7 @@ function unlockClue(){
   getMysteries()[currentMysteryIndex];
 
   const clue =
-  mystery.clues[currentClueIndex];
+  mystery.clues[Math.min(currentClueIndex, mystery.clues.length-1)];
 
   document
   .getElementById("clueText")
@@ -2557,130 +2646,159 @@ function normalize(text){
 
 function submitAnswer(){
 
-  const mystery =
-  getMysteries()[currentMysteryIndex];
-
-  const input =
-  document
-  .getElementById("answerInput")
-  .value;
-
-  const message =
-  document
-  .getElementById("answerMessage");
-
+  const mystery = getMysteries()[currentMysteryIndex];
+  const input = document.getElementById("answerInput").value;
+  const message = document.getElementById("answerMessage");
 
   if(!input.trim()){
-
-    message.textContent =
-    "Type an answer first.";
-
-    message.className =
-    "message wrong";
-
+    message.textContent = "Type an answer first.";
+    message.className = "message wrong";
     return;
-
   }
 
+  attemptsThisMystery++;
 
-  if(
-    normalize(input) ===
-    normalize(mystery.answer)
-  ){
+  if(normalize(input) === normalize(mystery.answer)){
 
-    message.innerHTML =
-    `<span class="key-pop">🔑</span>
-    <br>
-    CORRECT! KEY UNLOCKED.`;
+    const pointsByAttempt = [1000,750,500];
+    const earned = pointsByAttempt[Math.min(attemptsThisMystery-1,2)];
+    score += earned;
+    solvedCount++;
+    updateScore();
 
-    message.className =
-    "message correct";
+    message.innerHTML = `<span class="key-pop">🔑</span><br>CORRECT! +${earned} POINTS`;
+    message.className = "message correct";
 
     currentMysteryIndex++;
 
-
-    if(
-      currentMysteryIndex >=
-      getMysteries().length
-    ){
-
+    if(currentMysteryIndex >= getMysteries().length){
       setTimeout(finishGame,1200);
-
       return;
-
     }
 
-
-    setTimeout(()=>{
-
-      loadMystery();
-
-    },1200);
-
-  }else{
-
-    message.textContent =
-    "Not quite. Smash your way to another clue! 💥";
-
-    message.className =
-    "message wrong";
-
-
-    if(
-      currentClueIndex <
-      mystery.clues.length-1
-    ){
-
-      currentClueIndex++;
-
-      setTimeout(()=>{
-
-        document
-        .getElementById("clueBox")
-        .classList
-        .remove("show");
-
-        document
-        .getElementById("answerArea")
-        .classList
-        .remove("show");
-
-        startChallenge();
-
-      },900);
-
-    }else{
-
-      message.textContent =
-      "That was the final clue. Try another answer!";
-
-    }
-
+    setTimeout(loadMystery,1200);
+    return;
   }
 
+  if(attemptsThisMystery >= 3){
+    message.innerHTML = `Third attempt. The answer was:<div class="reveal-answer"><strong>${escapeHtml(mystery.answer)}</strong></div>Moving to the next mystery...`;
+    message.className = "message wrong";
+    currentMysteryIndex++;
+
+    if(currentMysteryIndex >= getMysteries().length){
+      setTimeout(finishGame,1800);
+      return;
+    }
+
+    setTimeout(loadMystery,1800);
+    return;
+  }
+
+  message.textContent = "Not quite. Smash your way to another clue! 💥";
+  message.className = "message wrong";
+  currentClueIndex = Math.min(currentClueIndex+1,2,mystery.clues.length-1);
+  updateAttempts();
+
+  setTimeout(()=>{
+    document.getElementById("clueBox").classList.remove("show");
+    document.getElementById("answerArea").classList.remove("show");
+    startChallenge();
+  },900);
+}
+
+function escapeHtml(value){
+  return String(value)
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
 }
 
 
 /* ESCAPE */
 
-function finishGame(){
+async function finishGame(){
 
   stopAllEffects();
-
-  /* Stop the ticking clock when the player escapes */
+  stopGameTimer();
   clock.pause();
   clock.currentTime = 0;
+
+  const total = getMysteries().length;
+  document.getElementById("escapeMessage").textContent =
+    solvedCount === total
+      ? "You solved every mystery and unlocked the final door!"
+      : `You reached the final door with ${solvedCount} of ${total} mysteries solved.`;
+
+  document.getElementById("finalSummary").innerHTML = `
+    <div class="stat-pill">👤 ${escapeHtml(playerName)}</div>
+    <div class="stat-pill">🔑 ${solvedCount}/${total}</div>
+    <div class="stat-pill">🏆 ${score.toLocaleString()} pts</div>
+    <div class="stat-pill">⏱️ ${formatTime(finalTimeSeconds)}</div>`;
 
   showScreen("escapeScreen");
 
   if(navigator.vibrate){
-
-    navigator.vibrate(
-      [100,50,100,50,200]
-    );
-
+    navigator.vibrate([100,50,100,50,200]);
   }
 
+  await saveResultAndLoadLeaderboard();
+}
+
+async function saveResultAndLoadLeaderboard(){
+  const boardMessage = document.getElementById("leaderboardMessage");
+  const body = document.getElementById("leaderboardBody");
+  boardMessage.textContent = "Saving result...";
+  body.innerHTML = "";
+
+  if(!resultSaved){
+    const {error:insertError} = await db.from("results").insert({
+      game_code: currentGame.code,
+      player_name: playerName,
+      solved: solvedCount,
+      total_mysteries: getMysteries().length,
+      score: score,
+      time_seconds: finalTimeSeconds
+    });
+
+    if(insertError){
+      console.error(insertError);
+      boardMessage.textContent = "Your game finished, but the result could not be saved.";
+      return;
+    }
+    resultSaved = true;
+  }
+
+  const {data,error} = await db
+    .from("results")
+    .select("player_name,solved,total_mysteries,score,time_seconds,created_at")
+    .eq("game_code",currentGame.code)
+    .order("solved",{ascending:false})
+    .order("score",{ascending:false})
+    .order("time_seconds",{ascending:true})
+    .limit(50);
+
+  if(error){
+    console.error(error);
+    boardMessage.textContent = "Result saved, but the leaderboard could not be loaded.";
+    return;
+  }
+
+  boardMessage.textContent = data && data.length ? "Best results for this room" : "No results yet.";
+
+  (data || []).forEach((row,index)=>{
+    const tr = document.createElement("tr");
+    const isMe = row.player_name === playerName && row.score === score && row.time_seconds === finalTimeSeconds;
+    if(isMe) tr.classList.add("me");
+    tr.innerHTML = `
+      <td>${index+1}</td>
+      <td>${escapeHtml(row.player_name)}</td>
+      <td>${row.solved}/${row.total_mysteries}</td>
+      <td>${Number(row.score).toLocaleString()}</td>
+      <td>${formatTime(Number(row.time_seconds)||0)}</td>`;
+    body.appendChild(tr);
+  });
 }
 
 </script>
