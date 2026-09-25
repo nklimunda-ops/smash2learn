@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Smash2Learn v5 • Realistic hand, brick wall, persistent damage • 2026-09-25 -->
+<!-- Smash2Learn v6 • One prepared wall, movable hand, break one thing at a time • 2026-09-25 -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -865,89 +865,67 @@ footer{
 @media(max-width:600px){.stage{min-height:390px}.egg-object,.wine-object,.balloon-object,.ice-object,.can-object,.wood-object{font-size:115px}.final-hammer{font-size:82px}.final-wall::after{white-space:normal;text-align:center;width:80%}}
 
 
-/* ===== SMASH2LEARN V5: REALISTIC HAND + BRICK WALL + PERSISTENT DAMAGE ===== */
-.stage{background:#24130e;align-items:flex-end;padding-bottom:24px}
-.stage::before{display:none}
-.stage::after{z-index:4;height:54px;border-top:0;
-  background:linear-gradient(180deg,#0e0c0b 0,#2d2824 9%,#24201d 55%,#161311 100%);
-  box-shadow:0 -12px 22px rgba(0,0,0,.55)}
-.v5-wall-layer{position:absolute;inset:0;z-index:0;pointer-events:none}
+/* ===== SMASH2LEARN V6: ONE PREPARED WALL, BREAK ONE THING AT A TIME ===== */
+.stage{background:#1b0f0b;min-height:0}
+.stage::before,.stage::after{display:none}
+@media(pointer:fine){.stage,.stage *{cursor:none!important}}
+
+/* The whole room is drawn at 1000x500 and scaled (or panned on phones) to fit the stage */
+.v5-scene{position:absolute;left:0;top:0;width:1000px;height:500px;transform-origin:0 0;transition:transform .6s cubic-bezier(.3,.7,.3,1)}
+.v5-escape{position:absolute;left:0;top:0;width:1000px;height:440px;z-index:0;background:radial-gradient(circle at 50% 45%,#fff7c2 0,#9ad4ff 38%,#1a3556 80%)}
+.v5-wall-layer{position:absolute;left:0;top:0;width:1000px;height:440px;z-index:1;pointer-events:none}
 .v5-wall-layer canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.v5-floor{position:absolute;left:0;top:440px;width:1000px;height:60px;z-index:2;
+  background:linear-gradient(180deg,#0c0a09 0,#36312c 7%,#2a2622 45%,#191613 100%);box-shadow:0 -10px 18px rgba(0,0,0,.55)}
+.v5-props{position:absolute;inset:0;z-index:3}
 
-/* First-person hand */
-.first-person-hand{position:absolute;right:-3%;bottom:-8px;width:clamp(190px,36%,320px);z-index:30;pointer-events:none;
-  transform-origin:85% 100%;filter:drop-shadow(-14px 18px 16px rgba(0,0,0,.55))}
-.first-person-hand svg{display:block;width:100%;height:auto;overflow:visible}
-.first-person-hand.throw{animation:v5Throw .5s cubic-bezier(.3,.7,.25,1)}
-.first-person-hand.hit{animation:v5Hit .3s cubic-bezier(.3,.7,.25,1)}
-.first-person-hand.swing{animation:v5Swing .36s cubic-bezier(.3,.7,.25,1)}
-@keyframes v5Throw{0%{transform:none}28%{transform:translate(26px,34px) rotate(10deg)}55%{transform:translate(-130px,-110px) rotate(-24deg) scale(.8)}100%{transform:none}}
-@keyframes v5Hit{0%{transform:none}40%{transform:translate(-140px,-70px) rotate(-10deg) scale(.8)}100%{transform:none}}
-@keyframes v5Swing{0%{transform:none}30%{transform:translate(20px,20px) rotate(16deg)}55%{transform:translate(-150px,-60px) rotate(-38deg) scale(.82)}100%{transform:none}}
+/* Wall furniture */
+.v6-shelf{position:absolute;height:14px;border-radius:2px;background:linear-gradient(180deg,#c08a52,#8a5a2e 55%,#5d3a1b);box-shadow:0 12px 12px rgba(0,0,0,.5)}
+.v6-shelf::before,.v6-shelf::after{content:'';position:absolute;top:14px;width:9px;height:34px;background:linear-gradient(90deg,#222,#666,#1c1c1c);box-shadow:3px 6px 6px rgba(0,0,0,.4)}
+.v6-shelf::before{left:28px}.v6-shelf::after{right:28px}
+.v6-prop{position:absolute;pointer-events:none}
+.v6-prop svg,.v6-item svg{display:block;width:100%;height:100%;overflow:visible}
 
-/* Throwable objects */
-.v5-row{position:relative;z-index:8;display:flex;align-items:flex-end;justify-content:center;gap:clamp(8px,3vw,26px);flex-wrap:wrap;margin-right:18%}
-.v5-throwable{cursor:pointer;filter:drop-shadow(0 10px 8px rgba(0,0,0,.45));transition:transform .15s}
-.v5-throwable:hover{transform:translateY(-5px)}
-.v5-throwable svg{display:block;width:100%;height:auto}
-.v5-throwable.fly{animation:v5Fly .33s cubic-bezier(.25,.6,.45,1) forwards}
-@keyframes v5Fly{to{transform:translate(var(--tx),var(--ty)) scale(.3) rotate(var(--spin))}}
-.v5-plate{width:clamp(92px,16vw,150px)}
-.v5-egg{width:clamp(46px,7.5vw,64px)}
-.v5-glass{width:clamp(50px,8vw,72px)}
-.v5-balloon{width:clamp(50px,8.5vw,76px);animation:v5Bob 2.6s ease-in-out infinite alternate}
-.v5-balloon:nth-child(2n){animation-delay:-1.1s}.v5-balloon:nth-child(3n){animation-delay:-.6s}
-.v5-balloon.pop{animation:v5Pop .14s ease-out forwards}
-@keyframes v5Bob{to{transform:translateY(-10px) rotate(2deg)}}
-@keyframes v5Pop{to{transform:scale(1.4);opacity:0}}
-
-/* Ice block */
-.v5-ice{position:relative;z-index:8;width:clamp(140px,25vw,205px);cursor:pointer;margin-right:14%;filter:drop-shadow(0 16px 12px rgba(0,0,0,.5));transition:transform .08s}
-.v5-ice svg{display:block;width:100%;height:auto}
-.v5-ice .c1,.v5-ice .c2{opacity:0}
-.v5-ice.crack1 .c1,.v5-ice.crack2 .c1,.v5-ice.crack2 .c2{opacity:1}
-.v5-ice.hit{transform:scale(.95) rotate(-1.5deg)}
-.v5-ice.shatter{animation:v5Shatter .22s ease-out forwards}
+/* Breakable things */
+.v6-item{position:absolute;z-index:5;filter:drop-shadow(0 6px 5px rgba(0,0,0,.45))}
+.v6-item.active{z-index:7;animation:v6Glow 1s ease-in-out infinite alternate}
+@keyframes v6Glow{from{filter:drop-shadow(0 0 2px rgba(255,214,90,.5)) drop-shadow(0 6px 5px rgba(0,0,0,.45))}to{filter:drop-shadow(0 0 13px rgba(255,214,90,1)) drop-shadow(0 6px 5px rgba(0,0,0,.45))}}
+.v6-balloon svg{transform-origin:50% 70%;animation:v5Bob 2.6s ease-in-out infinite alternate}
+.v6-balloon:nth-child(2n) svg{animation-delay:-1.1s}.v6-balloon:nth-child(3n) svg{animation-delay:-.6s}
+.v6-balloon.popped svg{animation:none}
+@keyframes v5Bob{to{transform:translateY(-6px) rotate(2deg)}}
+.v6-board .c1,.v6-board .c2,.v6-ice .c1,.v6-ice .c2{opacity:0}
+.v6-board.crack1 .c1,.v6-ice.crack1 .c1,.v6-ice.crack2 .c1,.v6-ice.crack2 .c2{opacity:1}
+.v6-board svg,.v6-ice svg{transition:transform .08s}
+.v6-board.hit svg{transform:translateY(3px)}
+.v6-ice.hit svg{transform:scale(.95) rotate(-1.5deg)}
+.v6-ice.shatter{animation:v5Shatter .22s ease-out forwards}
 @keyframes v5Shatter{to{transform:scale(1.15);opacity:0}}
+.v6-can{transform-origin:50% 100%;transition:transform .15s}
 
-/* Wooden board on blocks */
-.v5-board{position:relative;z-index:8;width:min(460px,68%);cursor:pointer;margin-right:12%;filter:drop-shadow(0 16px 12px rgba(0,0,0,.5))}
-.v5-board svg{display:block;width:100%;height:auto;overflow:visible}
-.v5-board .c1,.v5-board .c2{opacity:0}
-.v5-board.crack1 .c1,.v5-board.crack2 .c1,.v5-board.crack2 .c2{opacity:1}
-.v5-board .plank{transition:transform .08s;transform-box:fill-box;transform-origin:center}
-.v5-board.hit .plank{transform:translateY(4px)}
-.v5-board .half-l,.v5-board .half-r{transform-box:fill-box;transform-origin:center}
-.v5-board.broken .c1,.v5-board.broken .c2{opacity:0}
-.v5-board.broken .half-l{animation:v5HalfL .6s cubic-bezier(.4,0,.8,.6) forwards}
-.v5-board.broken .half-r{animation:v5HalfR .6s cubic-bezier(.4,0,.8,.6) forwards}
-@keyframes v5HalfL{to{transform:translate(-40px,120px) rotate(-26deg);opacity:0}}
-@keyframes v5HalfR{to{transform:translate(40px,120px) rotate(26deg);opacity:0}}
+/* First-person hand that follows the pointer */
+.v6-hand{position:absolute;left:0;top:0;z-index:30;pointer-events:none;will-change:transform;filter:drop-shadow(-12px 16px 14px rgba(0,0,0,.5))}
+.v6-hand-inner{width:100%;height:100%}
+.v6-hand-inner svg{display:block;width:100%;height:100%;overflow:visible}
+.v6-hand-inner.jab{animation:v6Jab .22s ease-out}
+.v6-hand-inner.swing{animation:v6Swing .32s cubic-bezier(.3,.7,.3,1)}
+.v6-hand-inner.throw{animation:v6Throw .38s ease-out}
+@keyframes v6Jab{40%{transform:translateY(-14px) scale(.88)}}
+@keyframes v6Swing{30%{transform:rotate(26deg)}60%{transform:rotate(-8deg) scale(.94)}}
+@keyframes v6Throw{35%{transform:translateY(16px) rotate(8deg)}65%{transform:translateY(-24px) rotate(-10deg) scale(.86)}}
 
-/* Soda can (kept from v4) */
-.v4-can{width:108px;height:180px;border-radius:20px 20px 28px 28px;position:relative;z-index:8;cursor:pointer;margin-right:14%;background:linear-gradient(90deg,#aab0b6 0,#f1f4f6 18%,#bdc4ca 43%,#f8fafb 60%,#8d949b 100%);border:3px solid #656b70;box-shadow:inset 0 0 18px rgba(0,0,0,.2),0 22px 20px rgba(0,0,0,.45);transition:transform .18s;transform-origin:50% 100%}
-.v4-can::before{content:'';position:absolute;left:8px;right:8px;top:-7px;height:17px;border-radius:50%;background:radial-gradient(ellipse at center,#60666b 0 12%,#d8dde0 14% 45%,#70777d 47% 53%,#c5cbd0 55%);border:2px solid #555b60}
-.v4-can::after{content:'SMASH';position:absolute;left:14px;right:14px;top:62px;text-align:center;padding:8px 0;border-radius:8px;background:#e5352e;color:white;font-weight:1000;letter-spacing:1px;box-shadow:inset 0 -5px 0 rgba(0,0,0,.14)}
-
-/* Flying debris and impact dust */
-.v5-shard{position:absolute;left:0;top:0;z-index:15;pointer-events:none;will-change:transform}
+/* Debris, dust, collapse */
+.v5-shard{position:absolute;left:0;top:0;z-index:12;pointer-events:none}
+.v6-drop{position:absolute;z-index:11;pointer-events:none}
+.v6-drop svg{display:block;width:100%;height:100%;overflow:visible}
 .v5-dust{position:absolute;z-index:14;pointer-events:none;width:130px;height:130px;margin:-65px 0 0 -65px;border-radius:50%;
   background:radial-gradient(circle,rgba(var(--dust),.5) 0,rgba(var(--dust),.22) 40%,transparent 70%);animation:v5Dust .9s ease-out forwards}
 @keyframes v5Dust{from{transform:scale(.25);opacity:1}to{transform:scale(2.1);opacity:0}}
+.v5-chunk{position:absolute;z-index:9;pointer-events:none;background-repeat:no-repeat}
+.v6-final-label{position:absolute;left:0;top:160px;width:1000px;z-index:8;text-align:center;font-size:64px;font-weight:1000;
+  color:rgba(255,255,255,.88);text-shadow:0 4px 18px #000;pointer-events:none;transition:opacity .3s}
+@media(prefers-reduced-motion:reduce){.v6-balloon svg,.v6-item.active{animation:none}.v5-scene{transition:none}}
 
-/* Final wall */
-.final-wall-wrap{z-index:3;cursor:pointer}
-.final-wall-label{position:relative;z-index:2;margin-bottom:8%;font-size:clamp(30px,6vw,64px);font-weight:1000;text-align:center;
-  color:rgba(255,255,255,.86);text-shadow:0 4px 18px #000;pointer-events:none;transition:opacity .3s}
-.v5-chunk{position:absolute;z-index:6;pointer-events:none;background-repeat:no-repeat}
-
-@media(max-width:600px){
-  .v5-row,.v5-ice,.v5-board,.v4-can{margin-right:22%}
-  .first-person-hand{width:40%}
-}
-@media(prefers-reduced-motion:reduce){
-  .v5-balloon{animation:none}
-}
 </style>
 </head>
 
@@ -1832,7 +1810,7 @@ async function joinRoom(){
   solvedCount = 0;
   attemptsThisMystery = 0;
   resultSaved = false;
-  wallDamage = [];
+  resetScene();
   document.getElementById("playerDisplay").textContent = playerName;
   updateScore();
   startGameTimer();
@@ -2897,14 +2875,40 @@ async function saveResultAndLoadLeaderboard(){
   });
 }
 
-/* ===== SMASH2LEARN V5: REALISTIC HAND + BRICK WALL + PERSISTENT DAMAGE ===== */
+/* ===== SMASH2LEARN V6: ONE PREPARED WALL, BREAK ONE THING AT A TIME ===== */
 const eggAudioV3=document.getElementById("eggAudio"),canAudioV3=document.getElementById("canAudio"),balloonAudioV3=document.getElementById("balloonAudio"),iceAudioV3=document.getElementById("iceAudio"),woodAudioV3=document.getElementById("woodAudio"),wineGlassAudioV3=document.getElementById("wineGlassAudio"),brickAudioV3=document.getElementById("brickAudio"),wallCollapseAudioV3=document.getElementById("wallCollapseAudio");
-[eggAudioV3,canAudioV3,balloonAudioV3,iceAudioV3,woodAudioV3,wineGlassAudioV3,brickAudioV3,wallCollapseAudioV3].forEach(a=>{if(a)a.volume=1});
 
-/* Every mark ever made on the wall lives here, so the wall keeps its damage between challenges. */
+/* Every mark ever made on the wall lives here, so the wall keeps its damage all game long. */
 let wallDamage=[];
 
-function instantEffect(audio){if(!soundEnabled||!audio)return;try{const fx=audio.cloneNode();fx.volume=audio.volume;fx.currentTime=0;const p=fx.play();if(p&&p.catch)p.catch(()=>{})}catch(e){}}
+/* ---------- LOW-LATENCY SOUND ----------
+   Sound effects are decoded once into memory with the Web Audio API and played from there,
+   skipping any silence at the start of the mp3. This removes the delay on can, wood and ice.
+   If the page is opened as a local file (file://) it falls back to normal <audio>. */
+const SFX={ctx:null,buf:{},off:{}};
+(function initSfx(){
+  const AC=window.AudioContext||window.webkitAudioContext;if(!AC)return;
+  try{SFX.ctx=new AC()}catch(e){return}
+  document.querySelectorAll('audio[id]').forEach(a=>{
+    if(a.id==='music'||a.id==='clock')return;
+    fetch(a.getAttribute('src')).then(r=>{if(!r.ok)throw new Error(r.status);return r.arrayBuffer()})
+      .then(b=>new Promise((res,rej)=>SFX.ctx.decodeAudioData(b,res,rej)))
+      .then(buf=>{SFX.buf[a.id]=buf;SFX.off[a.id]=soundStart(buf)}).catch(()=>{});
+  });
+  const unlock=()=>{if(SFX.ctx.state==='suspended')SFX.ctx.resume()};
+  ['pointerdown','keydown','touchstart'].forEach(ev=>document.addEventListener(ev,unlock,{passive:true}));
+})();
+function soundStart(buf){const d=buf.getChannelData(0);for(let i=0;i<d.length;i++)if(Math.abs(d[i])>.015)return Math.max(0,i/buf.sampleRate-.004);return 0}
+function instantEffect(audio,vol=1){
+  if(!soundEnabled||!audio)return;
+  const buf=SFX.ctx&&SFX.buf[audio.id];
+  if(buf){
+    if(SFX.ctx.state==='suspended')SFX.ctx.resume();
+    const src=SFX.ctx.createBufferSource(),g=SFX.ctx.createGain();
+    src.buffer=buf;g.gain.value=vol;src.connect(g);g.connect(SFX.ctx.destination);src.start(0,SFX.off[audio.id]||0);return;
+  }
+  try{const fx=audio.cloneNode();fx.volume=Math.max(0,Math.min(1,vol));const p=fx.play();if(p&&p.catch)p.catch(()=>{})}catch(e){}
+}
 
 /* ---------- small helpers ---------- */
 function rng(seed){let a=seed>>>0;return()=>{a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
@@ -2930,6 +2934,13 @@ function blob(R,cx,cy,r,points=20,jag=.3,stretch=1,angle=0){
 }
 function shardPoly(R,n=6){const pts=[];for(let i=0;i<n;i++){const a=i/n*Math.PI*2+R()*.6,r=30+R()*20;pts.push(`${50+Math.cos(a)*r}% ${50+Math.sin(a)*r}%`)}return`polygon(${pts.join(',')})`}
 
+
+/* ---------- ROOM LAYOUT (design units: 1000 x 500, wall is the top 440) ---------- */
+const SCENE_W=1000,SCENE_H=500,WALL_H=440;
+const WINDOW_BOX={x:40,y:70,w:210,h:250};
+const HOLE={x:400,y:330,rx:74,ry:60};
+const scene={el:null,props:null,built:false,cursor:0,items:[],active:null,cam:{s:1,tx:0,fx:SCENE_W/2},floorPieces:[],final:false};
+
 /* ---------- BRICK WALL (generated once per size, then cached) ---------- */
 const wallCache={key:'',canvas:null,meta:null};
 function buildBrickWall(W,H,dpr){
@@ -2937,7 +2948,7 @@ function buildBrickWall(W,H,dpr){
   if(wallCache.key===key)return wallCache.canvas;
   const c=document.createElement('canvas');c.width=W;c.height=H;
   const ctx=c.getContext('2d'),R=rng(20260925);
-  const s=H/430;
+  const s=H/440;
   const bh=Math.round(38*s),bw=Math.round(bh*2.8),m=Math.max(3,Math.round(7*s));
   const y0=-Math.round(R()*bh);
 
@@ -3005,6 +3016,8 @@ function buildBrickWall(W,H,dpr){
   g=ctx.createRadialGradient(W*.45,-H*.1,0,W*.45,-H*.1,H*1.2);g.addColorStop(0,'rgba(255,190,130,.22)');g.addColorStop(1,'rgba(255,190,130,0)');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
   g=ctx.createRadialGradient(W/2,H*.45,H*.3,W/2,H*.45,Math.max(W,H)*.8);g.addColorStop(0,'rgba(0,0,0,0)');g.addColorStop(1,'rgba(0,0,0,.6)');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
 
+  drawWallFeatures(ctx,W,H,s,R);
+
   // fine grain
   const img=ctx.getImageData(0,0,W,H),d=img.data;
   for(let i=0;i<d.length;i+=4){const n=(R()-.5)*14;d[i]+=n;d[i+1]+=n;d[i+2]+=n}
@@ -3015,37 +3028,66 @@ function buildBrickWall(W,H,dpr){
   return c;
 }
 
-/* ---------- wall + damage layer ---------- */
-function ensureLayer(host){
-  let layer=host.querySelector('.v5-wall-layer');
-  if(!layer){layer=document.createElement('div');layer.className='v5-wall-layer';layer.innerHTML='<canvas class="v5-bricks"></canvas><canvas class="v5-damage"></canvas><canvas class="v5-fresh"></canvas>';host.prepend(layer)}
-  return layer;
+
+/* Window and hole are painted straight into the brick wall */
+function drawWallFeatures(ctx,W,H,s,R){
+  const k=W/SCENE_W;
+  // window
+  const X=WINDOW_BOX.x*k,Y=WINDOW_BOX.y*k,Wd=WINDOW_BOX.w*k,Hd=WINDOW_BOX.h*k;
+  ctx.fillStyle='rgba(8,4,2,.75)';ctx.fillRect(X-10*k,Y-8*k,Wd+20*k,Hd+20*k);
+  let g=ctx.createLinearGradient(0,Y,0,Y+Hd);
+  g.addColorStop(0,'#131d38');g.addColorStop(.5,'#34477a');g.addColorStop(.82,'#e2875a');g.addColorStop(1,'#ffcb7c');
+  ctx.fillStyle=g;ctx.fillRect(X,Y,Wd,Hd);
+  for(let i=0;i<22;i++){ctx.fillStyle=`rgba(255,255,255,${.3+R()*.6})`;ctx.fillRect(X+R()*Wd,Y+R()*Hd*.45,1.5*k,1.5*k)}
+  let bx=X;
+  while(bx<X+Wd){
+    const bw=(16+R()*30)*k,bh=(30+R()*95)*k;
+    ctx.fillStyle='#0c1120';ctx.fillRect(bx,Y+Hd-bh,bw,bh);
+    for(let wy=Y+Hd-bh+6*k;wy<Y+Hd-6*k;wy+=10*k)for(let wx=bx+4*k;wx<bx+bw-5*k;wx+=8*k)if(R()<.35){ctx.fillStyle=`rgba(255,${190+R()*50|0},110,.85)`;ctx.fillRect(wx,wy,3.5*k,4.5*k)}
+    bx+=bw+2*k;
+  }
+  // broken glass left in the frame
+  ctx.fillStyle='rgba(210,235,255,.18)';ctx.strokeStyle='rgba(255,255,255,.55)';ctx.lineWidth=1*k;
+  [[X,Y,1,1],[X+Wd,Y,-1,1],[X,Y+Hd,1,-1],[X+Wd,Y+Hd,-1,-1]].forEach(([cx,cy,sx,sy])=>{
+    ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(cx+sx*(25+R()*40)*k,cy);ctx.lineTo(cx+sx*(8+R()*12)*k,cy+sy*(12+R()*14)*k);ctx.lineTo(cx,cy+sy*(30+R()*40)*k);ctx.closePath();ctx.fill();ctx.stroke();
+  });
+  // frame, mullions, lintel and sill
+  ctx.strokeStyle='#3a2313';ctx.lineWidth=10*k;ctx.strokeRect(X+5*k,Y+5*k,Wd-10*k,Hd-10*k);
+  ctx.lineWidth=7*k;ctx.beginPath();ctx.moveTo(X+Wd/2,Y);ctx.lineTo(X+Wd/2,Y+Hd);ctx.moveTo(X,Y+Hd*.46);ctx.lineTo(X+Wd,Y+Hd*.46);ctx.stroke();
+  const stone=(x,y,w,h)=>{const sg=ctx.createLinearGradient(0,y,0,y+h);sg.addColorStop(0,'#a39c91');sg.addColorStop(1,'#5d574f');ctx.fillStyle=sg;ctx.fillRect(x,y,w,h);ctx.fillStyle='rgba(0,0,0,.35)';ctx.fillRect(x,y+h,w,4*k)};
+  stone(X-18*k,Y-26*k,Wd+36*k,20*k);stone(X-16*k,Y+Hd+4*k,Wd+32*k,14*k);
+
+  // hole punched through the bricks
+  const hx=HOLE.x*k,hy=HOLE.y*k;
+  const hole=blob(R,hx,hy,HOLE.ry*k,18,.32,HOLE.rx/HOLE.ry,0);
+  ctx.save();ctx.strokeStyle='rgba(205,140,105,.75)';ctx.lineWidth=12*k;ctx.stroke(hole);ctx.restore();
+  g=ctx.createRadialGradient(hx,hy+10*k,4*k,hx,hy,HOLE.rx*k);
+  g.addColorStop(0,'#030101');g.addColorStop(.75,'#140805');g.addColorStop(1,'#3a1a10');
+  ctx.fillStyle=g;ctx.fill(hole);
+  ctx.strokeStyle='rgba(20,8,4,.9)';ctx.lineWidth=2.5*k;ctx.stroke(hole);
+  crackLines(ctx,R,hx-HOLE.rx*k*.8,hy-HOLE.ry*k*.6,k,3,40,2);
+  crackLines(ctx,R,hx+HOLE.rx*k*.8,hy-HOLE.ry*k*.4,k,3,40,2);
+  powder(ctx,R,hx,hy+HOLE.ry*k,70*k,k,'220,190,170',60);
 }
-function activeLayer(){const st=document.getElementById('stage');return st?st.querySelector('.v5-wall-layer'):null}
+
+/* ---------- wall + damage canvases ---------- */
+function activeLayer(){return scene.el?scene.el.querySelector('.v5-wall-layer'):null}
 function paintLayer(layer){
-  const w=layer.clientWidth,h=layer.clientHeight;
-  if(!w||!h){requestAnimationFrame(()=>{if(layer.isConnected&&layer.clientWidth)paintLayer(layer)});return}
-  const dpr=Math.min(2,window.devicePixelRatio||1),W=Math.round(w*dpr),H=Math.round(h*dpr);
+  const dpr=Math.min(2,window.devicePixelRatio||1),W=Math.round(SCENE_W*dpr),H=Math.round(WALL_H*dpr);
   const [b,d,f]=layer.querySelectorAll('canvas');
   [b,d,f].forEach(c=>{c.width=W;c.height=H});
   b.getContext('2d').drawImage(buildBrickWall(W,H,dpr),0,0);
-  const ctx=d.getContext('2d');
-  wallDamage.forEach(rec=>drawDamage(ctx,rec,W,H,1));
+  const ctx=d.getContext('2d');wallDamage.forEach(rec=>drawDamage(ctx,rec,W,H,1));
 }
 function renderDamage(){const l=activeLayer();if(l)paintLayer(l)}
-function prepStage(){const stage=document.getElementById('stage');stage.innerHTML='<div id="flash" class="flash"></div>';paintLayer(ensureLayer(stage));return stage}
-let v5ResizeTimer;window.addEventListener('resize',()=>{clearTimeout(v5ResizeTimer);v5ResizeTimer=setTimeout(renderDamage,200)});
 
 const LIQUID={egg:1,wine:1,soda:1,wet:1};
 function addDamage(type,x,y,extra={}){
-  if(x==null)x=50+Math.random()*30-15;
-  if(y==null)y=40+Math.random()*20-10;
   const rec={type,x,y,seed:Math.random()*1e9|0,size:extra.size||1,dir:extra.dir??Math.random()*Math.PI*2};
   wallDamage.push(rec);
   const layer=activeLayer();if(!layer)return rec;
-  const [,d,f]=layer.querySelectorAll('canvas'),W=d.width,H=d.height;
-  if(!LIQUID[type]){drawDamage(d.getContext('2d'),rec,W,H,1);return rec}
-  // liquids run down the wall: animate on the "fresh" canvas, then bake into the damage canvas
+  const [,d,f]=layer.querySelectorAll('canvas');
+  if(!LIQUID[type]){drawDamage(d.getContext('2d'),rec,d.width,d.height,1);return rec}
   const fc=f.getContext('2d'),t0=performance.now(),dur=1700;
   const frame=now=>{
     const p=Math.min(1,(now-t0)/dur);
@@ -3057,10 +3099,8 @@ function addDamage(type,x,y,extra={}){
   requestAnimationFrame(frame);
   return rec;
 }
-
-/* ---------- damage painters ---------- */
 function drawDamage(ctx,rec,W,H,p){
-  const R=rng(rec.seed),cx=rec.x/100*W,cy=rec.y/100*H,u=H/430*rec.size;
+  const R=rng(rec.seed),cx=rec.x/SCENE_W*W,cy=rec.y/WALL_H*H,u=H/WALL_H*rec.size;
   ctx.save();
   ({egg:drawEgg,wine:drawWine,soda:drawSoda,wet:drawWet,ceramic:drawCeramic,scuff:drawScuff,crack:drawCrackMark,hammer:drawHammer,hole:drawHole}[rec.type]||drawCrackMark)(ctx,R,cx,cy,u,p,rec.dir);
   ctx.restore();
@@ -3227,45 +3267,57 @@ function drawHole(ctx,R,cx,cy,u){
   crackLines(ctx,R,cx,cy,u,8,90,3);
 }
 
-/* ---------- impact effects ---------- */
-function stagePoint(x,y){const st=document.getElementById('stage');return{px:st.clientWidth*x/100,py:st.clientHeight*y/100,w:st.clientWidth,h:st.clientHeight}}
-function dustPuff(x,y,rgb='190,150,120'){const st=document.getElementById('stage'),d=document.createElement('div'),pt=stagePoint(x,y);d.className='v5-dust';d.style.left=pt.px+'px';d.style.top=pt.py+'px';d.style.setProperty('--dust',rgb);st.appendChild(d);setTimeout(()=>d.remove(),950)}
 
+/* ---------- flying debris (lands and stays on the floor) ---------- */
+function dustPuff(x,y,rgb='190,150,120'){if(!scene.el)return;const d=document.createElement('div');d.className='v5-dust';d.style.left=x+'px';d.style.top=y+'px';d.style.setProperty('--dust',rgb);scene.el.appendChild(d);setTimeout(()=>d.remove(),950)}
 const SHARD={
-  ceramic:{size:[6,18],bg:()=>'linear-gradient(135deg,#ffffff,#e4e0d6 60%,#c9c4b8)'},
-  shell:{size:[5,13],bg:()=>'linear-gradient(135deg,#fbf3e6,#e8d5b8)'},
-  glass:{size:[6,20],bg:()=>'linear-gradient(135deg,rgba(255,255,255,.95),rgba(190,230,245,.35) 45%,rgba(255,255,255,.7))'},
-  ice:{size:[6,18],bg:()=>'linear-gradient(135deg,rgba(255,255,255,.95),rgba(170,220,245,.6))'},
-  wood:{size:[3,6],long:true,bg:()=>'linear-gradient(90deg,#c48c52,#7a4a22)'},
-  brick:{size:[4,12],bg:()=>Math.random()<.5?'#9a4a33':'#7b3526'},
-  brickBig:{size:[18,44],bg:()=>'linear-gradient(180deg,#a9573c,#7e3726)'},
-  rubber:{size:[8,18],bg:c=>c},
-  soda:{size:[3,7],round:true,bg:()=>'rgba(120,70,30,.8)'}
+  ceramic:{size:[5,16],bg:()=>'linear-gradient(135deg,#ffffff,#e4e0d6 60%,#c9c4b8)'},
+  shell:{size:[5,11],bg:()=>'linear-gradient(135deg,#fbf3e6,#e8d5b8)'},
+  glass:{size:[5,16],bg:()=>'linear-gradient(135deg,rgba(255,255,255,.95),rgba(190,230,245,.4) 45%,rgba(255,255,255,.75))'},
+  ice:{size:[5,16],bg:()=>'linear-gradient(135deg,rgba(255,255,255,.95),rgba(170,220,245,.65))'},
+  wood:{size:[3,5],long:true,bg:()=>'linear-gradient(90deg,#c48c52,#7a4a22)'},
+  brick:{size:[4,11],bg:()=>Math.random()<.5?'#9a4a33':'#7b3526'},
+  brickBig:{size:[16,40],bg:()=>'linear-gradient(180deg,#a9573c,#7e3726)'},
+  rubber:{size:[6,14],bg:c=>c},
+  soda:{size:[3,6],round:true,bg:()=>'rgba(120,70,30,.8)'}
 };
-const LEGACY_SHARD={'◻':'ceramic','◽':'shell','◇':'glass','❄':'ice','▰':'wood','▪':'brick','🧱':'brickBig'};
-function debris(kind,count=16,at,color){
-  kind=LEGACY_SHARD[kind]||kind;const spec=SHARD[kind]||SHARD.brick;
-  const st=document.getElementById('stage');if(!st)return;
-  const pt=stagePoint(at?at.x:50,at?at.y:42),floor=pt.h-54+Math.random()*10;
+function debris(kind,count,at,color,opts={}){
+  if(!scene.el)return;const spec=SHARD[kind]||SHARD.brick;
   for(let i=0;i<count;i++){
     const el=document.createElement('div');el.className='v5-shard';
     const sz=spec.size[0]+Math.random()*(spec.size[1]-spec.size[0]);
-    el.style.width=(spec.long?sz:sz)+'px';el.style.height=(spec.long?sz*5:sz*(.7+Math.random()*.5))+'px';
+    el.style.width=sz+'px';el.style.height=(spec.long?sz*5:sz*(.7+Math.random()*.5))+'px';
     el.style.background=spec.bg(color);
     if(spec.round)el.style.borderRadius='50%';else el.style.clipPath=shardPoly(Math.random);
-    st.appendChild(el);
-    const vx=(Math.random()-.5)*2*(140+Math.random()*120),vy=-(60+Math.random()*180),g=520+Math.random()*200,rot=(Math.random()-.5)*1080;
+    scene.el.appendChild(el);
+    const floor=452+Math.random()*40,vx=(Math.random()-.5)*2*(90+Math.random()*150),vy=-(40+Math.random()*150);
+    const g=Math.max(520,floor-at.y-vy+30),rot=(Math.random()-.5)*1080,landRot=Math.random()*180;
     const frames=[];
-    for(let k=0;k<=8;k++){
-      const t=k/8,x=pt.px+vx*t,y=Math.min(pt.py+vy*t+g*t*t,floor);
-      frames.push({transform:`translate(${x}px,${y}px) rotate(${rot*t}deg)`,opacity:t<.75?1:1-(t-.75)*4});
+    for(let k=0;k<=10;k++){
+      const t=k/10,y=Math.min(at.y+vy*t+g*t*t,floor),landed=y>=floor;
+      const op=opts.stay?1:(t<.7?1:1-(t-.7)/.3);
+      frames.push({transform:`translate(${at.x+vx*t}px,${y}px) rotate(${landed&&opts.stay?landRot:rot*t}deg) ${opts.stay&&landed?'scaleY(.55)':''}`,opacity:op});
     }
-    el.animate(frames,{duration:900+Math.random()*400,easing:'linear',fill:'forwards'});
-    setTimeout(()=>el.remove(),1400);
+    el.animate(frames,{duration:800+Math.random()*350,easing:'linear',fill:'forwards'});
+    if(opts.stay)keepOnFloor(el);else setTimeout(()=>el.remove(),1250);
   }
 }
+function keepOnFloor(el){scene.floorPieces.push(el);while(scene.floorPieces.length>260)scene.floorPieces.shift().remove()}
+/* Drop a bigger piece (plank half, burst balloon) so it tumbles to the floor and stays there */
+function dropToFloor(html,cx,cy,w,h,rot0=0){
+  const el=document.createElement('div');el.className='v6-drop';el.innerHTML=html;
+  el.style.left=(cx-w/2)+'px';el.style.top=(cy-h/2)+'px';el.style.width=w+'px';el.style.height=h+'px';
+  scene.el.appendChild(el);
+  const floor=462+Math.random()*26-h*.25,dx=(Math.random()-.5)*90,dy=floor-cy,r1=rot0+(Math.random()<.5?-1:1)*(8+Math.random()*25);
+  const frames=[];
+  for(let k=0;k<=8;k++){const t=k/8;frames.push({offset:t*.82,transform:`translate(${dx*t}px,${dy*t*t}px) rotate(${rot0+(r1-rot0)*t}deg)`})}
+  frames.push({offset:.91,transform:`translate(${dx}px,${dy-7}px) rotate(${r1+2}deg)`});
+  frames.push({offset:1,transform:`translate(${dx}px,${dy}px) rotate(${r1}deg)`});
+  el.animate(frames,{duration:760,easing:'ease-in',fill:'forwards'});
+  keepOnFloor(el);return el;
+}
 
-/* ---------- REALISTIC FIRST-PERSON HAND (inline SVG) ---------- */
+/* ---------- REALISTIC FIRST-PERSON HAND ---------- */
 /* Change these to adjust the skin tone. */
 const HAND_SKIN={light:'#f2c8a6',base:'#d99f7a',shadow:'#ad6d4b',deep:'#6b3c28',nail:'#f3d4c6'};
 const FINGERS=[{x:-33,y:-96,w:26,L:90},{x:-10,y:-104,w:27,L:100},{x:13,y:-100,w:25,L:93},{x:34,y:-88,w:22,L:72}];
@@ -3315,7 +3367,7 @@ function handSVG(pose){
   const knuckles=KNUCKLES.map((k,i)=>`<ellipse cx="${k.x}" cy="${k.y+3}" rx="${FINGERS[i].w*.42}" ry="${FINGERS[i].w*.3}" fill="url(#${id}k)" opacity="${P.curl[i]>.5?1:.7}"/><path d="M${k.x-5} ${k.y-2} q5 -2 10 0" stroke="${S.deep}" stroke-opacity=".25" stroke-width=".9" fill="none"/>`).join('');
   const wrist=`<path d="M-37 -2 Q0 6 39 -2" stroke="${S.deep}" stroke-opacity=".22" stroke-width="1.2" fill="none"/>`;
   let ribs='';for(let x=-60;x<=66;x+=5)ribs+=`<path d="M${x} ${69-Math.abs(x)*.02} L${x+1.5} ${90}" stroke="#000" stroke-opacity=".25" stroke-width="1.2"/>`;
-  const sleeve=`<path d="M-66 72 C-30 60 40 58 72 72 L100 260 L-90 260 Z" fill="url(#${id}s)"/>
+  const sleeve=`<path d="M-66 72 C-30 60 40 58 72 72 L118 900 L-110 900 Z" fill="url(#${id}s)"/>
     <path d="M-40 120 Q-10 110 20 128 M-50 170 Q0 150 40 176" stroke="#fff" stroke-opacity=".06" stroke-width="4" fill="none"/>
     <path d="M-64 70 C-30 58 40 56 70 70 L72 94 C40 82 -30 84 -64 94 Z" fill="#1c212d"/>${ribs}
     <path d="M-64 70 C-30 58 40 56 70 70" stroke="#556078" stroke-opacity=".6" stroke-width="1.5" fill="none"/>`;
@@ -3330,18 +3382,64 @@ function handSVG(pose){
   }
   const body=P.thumbBehind?`${arm}${thumb}${fingers}${back}`:`${arm}${fingers}${back}`;
   const front=P.thumbBehind?'':thumb;
-  return`<svg viewBox="-262 -262 350 382" xmlns="http://www.w3.org/2000/svg">${defs}
-    <g transform="rotate(-16)">${hammer}<g filter="url(#${id}t)">${body}${tendons}${veins}${knuckles}${wrist}${front}</g>${sleeve}</g></svg>`;
+  return`<svg viewBox="-260 -260 360 1160" xmlns="http://www.w3.org/2000/svg">${defs}
+    <g>${hammer}<g filter="url(#${id}t)">${body}${tendons}${veins}${knuckles}${wrist}${front}</g>${sleeve}</g></svg>`;
 }
-const HAND_ALIASES={'🫱':'grab','✋':'grab','✊':'fist','☝️':'point','🔨':'hammer'};
-function hand(kind='grab'){
-  const stage=document.getElementById('stage');const pose=HAND_ALIASES[kind]||kind;
-  const h=document.createElement('div');h.className='first-person-hand';h.dataset.pose=pose;h.innerHTML=handSVG(pose);
-  stage.appendChild(h);return h;
-}
-function handMove(h,cls){if(!h)return;if(h.dataset.pose==='hammer'&&cls==='hit')cls='swing';h.classList.remove('throw','hit','swing');void h.offsetWidth;h.classList.add(cls)}
 
-/* ---------- OBJECT ARTWORK (inline SVG) ---------- */
+
+/* The hand follows your mouse or finger; the "hot spot" is the part that touches things */
+const HOT={grab:[-8,-160],fist:[-8,-122],point:[-45,-180],hammer:[-179,-99]};
+const HAND={el:null,inner:null,pose:null,x:0,y:0,hx:0,hy:0};
+function createHand(){
+  const st=document.getElementById('stage');
+  const h=document.createElement('div');h.className='v6-hand';h.innerHTML='<div class="v6-hand-inner"></div>';
+  st.appendChild(h);HAND.el=h;HAND.inner=h.firstChild;HAND.pose=null;
+  HAND.x=st.clientWidth*.8;HAND.y=st.clientHeight*.8;
+  setHandPose('grab');
+}
+function setHandPose(p){if(!HAND.el)return;if(HAND.pose!==p){HAND.pose=p;HAND.inner.innerHTML=handSVG(p)}sizeHand()}
+function sizeHand(){
+  const k=scene.cam.s*.78,[lx,ly]=HOT[HAND.pose];
+  HAND.el.style.width=360*k+'px';HAND.el.style.height=1160*k+'px';
+  HAND.hx=(lx+260)*k;HAND.hy=(ly+260)*k;
+  HAND.el.style.transformOrigin=`${HAND.hx}px ${HAND.hy}px`;
+  HAND.inner.style.transformOrigin=HAND.pose==='hammer'?`${260*k}px ${260*k}px`:`${HAND.hx}px ${HAND.hy}px`;
+  placeHand();
+}
+function placeHand(){
+  if(!HAND.el)return;const st=document.getElementById('stage');
+  const W=st.clientWidth,H=st.clientHeight;
+  HAND.x=clamp(HAND.x,0,W);HAND.y=clamp(HAND.y,0,H);
+  const sx=W*.86,sy=H*1.7;
+  const a=clamp(Math.atan2(-(sx-HAND.x),sy-HAND.y)*180/Math.PI,-60,40);
+  HAND.el.style.transform=`translate(${HAND.x-HAND.hx}px,${HAND.y-HAND.hy}px) rotate(${a}deg)`;
+}
+function handStrike(type){if(!HAND.inner)return;if(HAND.pose==='hammer')type='swing';HAND.inner.classList.remove('jab','swing','throw');void HAND.inner.offsetWidth;HAND.inner.classList.add(type)}
+function stagePointer(e){const st=document.getElementById('stage'),r=st.getBoundingClientRect();return{x:e.clientX-r.left-st.clientLeft,y:e.clientY-r.top-st.clientTop}}
+function toDesign(e){const p=stagePointer(e);return{x:(p.x-scene.cam.tx)/scene.cam.s,y:p.y/scene.cam.s}}
+function bindStagePointer(){
+  const st=document.getElementById('stage');if(st.dataset.v6)return;st.dataset.v6='1';
+  const move=e=>{const p=stagePointer(e);HAND.x=p.x;HAND.y=p.y;placeHand()};
+  st.addEventListener('pointermove',move);
+  st.addEventListener('pointerdown',move,true);
+}
+
+/* ---------- camera: whole room on wide screens, pans to the active object on phones ---------- */
+function layoutScene(focusX){
+  const st=document.getElementById('stage');if(!scene.el)return;
+  const W=st.clientWidth||1000;let s,H;
+  if(W>=700){s=W/SCENE_W;H=SCENE_H*s}else{H=Math.min(460,Math.max(360,window.innerHeight*.6));s=H/SCENE_H}
+  st.style.height=H+'px';
+  if(focusX!=null)scene.cam.fx=focusX;
+  const sw=SCENE_W*s;let tx=0;
+  if(sw>W+1)tx=clamp(W/2-scene.cam.fx*s,W-sw,0);
+  scene.cam.s=s;scene.cam.tx=tx;
+  scene.el.style.transform=`translate(${tx}px,0) scale(${s})`;
+  if(HAND.el)sizeHand();
+}
+let v6ResizeTimer;window.addEventListener('resize',()=>{clearTimeout(v6ResizeTimer);v6ResizeTimer=setTimeout(()=>layoutScene(),150)});
+
+/* ---------- OBJECT ARTWORK ---------- */
 function shade(hex,amt){const n=parseInt(hex.slice(1),16);let r=n>>16,g=n>>8&255,b=n&255;const f=v=>clamp(Math.round(amt<0?v*(1+amt):v+(255-v)*amt),0,255);return`rgb(${f(r)},${f(g)},${f(b)})`}
 const ITEM_SVG={
   egg:()=>{const id='eg'+(++svgUid);let sp='';const R=rng(svgUid*77);for(let i=0;i<14;i++)sp+=`<circle cx="${22+R()*56}" cy="${24+R()*86}" r="${.6+R()*1.3}" fill="#8a5a33" opacity="${.15+R()*.25}"/>`;
@@ -3391,92 +3489,184 @@ const ITEM_SVG={
     <path d="M40 70 L42 128" stroke="#fff" stroke-opacity=".7" stroke-width="3" stroke-linecap="round"/>
     <path class="c1" d="M62 70 L70 98 L60 118 L74 140 M70 98 L86 104" stroke="#fff" stroke-width="2" fill="none"/>
     <path class="c2" d="M120 76 L130 100 L118 124 L136 150 M130 100 L152 96 M60 118 L40 124" stroke="#fff" stroke-width="2" fill="none"/></svg>`},
-  board:()=>{const id='bd'+(++svgUid);const R=rng(svgUid*31);let grain='';for(let i=0;i<13;i++){const y=28+i*6.5+R()*3;grain+=`<path d="M0 ${y} C130 ${y+(R()-.5)*8} 260 ${y+(R()-.5)*10} 390 ${y+(R()-.5)*8} S520 ${y} 520 ${y}" stroke="#5b3013" stroke-opacity="${.18+R()*.2}" stroke-width="${.8+R()*1.4}" fill="none"/>`}
-    const plank=`<g><rect x="0" y="20" width="520" height="92" rx="5" fill="url(#${id}w)"/>${grain}
-      <g transform="translate(140 62)"><ellipse rx="11" ry="7" fill="#5a2e12"/><ellipse rx="18" ry="11" fill="none" stroke="#5a2e12" stroke-opacity=".5" stroke-width="2"/><ellipse rx="26" ry="15" fill="none" stroke="#5a2e12" stroke-opacity=".25" stroke-width="2"/></g>
-      <g transform="translate(395 84)"><ellipse rx="7" ry="4.5" fill="#5a2e12"/><ellipse rx="13" ry="8" fill="none" stroke="#5a2e12" stroke-opacity=".4" stroke-width="2"/></g>
-      <rect x="0" y="20" width="520" height="4" fill="#fff" opacity=".22"/><rect x="0" y="106" width="520" height="6" fill="#000" opacity=".25"/>
-      <rect x="0" y="20" width="10" height="92" fill="#000" opacity=".2"/><rect x="510" y="20" width="10" height="92" fill="#000" opacity=".2"/></g>`;
-    const jag='262,0 250,24 271,44 254,66 272,88 258,120';
-    const block=x=>`<g transform="translate(${x} 112)"><rect width="96" height="74" fill="url(#${id}c)" stroke="#3c3c3c"/><rect x="12" y="18" width="28" height="40" rx="3" fill="#2b2b2b"/><rect x="56" y="18" width="28" height="40" rx="3" fill="#2b2b2b"/><rect width="96" height="4" fill="#fff" opacity=".15"/></g>`;
-    return`<svg viewBox="0 0 520 190"><defs>
-      <linearGradient id="${id}w" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d49a5a"/><stop offset=".3" stop-color="#b87a3f"/><stop offset=".65" stop-color="#c98d4e"/><stop offset="1" stop-color="#8e5427"/></linearGradient>
-      <linearGradient id="${id}c" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9b9893"/><stop offset="1" stop-color="#65625e"/></linearGradient>
-      <clipPath id="${id}L"><polygon points="0,0 ${jag} 0,120"/></clipPath><clipPath id="${id}R"><polygon points="520,0 ${jag} 520,120"/></clipPath></defs>
-      <ellipse cx="260" cy="186" rx="250" ry="7" fill="#000" opacity=".4"/>${block(22)}${block(402)}
-      <g class="plank"><g class="half-l" clip-path="url(#${id}L)">${plank}</g><g class="half-r" clip-path="url(#${id}R)">${plank}</g>
-      <polyline class="c1" points="262,20 252,40 268,56" stroke="#2a1406" stroke-width="3" fill="none"/>
-      <path class="c2" d="M268 56 L256 74 L270 94 L260 112 M252 40 L236 46" stroke="#2a1406" stroke-width="3" fill="none"/></g></svg>`}
+
+  plateFront:()=>{const id='pf'+(++svgUid);return`<svg viewBox="0 0 100 100"><defs>
+    <radialGradient id="${id}r" cx=".4" cy=".35" r=".75"><stop offset="0" stop-color="#fff"/><stop offset=".7" stop-color="#ece9e0"/><stop offset="1" stop-color="#c9c4b8"/></radialGradient>
+    <radialGradient id="${id}w" cx=".5" cy=".42" r=".6"><stop offset="0" stop-color="#fbfaf6"/><stop offset=".8" stop-color="#eeebe3"/><stop offset="1" stop-color="#d3cec2"/></radialGradient></defs>
+    <circle cx="50" cy="50" r="48" fill="url(#${id}r)" stroke="#b1ab9e"/>
+    <circle cx="50" cy="50" r="43" fill="none" stroke="#2e5b9e" stroke-width="2.6"/><circle cx="50" cy="50" r="40.5" fill="none" stroke="#2e5b9e" stroke-width="1" opacity=".6"/>
+    <circle cx="50" cy="50" r="30" fill="url(#${id}w)"/>
+    <path d="M17 36 A36 36 0 0 1 43 12" stroke="#fff" stroke-width="3.5" fill="none" stroke-linecap="round" opacity=".9"/></svg>`},
+  can:()=>{const id='cn'+(++svgUid);return`<svg viewBox="0 0 60 100"><defs>
+    <linearGradient id="${id}r" x2="1"><stop offset="0" stop-color="#7d1111"/><stop offset=".25" stop-color="#e53935"/><stop offset=".42" stop-color="#ff8a80"/><stop offset=".6" stop-color="#d32f2f"/><stop offset="1" stop-color="#5f0d0d"/></linearGradient>
+    <linearGradient id="${id}m" x2="1"><stop offset="0" stop-color="#6b7075"/><stop offset=".4" stop-color="#eef1f3"/><stop offset=".7" stop-color="#9aa0a5"/><stop offset="1" stop-color="#50555a"/></linearGradient></defs>
+    <ellipse cx="30" cy="96" rx="27" ry="4" fill="#000" opacity=".45"/>
+    <path d="M6 12 Q6 8 10 7 L50 7 Q54 8 54 12 L54 88 Q54 93 50 94 L10 94 Q6 93 6 88 Z" fill="url(#${id}r)"/>
+    <rect x="6" y="84" width="48" height="10" rx="3" fill="url(#${id}m)"/>
+    <ellipse cx="30" cy="8" rx="24" ry="5" fill="url(#${id}m)" stroke="#555"/><ellipse cx="30" cy="8" rx="8" ry="2.2" fill="#7a7f84"/>
+    <rect x="6" y="38" width="48" height="20" fill="#fff" opacity=".92"/>
+    <text x="30" y="52" font-size="10.5" font-weight="900" fill="#d32f2f" text-anchor="middle" font-family="Arial,sans-serif">SMASH</text>
+    <rect x="15" y="13" width="5" height="70" fill="#fff" opacity=".33"/></svg>`},
+  rope:()=>`<svg viewBox="0 0 330 80"><path d="M10 20 Q165 72 320 20" stroke="#000" stroke-opacity=".35" stroke-width="4" fill="none" transform="translate(3 6)"/>
+    <path d="M10 20 Q165 72 320 20" stroke="#c9ab7a" stroke-width="3.5" fill="none"/><path d="M10 20 Q165 72 320 20" stroke="#7d6440" stroke-width="3.5" stroke-dasharray="3 4" fill="none"/>
+    <circle cx="10" cy="20" r="5" fill="#777" stroke="#333"/><circle cx="320" cy="20" r="5" fill="#777" stroke="#333"/><circle cx="8.5" cy="18.5" r="1.6" fill="#ddd"/><circle cx="318.5" cy="18.5" r="1.6" fill="#ddd"/></svg>`,
+  cartonBack:()=>`<svg viewBox="0 0 140 40"><path d="M4 12 L136 12 L132 36 L8 36 Z" fill="#9c9486"/>${[25,65,105].map(x=>`<ellipse cx="${x}" cy="13" rx="17" ry="5" fill="#6f685c"/>`).join('')}</svg>`,
+  cartonFront:()=>`<svg viewBox="0 0 140 40"><path d="M6 22 Q25 30 45 22 Q65 30 85 22 Q105 30 125 22 L134 22 L130 38 L10 38 Z" fill="#b9b1a2" stroke="#8a8274"/><path d="M12 32 H128" stroke="#8a8274" stroke-opacity=".5"/></svg>`,
+  knot:(c)=>`<svg viewBox="0 0 100 200"><path d="M50 136 C43 156 58 172 50 198" stroke="#e8e8e8" stroke-width="1.3" fill="none"/>
+    <path d="M44 138 L50 128 L56 138 Z" fill="${shade(c,-.35)}"/><path d="M46 129 L38 116 L47 122 L50 110 L53 122 L63 115 L54 129 Z" fill="${c}" opacity=".9"/></svg>`,
+  rubber:(c)=>`<svg viewBox="0 0 40 26"><path d="M3 18 Q6 6 16 9 Q20 2 28 7 Q38 6 36 16 Q34 24 22 21 Q12 26 3 18 Z" fill="${c}"/><path d="M8 16 Q16 12 22 16 M18 10 Q24 12 28 9" stroke="${shade(c,-.45)}" stroke-width="1.4" fill="none"/><ellipse cx="14" cy="12" rx="4" ry="2" fill="#fff" opacity=".4"/></svg>`,
+  plank:(part='full')=>{
+    const id='pk'+(++svgUid),R=rng(svgUid*17);let grain='';
+    for(let i=0;i<6;i++){const y=7+i*4.6+R()*2;grain+=`<path d="M0 ${y} C60 ${y+(R()-.5)*4} 150 ${y+(R()-.5)*5} 250 ${y}" stroke="#5b3013" stroke-opacity="${.2+R()*.25}" stroke-width="${.7+R()}" fill="none"/>`}
+    const jag='125,0 118,10 131,18 120,27 128,36';
+    const clip=part==='left'?`0,0 ${jag} 0,36`:part==='right'?`250,0 ${jag} 250,36`:null;
+    const vb=part==='left'?'0 0 132 36':part==='right'?'117 0 133 36':'0 0 250 36';
+    const nail=x=>`<circle cx="${x}" cy="18" r="4" fill="#707070" stroke="#2c2c2c"/><circle cx="${x-1.2}" cy="16.8" r="1.4" fill="#ddd"/>`;
+    return`<svg viewBox="${vb}"><defs><linearGradient id="${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d19756"/><stop offset=".35" stop-color="#b3743b"/><stop offset=".7" stop-color="#c68b4d"/><stop offset="1" stop-color="#875022"/></linearGradient>
+      ${clip?`<clipPath id="${id}c"><polygon points="${clip}"/></clipPath>`:''}</defs>
+      <g ${clip?`clip-path="url(#${id}c)"`:''}><rect x="0" y="2" width="250" height="32" rx="3" fill="url(#${id})"/>${grain}
+      <rect x="0" y="2" width="250" height="3" fill="#fff" opacity=".2"/><rect x="0" y="30" width="250" height="4" fill="#000" opacity=".25"/>${nail(13)}${nail(237)}
+      ${clip?`<polyline points="${jag}" stroke="#e8c08a" stroke-width="1.5" fill="none"/>`:''}</g>
+      ${part==='full'?`<polyline class="c1" points="125,2 119,12 130,19 121,27" stroke="#2a1406" stroke-width="2.4" fill="none"/>`:''}</svg>`;
+  }
 };
 
-/* ---------- CHALLENGES ---------- */
-function setChallengeText(title,instr){document.getElementById('challengeTitle').textContent=title;document.getElementById('challengeInstruction').textContent=instr}
-function finishMechanic(delay=520){setTimeout(unlockClue,delay)}
-function startChallenge(){stopAllEffects();const type=globalChallengeIndex%7;globalChallengeIndex++;[setupPlateV4,setupEggV4,setupWineGlassV4,setupCanV4,setupBalloonsV4,setupIceV4,setupWoodV4][type]()}
+/* ---------- BUILD THE ROOM ---------- */
+function resetScene(){scene.built=false;scene.el=null;scene.items=[];scene.cursor=0;scene.floorPieces=[];scene.active=null;scene.final=false;wallDamage=[]}
+function place(el,x,y,w,h){el.style.left=x+'px';el.style.top=y+'px';el.style.width=w+'px';el.style.height=h+'px';return el}
+function prop(html,x,y,w,h,z=4){const el=document.createElement('div');el.className='v6-prop';el.innerHTML=html;el.style.zIndex=z;scene.props.appendChild(place(el,x,y,w,h));return el}
+function buildScene(){
+  const stage=document.getElementById('stage');
+  stage.innerHTML='<div id="flash" class="flash"></div>';
+  const el=document.createElement('div');el.className='v5-scene';
+  el.innerHTML='<div class="v5-escape"></div><div class="v5-wall-layer"><canvas></canvas><canvas></canvas><canvas></canvas></div><div class="v5-floor"></div><div class="v5-props"></div>';
+  stage.appendChild(el);
+  Object.assign(scene,{el,props:el.querySelector('.v5-props'),built:true,items:[],cursor:0,floorPieces:[],active:null,final:false});
+  paintLayer(el.querySelector('.v5-wall-layer'));
+  // furniture that never breaks
+  prop(ITEM_SVG.rope(),270,150,330,80,4);
+  [[615,200],[615,352]].forEach(([x,y])=>{const s=document.createElement('div');s.className='v6-shelf';scene.props.appendChild(place(s,x,y,330,14))});
+  prop(ITEM_SVG.cartonBack(),800,314,140,40,4);
+  prop(ITEM_SVG.cartonFront(),800,314,140,40,6);
+  stockItems();
+  bindStagePointer();createHand();layoutScene(SCENE_W/2);
+}
+function addItem(kind,html,x,y,w,h,extra={}){
+  const el=document.createElement('div');el.className=`v6-item v6-${kind}`;el.innerHTML=html;place(el,x,y,w,h);
+  if(extra.rot!=null)el.style.transform=`rotate(${extra.rot}deg)`;
+  scene.props.appendChild(el);
+  const it={kind,el,hits:0,done:false,cx:x+w/2,cy:y+h/2,...extra};
+  el.addEventListener('pointerdown',e=>{if(scene.active!==it||scene.final)return;e.stopPropagation();HANDLERS[kind](it)});
+  scene.items.push(it);return it;
+}
+function stockItems(){
+  scene.items.forEach(it=>it.el.remove());scene.items=[];
+  // balloons tied to the rope
+  const colors=['#e53935','#fb8c00','#fdd835','#43a047','#1e88e5'];
+  colors.forEach((c,i)=>{const t=(i+.5)/5,rx=(1-t)*(1-t)*10+2*(1-t)*t*165+t*t*320,ry=(1-t)*(1-t)*20+2*(1-t)*t*72+t*t*20;
+    addItem('balloon',ITEM_SVG.balloon(c),270+rx-26,150+ry-103,52,104,{color:c})});
+  // plates on the top shelf, glasses and eggs on the lower one
+  [665,775,885].forEach(x=>addItem('plate',ITEM_SVG.plateFront(),x-42,118,84,84));
+  [642,690,738].forEach(x=>addItem('glass',ITEM_SVG.glass(),x-21,352-74,42,76));
+  [825,865,905].forEach(x=>addItem('egg',ITEM_SVG.egg(),x-15,299,30,39));
+  // boards nailed over the window
+  [[120,-9],[200,7],[278,-5]].forEach(([y,r])=>addItem('board',ITEM_SVG.plank(),WINDOW_BOX.x+WINDOW_BOX.w/2-125,y-18,250,36,{rot:r}));
+  // ice stuck in the hole, can on the floor
+  addItem('ice',ITEM_SVG.ice(),HOLE.x-59,HOLE.y+HOLE.ry-106,118,112);
+  addItem('can',ITEM_SVG.can(),528,392,46,78);
+}
 
-function makeThrowRow(kind,count,onImpact){
-  const stage=document.getElementById('stage'),row=document.createElement('div');row.className='v5-row';
-  let hits=0;
-  for(let i=0;i<count;i++){
-    const o=document.createElement('div');o.className='v5-throwable v5-'+kind;o.innerHTML=ITEM_SVG[kind]();row.appendChild(o);
-    o.onpointerdown=()=>{
-      if(o.dataset.done)return;o.dataset.done=1;
-      handMove(stage.querySelector('.first-person-hand'),'throw');
-      const sr=stage.getBoundingClientRect(),or=o.getBoundingClientRect();
-      const ix=20+Math.random()*56,iy=18+Math.random()*34;
-      const tx=sr.left+sr.width*ix/100-(or.left+or.width/2),ty=sr.top+sr.height*iy/100-(or.top+or.height/2);
-      o.style.setProperty('--tx',tx+'px');o.style.setProperty('--ty',ty+'px');o.style.setProperty('--spin',(Math.random()<.5?-1:1)*(220+Math.random()*300)+'deg');
-      o.classList.add('fly');
-      setTimeout(()=>{o.style.visibility='hidden';onImpact(ix,iy,Math.atan2(ty,tx));if(++hits===count)finishMechanic(700)},330);
-    };
+/* ---------- ONE THING PER CHALLENGE, unlocked in turn ---------- */
+const ORDER=['balloon','plate','board','glass','egg','ice','can'];
+const TEXT={
+  balloon:['🎈 POP A BALLOON','Move your hand to the glowing balloon and pop it.'],
+  plate:['🍽️ THROW A PLATE','Grab the glowing plate off the shelf and throw it at the wall.'],
+  board:['🪵 BREAK A BOARD','Hammer the glowing board off the window.'],
+  glass:['🍷 THROW A GLASS','Grab the glowing glass and throw it at the wall.'],
+  egg:['🥚 THROW AN EGG','Grab the glowing egg and throw it at the wall.'],
+  ice:['🧊 FREE THE ICE','Hammer the ice block stuck in the wall until it shatters.'],
+  can:['🥫 CRUSH THE CAN','Punch the can on the floor until it is flat.']
+};
+const POSE={balloon:'point',plate:'grab',glass:'grab',egg:'grab',board:'hammer',ice:'hammer',can:'fist'};
+function nextItem(){
+  for(let pass=0;pass<2;pass++){
+    for(let k=0;k<ORDER.length;k++){
+      const kind=ORDER[(scene.cursor+k)%ORDER.length],it=scene.items.find(i=>i.kind===kind&&!i.done);
+      if(it){scene.cursor=(scene.cursor+k+1)%ORDER.length;return it}
+    }
+    stockItems(); // everything is broken: hang up a fresh set, the damage stays
   }
-  stage.appendChild(row);hand('grab');
 }
-function setupPlateV4(){setChallengeText('🍽️ THROW THE PLATES','Throw three plates at the brick wall.');prepStage();makeThrowRow('plate',3,(x,y)=>{instantEffect(plateAudio);addDamage('ceramic',x,y);dustPuff(x,y,'235,228,215');flashScreen();cameraShake(true);debris('ceramic',22,{x,y})})}
-function setupEggV4(){setChallengeText('🥚 EGG THE WALL','Throw three whole eggs at the wall and make a mess.');prepStage();makeThrowRow('egg',3,(x,y,dir)=>{instantEffect(eggAudioV3);addDamage('egg',x,y,{dir});cameraShake();debris('shell',9,{x,y})})}
-function setupWineGlassV4(){setChallengeText('🍷 THROW THE GLASSES','Throw three glasses against the brick wall.');prepStage();makeThrowRow('glass',3,(x,y,dir)=>{instantEffect(wineGlassAudioV3);addDamage('wine',x,y,{dir});flashScreen();cameraShake(true);debris('glass',26,{x,y})})}
-function setupCanV4(){
-  setChallengeText('🥫 CRUSH THE CAN','Crush the soda can until it is completely flat.');
-  const stage=prepStage(),c=document.createElement('div');c.className='v4-can';stage.appendChild(c);
-  const h=hand('fist');let hits=0;
-  c.onpointerdown=()=>{if(hits>=3)return;hits++;instantEffect(canAudioV3);handMove(h,'hit');cameraShake();
-    c.style.transform=`scaleY(${1-hits*.23}) scaleX(${1+hits*.12}) rotate(${hits*3}deg)`;
-    debris('soda',6+hits*4,{x:44,y:70});
-    if(hits===3){addDamage('soda',44+Math.random()*8,52+Math.random()*6);flashScreen();finishMechanic(600)}};
+function setChallengeText(title,instr){document.getElementById('challengeTitle').textContent=title;document.getElementById('challengeInstruction').textContent=instr}
+function finishMechanic(delay=600){setTimeout(unlockClue,delay)}
+function startChallenge(){
+  stopAllEffects();
+  if(!scene.built||!scene.el||!scene.el.isConnected)buildScene();
+  globalChallengeIndex++;
+  const it=nextItem();scene.active=it;
+  it.el.classList.add('active');
+  setChallengeText(...TEXT[it.kind]);
+  setHandPose(POSE[it.kind]);
+  layoutScene(it.cx);
 }
-function setupBalloonsV4(){
-  setChallengeText('🎈 POP THE BALLOONS','Pop every balloon to unlock the clue.');
-  const stage=prepStage(),row=document.createElement('div');row.className='v5-row';
-  const colors=['#e53935','#fb8c00','#fdd835','#43a047','#1e88e5'];let pops=0;
-  colors.forEach(col=>{const b=document.createElement('div');b.className='v5-throwable v5-balloon';b.innerHTML=ITEM_SVG.balloon(col);row.appendChild(b);
-    b.onpointerdown=()=>{if(b.dataset.done)return;b.dataset.done=1;instantEffect(balloonAudioV3);cameraShake();handMove(stage.querySelector('.first-person-hand'),'hit');
-      const sr=stage.getBoundingClientRect(),br=b.getBoundingClientRect();
-      debris('rubber',7,{x:(br.left+br.width/2-sr.left)/sr.width*100,y:(br.top+br.height*.3-sr.top)/sr.height*100},col);
-      b.classList.add('pop');if(++pops>=5){flashScreen();finishMechanic(420)}}});
-  stage.appendChild(row);hand('point');
-}
-function setupIceV4(){
-  setChallengeText('🧊 BREAK THE ICE','Smash the ice block with the hammer.');
-  const stage=prepStage(),ice=document.createElement('div');ice.className='v5-ice';ice.innerHTML=ITEM_SVG.ice();stage.appendChild(ice);
-  const h=hand('hammer');let hits=0;
-  ice.onpointerdown=()=>{if(hits>=3)return;hits++;handMove(h,'hit');cameraShake(hits===3);
-    ice.classList.remove('hit');void ice.offsetWidth;ice.classList.add('hit');setTimeout(()=>ice.classList.remove('hit'),90);
-    if(hits===1)ice.classList.add('crack1');if(hits===2)ice.classList.add('crack2');
-    debris('ice',hits<3?5:30,{x:44,y:66});
-    if(hits===3){instantEffect(iceAudioV3);ice.classList.add('shatter');const x=40+Math.random()*16,y=40+Math.random()*12;addDamage('wet',x,y);dustPuff(x,y,'220,240,255');flashScreen();finishMechanic(700)}};
-}
-function setupWoodV4(){
-  setChallengeText('🪵 BREAK THE BOARD','Strike the wooden board until it snaps in two.');
-  const stage=prepStage(),wrap=document.createElement('div');wrap.className='v5-board';wrap.innerHTML=ITEM_SVG.board();stage.appendChild(wrap);
-  const h=hand('hammer');let hits=0;
-  wrap.onpointerdown=()=>{if(hits>=3)return;hits++;handMove(h,'hit');cameraShake(hits===3);
-    wrap.classList.remove('hit');void wrap.offsetWidth;wrap.classList.add('hit');setTimeout(()=>wrap.classList.remove('hit'),90);
-    if(hits===1)wrap.classList.add('crack1');if(hits===2)wrap.classList.add('crack2');
-    debris('wood',hits<3?4:20,{x:43,y:62});
-    if(hits===3){instantEffect(woodAudioV3);wrap.classList.add('broken');const x=36+Math.random()*20,y=34+Math.random()*14;addDamage('scuff',x,y,{dir:Math.random()*Math.PI});flashScreen();finishMechanic(700)}};
-}
+function completeItem(it,delay){it.done=true;it.el.classList.remove('active');scene.active=null;finishMechanic(delay)}
 
-/* ---------- FINAL WALL: your own damaged wall, smashed until it falls ---------- */
+function randomWallSpot(){
+  for(let i=0;i<30;i++){
+    const x=270+Math.random()*330,y=70+Math.random()*350;
+    const inHole=((x-HOLE.x)/(HOLE.rx+20))**2+((y-HOLE.y)/(HOLE.ry+20))**2<1;
+    if(!inHole)return{x,y};
+  }
+  return{x:560,y:260};
+}
+function throwItem(it,onImpact){
+  handStrike('throw');
+  const t=randomWallSpot(),dx=t.x-it.cx,dy=t.y-it.cy,spin=(Math.random()<.5?-1:1)*(240+Math.random()*300);
+  it.el.classList.remove('active');it.el.style.zIndex=12;
+  it.el.animate([{transform:'none'},{transform:`translate(${dx*.5}px,${dy*.5-70}px) rotate(${spin/2}deg) scale(.8)`},{transform:`translate(${dx}px,${dy}px) rotate(${spin}deg) scale(.45)`}],{duration:360,easing:'linear',fill:'forwards'});
+  setTimeout(()=>{it.el.style.visibility='hidden';onImpact(t.x,t.y,Math.atan2(dy,dx))},350);
+  completeItem(it,1000);
+}
+const HANDLERS={
+  balloon(it){
+    handStrike('jab');instantEffect(balloonAudioV3);cameraShake();
+    it.el.classList.add('popped');it.el.innerHTML=ITEM_SVG.knot(it.color);
+    dropToFloor(ITEM_SVG.rubber(it.color),it.cx,it.cy-16,34,22,Math.random()*60-30);
+    debris('rubber',5,{x:it.cx,y:it.cy-16},it.color,{stay:true});
+    completeItem(it,650);
+  },
+  plate(it){throwItem(it,(x,y)=>{instantEffect(plateAudio);addDamage('ceramic',x,y);dustPuff(x,y,'235,228,215');flashScreen();cameraShake(true);debris('ceramic',20,{x,y},null,{stay:true})})},
+  glass(it){throwItem(it,(x,y,dir)=>{instantEffect(wineGlassAudioV3);addDamage('wine',x,y,{dir});flashScreen();cameraShake(true);debris('glass',22,{x,y},null,{stay:true})})},
+  egg(it){throwItem(it,(x,y,dir)=>{instantEffect(eggAudioV3);addDamage('egg',x,y,{dir});cameraShake();debris('shell',8,{x,y},null,{stay:true})})},
+  board(it){
+    it.hits++;handStrike('swing');cameraShake(it.hits===2);
+    it.el.classList.remove('hit');void it.el.offsetWidth;it.el.classList.add('hit');setTimeout(()=>it.el.classList.remove('hit'),90);
+    if(it.hits===1){instantEffect(woodAudioV3,.55);it.el.classList.add('crack1');debris('wood',4,{x:it.cx,y:it.cy},null,{stay:true});return}
+    instantEffect(woodAudioV3);flashScreen();
+    const a=it.rot*Math.PI/180,off=62;
+    dropToFloor(ITEM_SVG.plank('left'),it.cx-Math.cos(a)*off,it.cy-Math.sin(a)*off,132,36,it.rot);
+    dropToFloor(ITEM_SVG.plank('right'),it.cx+Math.cos(a)*off,it.cy+Math.sin(a)*off,133,36,it.rot);
+    debris('wood',14,{x:it.cx,y:it.cy},null,{stay:true});
+    it.el.style.visibility='hidden';completeItem(it,700);
+  },
+  ice(it){
+    it.hits++;handStrike('swing');cameraShake(it.hits===3);
+    instantEffect(iceAudioV3,it.hits<3?.45:1);
+    it.el.classList.remove('hit');void it.el.offsetWidth;it.el.classList.add('hit');setTimeout(()=>it.el.classList.remove('hit'),90);
+    if(it.hits===1)it.el.classList.add('crack1');
+    if(it.hits===2)it.el.classList.add('crack2');
+    debris('ice',it.hits<3?5:28,{x:it.cx,y:it.cy},null,{stay:it.hits===3});
+    if(it.hits===3){it.el.classList.add('shatter');addDamage('wet',HOLE.x+Math.random()*30-15,HOLE.y+HOLE.ry+18);dustPuff(it.cx,it.cy,'220,240,255');flashScreen();completeItem(it,700)}
+  },
+  can(it){
+    it.hits++;handStrike('jab');instantEffect(canAudioV3);cameraShake();
+    it.el.style.transform=`scaleY(${1-it.hits*.23}) scaleX(${1+it.hits*.14}) rotate(${it.hits*3}deg)`;
+    debris('soda',5+it.hits*4,{x:it.cx,y:it.cy-10});
+    if(it.hits===3){addDamage('soda',it.cx,405);flashScreen();completeItem(it,650)}
+  }
+};
+
+/* ---------- FINAL WALL: the same battered wall, hammered until it falls ---------- */
 let finalWallActive=false;
 async function finishGame(){
   if(finalWallActive)return;finalWallActive=true;stopAllEffects();
@@ -3485,48 +3675,51 @@ async function finishGame(){
   document.getElementById('attemptsDisplay').textContent='One last smash stands between you and freedom.';
   setChallengeText('🧱 FINAL SMASH','Hammer your damaged wall until it collapses!');
   document.getElementById('challengeInstruction').classList.add('final-instruction');
-  const stage=prepStage();
-  const light=document.createElement('div');light.className='escape-light';stage.prepend(light);
-  const wrap=document.createElement('div');wrap.className='final-wall-wrap';wrap.innerHTML='<div class="final-wall-label">SMASH TO ESCAPE</div>';
-  const layer=stage.querySelector('.v5-wall-layer');wrap.prepend(layer);stage.appendChild(wrap);
-  const label=wrap.querySelector('.final-wall-label');
-  const h=hand('hammer');let hits=0,done=false;
-  wrap.onpointerdown=e=>{
-    if(done)return;hits++;
-    const sr=stage.getBoundingClientRect();
-    const x=clamp((e.clientX-sr.left)/sr.width*100,12,88),y=clamp((e.clientY-sr.top)/sr.height*100,12,78);
-    instantEffect(brickAudioV3);handMove(h,'hit');cameraShake(hits>4);
+  if(!scene.built||!scene.el||!scene.el.isConnected)buildScene();
+  if(scene.active){scene.active.el.classList.remove('active');scene.active=null}
+  scene.final=true;setHandPose('hammer');layoutScene(SCENE_W/2);
+  const label=document.createElement('div');label.className='v6-final-label';label.textContent='SMASH TO ESCAPE';scene.el.appendChild(label);
+  let hits=0,done=false;
+  scene.el.onpointerdown=e=>{
+    if(!scene.final||done)return;
+    const p=toDesign(e);if(p.y>WALL_H-12)return;
+    hits++;
+    const x=clamp(p.x,40,960),y=clamp(p.y,40,400);
+    instantEffect(brickAudioV3);handStrike('swing');cameraShake(hits>4);
     addDamage(hits>=5?'hole':'hammer',x,y,{size:.8+hits*.1});
-    dustPuff(x,y);debris('brick',6+hits*2,{x,y});
+    dustPuff(x,y);debris('brick',6+hits*2,{x,y},null,{stay:true});
     label.style.opacity=Math.max(0,1-hits*.18);
-    if(hits>=7){done=true;instantEffect(wallCollapseAudioV3);flashScreen();cameraShake(true);collapseWall(stage,layer);debris('brickBig',30);setTimeout(completeEscapeV4,1500)}
+    if(hits>=7){done=true;instantEffect(wallCollapseAudioV3);flashScreen();cameraShake(true);collapseWall();setTimeout(completeEscapeV4,1700)}
   };
 }
-function collapseWall(stage,layer){
-  const [b,d]=layer.querySelectorAll('canvas');
+function collapseWall(){
+  const layer=activeLayer(),[b,d]=layer.querySelectorAll('canvas');
   const comp=document.createElement('canvas');comp.width=b.width;comp.height=b.height;
   const cc=comp.getContext('2d');cc.drawImage(b,0,0);cc.drawImage(d,0,0);
-  const url=comp.toDataURL('image/jpeg',.88);
-  const W=stage.clientWidth,H=stage.clientHeight,meta=wallCache.meta||{bh:38,bw:106,m:7,y0:0};
+  const url=comp.toDataURL('image/jpeg',.88),meta=wallCache.meta;
   const rowH=meta.bh+meta.m,colW=(meta.bw+meta.m)*2;
   let row=0;
-  for(let y=meta.y0;y<H;y+=rowH,row++){
+  for(let y=meta.y0;y<WALL_H;y+=rowH,row++){
     const off=row%2?-(meta.bw+meta.m)/2:0;
-    for(let x=off-colW;x<W;x+=colW){
+    for(let x=off-colW;x<SCENE_W;x+=colW){
       if(x+colW<0)continue;
       const el=document.createElement('div');el.className='v5-chunk';
-      el.style.left=x+'px';el.style.top=y+'px';el.style.width=colW+'px';el.style.height=rowH+'px';
-      el.style.backgroundImage=`url(${url})`;el.style.backgroundSize=`${W}px ${H}px`;el.style.backgroundPosition=`${-x}px ${-y}px`;
-      stage.appendChild(el);
-      const dist=Math.hypot(x+colW/2-W/2,y-H/2)/Math.hypot(W/2,H/2);
-      el.animate([{transform:'translate(0,0) rotate(0)'},{transform:`translate(${(Math.random()-.5)*160}px,${H+120}px) rotate(${(Math.random()-.5)*120}deg)`}],
+      place(el,x,y,colW,Math.min(rowH,WALL_H-y));
+      el.style.backgroundImage=`url(${url})`;el.style.backgroundSize=`${SCENE_W}px ${WALL_H}px`;el.style.backgroundPosition=`${-x}px ${-y}px`;
+      scene.el.appendChild(el);
+      const dist=Math.hypot(x+colW/2-SCENE_W/2,y-WALL_H/2)/Math.hypot(SCENE_W/2,WALL_H/2);
+      el.animate([{transform:'none'},{transform:`translate(${(Math.random()-.5)*160}px,${SCENE_H+120}px) rotate(${(Math.random()-.5)*120}deg)`}],
         {duration:800+Math.random()*400,delay:dist*420+Math.random()*120,easing:'cubic-bezier(.5,0,.9,.5)',fill:'forwards'});
     }
   }
   layer.style.visibility='hidden';
+  scene.props.querySelectorAll('.v6-item,.v6-prop,.v6-shelf').forEach(el=>{
+    el.animate([{transform:getComputedStyle(el).transform==='none'?'none':getComputedStyle(el).transform,opacity:1},{transform:`translateY(${SCENE_H}px) rotate(${(Math.random()-.5)*90}deg)`,opacity:0}],
+      {duration:900,delay:150+Math.random()*300,easing:'cubic-bezier(.5,0,.9,.5)',fill:'forwards'});
+  });
 }
-async function completeEscapeV4(){stopAllEffects();stopGameTimer();clock.pause();clock.currentTime=0;const total=getMysteries().length;document.getElementById('escapeMessage').textContent=solvedCount===total?'You smashed through the wall and solved every mystery!':`You smashed through the wall with ${solvedCount} of ${total} mysteries solved.`;document.getElementById('finalSummary').innerHTML=`<div class="stat-pill">👤 ${escapeHtml(playerName)}</div><div class="stat-pill">🔑 ${solvedCount}/${total}</div><div class="stat-pill">🏆 ${score.toLocaleString()} pts</div><div class="stat-pill">⏱️ ${formatTime(finalTimeSeconds)}</div>`;showScreen('escapeScreen');finalWallActive=false;if(navigator.vibrate)navigator.vibrate([100,50,100,50,220]);await saveResultAndLoadLeaderboard()}
-console.log('Smash2Learn v5 loaded: realistic hand, brick wall, persistent damage');
+async function completeEscapeV4(){stopAllEffects();stopGameTimer();clock.pause();clock.currentTime=0;const total=getMysteries().length;document.getElementById('escapeMessage').textContent=solvedCount===total?'You smashed through the wall and solved every mystery!':`You smashed through the wall with ${solvedCount} of ${total} mysteries solved.`;document.getElementById('finalSummary').innerHTML=`<div class="stat-pill">👤 ${escapeHtml(playerName)}</div><div class="stat-pill">🔑 ${solvedCount}/${total}</div><div class="stat-pill">🏆 ${score.toLocaleString()} pts</div><div class="stat-pill">⏱️ ${formatTime(finalTimeSeconds)}</div>`;showScreen('escapeScreen');finalWallActive=false;scene.built=false;if(navigator.vibrate)navigator.vibrate([100,50,100,50,220]);await saveResultAndLoadLeaderboard()}
+console.log('Smash2Learn v6 loaded: one prepared wall, movable hand, one thing at a time');
 
 </script>
 </body>
