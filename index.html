@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Smash2Learn v4 • First-Person Persistent Damage Edition • 2026-09-25 -->
+<!-- Smash2Learn v4 FIXED • First-Person Persistent Damage Edition • 2026-09-25 -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -2736,7 +2736,6 @@ function submitAnswer(){
   attemptsThisMystery++;
 
   if(normalize(input) === normalize(mystery.answer)){
-
     const pointsByAttempt = [1000,750,500];
     const earned = pointsByAttempt[Math.min(attemptsThisMystery-1,2)];
     score += earned;
@@ -2745,14 +2744,105 @@ function submitAnswer(){
 
     message.innerHTML = `<span class="key-pop">🔑</span><br>CORRECT! +${earned} POINTS`;
     message.className = "message correct";
-
     currentMysteryIndex++;
 
-    if(currentMysteryIndex >= getMysteries().lengt/* ===== SMASH2LEARN V4: FIRST-PERSON + PERSISTENT WALL DAMAGE ===== */
+    if(currentMysteryIndex >= getMysteries().length){
+      setTimeout(finishGame,1200);
+      return;
+    }
+
+    setTimeout(loadMystery,1200);
+    return;
+  }
+
+  if(attemptsThisMystery >= 3){
+    message.innerHTML = `Third attempt. The answer was:<div class="reveal-answer"><strong>${escapeHtml(mystery.answer)}</strong></div>Moving to the next mystery...`;
+    message.className = "message wrong";
+    currentMysteryIndex++;
+
+    if(currentMysteryIndex >= getMysteries().length){
+      setTimeout(finishGame,1800);
+      return;
+    }
+
+    setTimeout(loadMystery,1800);
+    return;
+  }
+
+  message.textContent = "Not quite. Smash your way to another clue! 💥";
+  message.className = "message wrong";
+  currentClueIndex = Math.min(currentClueIndex+1,2,mystery.clues.length-1);
+  updateAttempts();
+
+  setTimeout(()=>{
+    document.getElementById("clueBox").classList.remove("show");
+    document.getElementById("answerArea").classList.remove("show");
+    startChallenge();
+  },900);
+}
+
+function escapeHtml(value){
+  return String(value)
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/\"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+}
+
+async function saveResultAndLoadLeaderboard(){
+  const boardMessage = document.getElementById("leaderboardMessage");
+  const body = document.getElementById("leaderboardBody");
+  boardMessage.textContent = "Saving result...";
+  body.innerHTML = "";
+
+  if(!resultSaved){
+    const {error:insertError} = await db.from("results").insert({
+      game_code: currentGame.code,
+      player_name: playerName,
+      solved: solvedCount,
+      total_mysteries: getMysteries().length,
+      score: score,
+      time_seconds: finalTimeSeconds
+    });
+    if(insertError){
+      console.error(insertError);
+      boardMessage.textContent = "Your game finished, but the result could not be saved.";
+      return;
+    }
+    resultSaved = true;
+  }
+
+  const {data,error} = await db
+    .from("results")
+    .select("player_name,solved,total_mysteries,score,time_seconds,created_at")
+    .eq("game_code",currentGame.code)
+    .order("solved",{ascending:false})
+    .order("score",{ascending:false})
+    .order("time_seconds",{ascending:true})
+    .limit(50);
+
+  if(error){
+    console.error(error);
+    boardMessage.textContent = "Result saved, but the leaderboard could not be loaded.";
+    return;
+  }
+
+  boardMessage.textContent = data && data.length ? "Best results for this room" : "No results yet.";
+  (data || []).forEach((row,index)=>{
+    const tr = document.createElement("tr");
+    const isMe = row.player_name === playerName && row.score === score && row.time_seconds === finalTimeSeconds;
+    if(isMe) tr.classList.add("me");
+    tr.innerHTML = `<td>${index+1}</td><td>${escapeHtml(row.player_name)}</td><td>${row.solved}/${row.total_mysteries}</td><td>${Number(row.score).toLocaleString()}</td><td>${formatTime(Number(row.time_seconds)||0)}</td>`;
+    body.appendChild(tr);
+  });
+}
+
+/* ===== SMASH2LEARN V4: FIRST-PERSON + PERSISTENT WALL DAMAGE ===== */
 const eggAudioV3=document.getElementById("eggAudio"),canAudioV3=document.getElementById("canAudio"),balloonAudioV3=document.getElementById("balloonAudio"),iceAudioV3=document.getElementById("iceAudio"),woodAudioV3=document.getElementById("woodAudio"),wineGlassAudioV3=document.getElementById("wineGlassAudio"),brickAudioV3=document.getElementById("brickAudio"),wallCollapseAudioV3=document.getElementById("wallCollapseAudio");
 [eggAudioV3,canAudioV3,balloonAudioV3,iceAudioV3,woodAudioV3,wineGlassAudioV3,brickAudioV3,wallCollapseAudioV3].forEach(a=>{if(a)a.volume=1});
 let wallDamage=[];
-function instantEffect(audio){if(!soundEnabled||!audio)return;try{audio.pause();audio.currentTime=0;const p=audio.play();if(p&&p.catch)p.catch(()=>{})}catch(e){}}
+function instantEffect(audio){if(!soundEnabled||!audio)return;try{const fx=audio.cloneNode();fx.volume=audio.volume;fx.currentTime=0;const p=fx.play();if(p&&p.catch)p.catch(()=>{})}catch(e){}}
 function addDamage(type,x=50+Math.random()*22-11,y=43+Math.random()*18-9){wallDamage.push({type,x,y,rot:Math.random()*70-35});renderDamage()}
 function renderDamage(){const stage=document.getElementById('stage');if(!stage)return;let layer=stage.querySelector('.v4-wall-damage');if(!layer){layer=document.createElement('div');layer.className='v4-wall-damage';stage.prepend(layer)}layer.innerHTML='';wallDamage.forEach(d=>{const m=document.createElement('div');m.style.left=d.x+'%';m.style.top=d.y+'%';if(d.type==='egg')m.className='v4-splat';else if(d.type==='crack'){m.className='v4-crack';m.textContent='╱╲';m.style.setProperty('--rot',d.rot+'deg')}else m.className='v4-mark';layer.appendChild(m)})}
 function prepStage(){const stage=document.getElementById('stage');stage.innerHTML='<div id="flash" class="flash"></div><div class="v4-wall-damage"></div>';renderDamage();return stage}
@@ -2774,48 +2864,6 @@ async function finishGame(){if(finalWallActive)return;finalWallActive=true;stopA
 async function completeEscapeV4(){stopAllEffects();stopGameTimer();clock.pause();clock.currentTime=0;const total=getMysteries().length;document.getElementById('escapeMessage').textContent=solvedCount===total?'You smashed through the wall and solved every mystery!':`You smashed through the wall with ${solvedCount} of ${total} mysteries solved.`;document.getElementById('finalSummary').innerHTML=`<div class="stat-pill">👤 ${escapeHtml(playerName)}</div><div class="stat-pill">🔑 ${solvedCount}/${total}</div><div class="stat-pill">🏆 ${score.toLocaleString()} pts</div><div class="stat-pill">⏱️ ${formatTime(finalTimeSeconds)}</div>`;showScreen('escapeScreen');finalWallActive=false;if(navigator.vibrate)navigator.vibrate([100,50,100,50,220]);await saveResultAndLoadLeaderboard()}
 console.log('Smash2Learn v4 First-Person Persistent Damage Edition loaded');
 
-lassName="rage-object ice-object";ice.textContent="🧊";stage.appendChild(ice);const ham=document.createElement("div");ham.className="hammer";ham.textContent="🔨";stage.appendChild(ham);let hits=0;
-  ice.onclick=()=>{if(hits>=3)return;hits++;ham.classList.remove("swing");void ham.offsetWidth;ham.classList.add("swing");cameraShake();if(hits>=3){playEffect(iceAudioV3);ice.classList.add("ice-cracked");flashScreen();cameraShake(true);v3Debris("❄",22);finishMechanic(750)}};
-}
-
-function setupWoodV3(){
-  document.getElementById("challengeTitle").textContent="🪵 BREAK THE BOARD";
-  document.getElementById("challengeInstruction").textContent="Strike the wooden board three times.";
-  const stage=document.getElementById("stage");addTarget();const wood=document.createElement("div");wood.className="rage-object wood-object";wood.textContent="🪵";stage.appendChild(wood);const ham=document.createElement("div");ham.className="hammer";ham.textContent="🔨";stage.appendChild(ham);let hits=0;
-  wood.onclick=()=>{if(hits>=3)return;hits++;ham.classList.remove("swing");void ham.offsetWidth;ham.classList.add("swing");cameraShake();if(hits>=3){playEffect(woodAudioV3);wood.classList.add("wood-broken");flashScreen();cameraShake(true);v3Debris("▰",18);finishMechanic(700)}};
-}
-
-function setupGraffitiV3(){ setupGraffiti(); }
-
-let finalWallActive=false;
-async function finishGame(){
-  if(finalWallActive)return;
-  finalWallActive=true;
-  stopAllEffects();
-  document.getElementById("clueBox").classList.remove("show");
-  document.getElementById("progressText").textContent="🔨 FINAL ESCAPE • BREAK THROUGH THE WALL";
-  document.getElementById("attemptsDisplay").textContent="One last smash stands between you and freedom.";
-  document.getElementById("challengeTitle").textContent="🧱 FINAL SMASH";
-  document.getElementById("challengeInstruction").textContent="Hammer the brick wall until it collapses!";
-  document.getElementById("challengeInstruction").classList.add("final-instruction");
-  const stage=document.getElementById("stage");
-  stage.innerHTML='<div id="flash" class="flash"></div><div class="escape-light"></div><div class="final-wall-wrap"><div id="finalWall" class="final-wall"></div><div id="wallCrack" class="wall-crack"></div><div id="finalHammer" class="final-hammer">🔨</div></div>';
-  const wall=document.getElementById("finalWall"), crack=document.getElementById("wallCrack"), hammer=document.getElementById("finalHammer");let hits=0,done=false;
-  wall.addEventListener("pointerdown",()=>{if(done)return;hits++;playEffect(brickAudioV3);cameraShake(hits>4);hammer.classList.remove("swing");void hammer.offsetWidth;hammer.classList.add("swing");crack.textContent=hits<3?"╱╲":hits<6?"✳":"💥";crack.style.fontSize=(100+hits*18)+"px";v3Debris("▪",5+hits*2);if(hits>=7){done=true;playEffect(wallCollapseAudioV3);flashScreen();cameraShake(true);wall.classList.add("wall-collapse");v3Debris("🧱",35);setTimeout(completeEscapeV3,1250)}});
-}
-
-async function completeEscapeV3(){
-  stopAllEffects();stopGameTimer();clock.pause();clock.currentTime=0;
-  const total=getMysteries().length;
-  document.getElementById("escapeMessage").textContent=solvedCount===total?"You smashed through the wall and solved every mystery!":`You smashed through the wall with ${solvedCount} of ${total} mysteries solved.`;
-  document.getElementById("finalSummary").innerHTML=`<div class="stat-pill">👤 ${escapeHtml(playerName)}</div><div class="stat-pill">🔑 ${solvedCount}/${total}</div><div class="stat-pill">🏆 ${score.toLocaleString()} pts</div><div class="stat-pill">⏱️ ${formatTime(finalTimeSeconds)}</div>`;
-  showScreen("escapeScreen");finalWallActive=false;
-  if(navigator.vibrate)navigator.vibrate([100,50,100,50,220]);
-  await saveResultAndLoadLeaderboard();
-}
-console.log("Smash2Learn v3 Rage Room Brick Wall Edition loaded");
-
 </script>
-
 </body>
 </html>
