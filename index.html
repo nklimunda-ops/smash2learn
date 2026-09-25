@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- Smash2Learn v3 • Rage Room Brick Wall Edition • 2026-09-25 -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -823,6 +824,46 @@ footer{
   .stage{height:350px}
   .card{padding:18px}
 }
+
+
+/* ===== SMASH2LEARN V3: BRICK RAGE ROOM ===== */
+.stage{
+  min-height:430px;
+  background:
+    radial-gradient(circle at 50% 45%,rgba(255,120,45,.10),transparent 35%),
+    linear-gradient(rgba(0,0,0,.16),rgba(0,0,0,.38)),
+    repeating-linear-gradient(0deg,transparent 0 43px,rgba(30,10,5,.62) 44px 48px),
+    repeating-linear-gradient(90deg,#743628 0 86px,#8e4633 86px 170px,#5d2b22 170px 174px);
+  border:4px solid #2b1712;
+  box-shadow:inset 0 0 110px #000,0 18px 50px rgba(0,0,0,.45);
+}
+.stage::before{content:"TARGET WALL";position:absolute;top:16px;left:50%;transform:translateX(-50%);font-size:12px;font-weight:900;letter-spacing:3px;color:rgba(255,255,255,.24);z-index:1}
+.stage::after{height:55px;background:linear-gradient(#30241d,#15100d);border-top:3px solid #49352a}
+.rage-object{position:relative;z-index:6;cursor:pointer;filter:drop-shadow(0 20px 16px rgba(0,0,0,.55));transition:transform .12s}
+.rage-object:active{transform:scale(.94)}
+.wall-target{position:absolute;left:50%;top:45%;width:150px;height:150px;transform:translate(-50%,-50%);border:4px dashed rgba(255,210,80,.35);border-radius:50%;box-shadow:0 0 45px rgba(255,80,30,.12);z-index:2;pointer-events:none}
+.wall-target::after{content:"💥";position:absolute;inset:0;display:grid;place-items:center;font-size:48px;opacity:.24}
+.throw-fly{animation:throwFly .42s cubic-bezier(.2,.8,.2,1) forwards}
+@keyframes throwFly{to{transform:translate(0,-95px) scale(.32) rotate(420deg);opacity:.15}}
+.splat{position:absolute;left:50%;top:43%;transform:translate(-50%,-50%) scale(0);z-index:5;font-size:105px;animation:splatIn .35s ease forwards;pointer-events:none}
+@keyframes splatIn{70%{transform:translate(-50%,-50%) scale(1.25)}100%{transform:translate(-50%,-50%) scale(1)}}
+.egg-object{font-size:145px}.wine-object{font-size:150px}.balloon-object{font-size:155px}.ice-object{font-size:145px}.can-object{font-size:150px}.wood-object{font-size:155px}
+.crush-can{animation:canCrush .38s ease forwards}@keyframes canCrush{to{transform:scaleY(.25) scaleX(1.25) rotate(12deg)}}
+.ice-cracked{animation:iceCrack .4s ease forwards}@keyframes iceCrack{50%{transform:scale(.92) rotate(-4deg)}100%{transform:scale(.72);filter:brightness(1.5) drop-shadow(0 0 18px #bff)}}
+.wood-broken{animation:woodBreak .45s ease forwards}@keyframes woodBreak{50%{transform:rotate(8deg) scale(1.08)}100%{transform:rotate(-14deg) scale(.82);opacity:.35}}
+.balloon-pop{animation:balloonPop .18s ease forwards}@keyframes balloonPop{to{transform:scale(1.55);opacity:0}}
+.debris-v3{position:absolute;z-index:15;pointer-events:none;animation:debrisV3 .9s ease-out forwards}@keyframes debrisV3{to{transform:translate(var(--dx),var(--dy)) rotate(var(--rot));opacity:0}}
+.final-wall-wrap{position:absolute;inset:0;z-index:5;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.final-wall{position:absolute;inset:0;background:linear-gradient(rgba(0,0,0,.06),rgba(0,0,0,.22)),repeating-linear-gradient(0deg,transparent 0 43px,#3a1d16 44px 48px),repeating-linear-gradient(90deg,#8d4431 0 86px,#713426 86px 170px,#47231c 170px 174px);cursor:pointer;transition:filter .2s}
+.final-wall::after{content:"SMASH TO ESCAPE";position:absolute;left:50%;top:42%;transform:translate(-50%,-50%);font-size:clamp(30px,6vw,64px);font-weight:1000;color:rgba(255,255,255,.82);text-shadow:0 5px 18px #000;white-space:nowrap}
+.final-hammer{position:absolute;right:8%;bottom:8%;font-size:110px;z-index:9;pointer-events:none;transform:rotate(-25deg);filter:drop-shadow(0 10px 10px #000)}
+.final-hammer.swing{animation:finalHammer .24s ease}@keyframes finalHammer{50%{transform:rotate(-78deg) translate(-55px,-35px)}}
+.wall-crack{position:absolute;left:50%;top:48%;transform:translate(-50%,-50%);font-size:150px;z-index:7;pointer-events:none;filter:grayscale(1) brightness(.5)}
+.wall-collapse{animation:wallCollapse 1.15s ease-in forwards}@keyframes wallCollapse{0%{clip-path:circle(100% at 50% 50%)}55%{clip-path:circle(42% at 50% 50%)}100%{clip-path:circle(0% at 50% 50%);opacity:0}}
+.escape-light{position:absolute;inset:0;background:radial-gradient(circle,#fff7b0 0,#75c8ff 38%,#17304d 75%);z-index:1}
+.final-instruction{color:#ffd36b!important;font-weight:900;font-size:18px}
+@media(max-width:600px){.stage{min-height:390px}.egg-object,.wine-object,.balloon-object,.ice-object,.can-object,.wood-object{font-size:115px}.final-hammer{font-size:82px}.final-wall::after{white-space:normal;text-align:center;width:80%}}
+
 </style>
 </head>
 
@@ -1092,6 +1133,16 @@ SMASH2LEARN • LEARN • SMASH • ESCAPE
   preload="auto">
 </audio>
 
+
+
+<audio id="eggAudio" src="sounds/egg-splat.mp3" preload="auto"></audio>
+<audio id="canAudio" src="sounds/can-crush.mp3" preload="auto"></audio>
+<audio id="balloonAudio" src="sounds/balloon-pop.mp3" preload="auto"></audio>
+<audio id="iceAudio" src="sounds/ice-break.mp3" preload="auto"></audio>
+<audio id="woodAudio" src="sounds/wood-break.mp3" preload="auto"></audio>
+<audio id="wineGlassAudio" src="sounds/wine-glass-break.mp3" preload="auto"></audio>
+<audio id="brickAudio" src="sounds/brick-hit.mp3" preload="auto"></audio>
+<audio id="wallCollapseAudio" src="sounds/wall-collapse.mp3" preload="auto"></audio>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -2800,6 +2851,129 @@ async function saveResultAndLoadLeaderboard(){
     body.appendChild(tr);
   });
 }
+
+
+
+/* ===== SMASH2LEARN V3: NEW RAGE ROOM MECHANICS ===== */
+const eggAudioV3 = document.getElementById("eggAudio");
+const canAudioV3 = document.getElementById("canAudio");
+const balloonAudioV3 = document.getElementById("balloonAudio");
+const iceAudioV3 = document.getElementById("iceAudio");
+const woodAudioV3 = document.getElementById("woodAudio");
+const wineGlassAudioV3 = document.getElementById("wineGlassAudio");
+const brickAudioV3 = document.getElementById("brickAudio");
+const wallCollapseAudioV3 = document.getElementById("wallCollapseAudio");
+[eggAudioV3,canAudioV3,balloonAudioV3,iceAudioV3,woodAudioV3,wineGlassAudioV3,brickAudioV3,wallCollapseAudioV3].forEach(a=>{if(a)a.volume=1;});
+
+function addTarget(){
+  const stage=document.getElementById("stage");
+  const target=document.createElement("div"); target.className="wall-target"; stage.appendChild(target);
+}
+function v3Debris(symbol,count=18){
+  const stage=document.getElementById("stage");
+  for(let i=0;i<count;i++){
+    const d=document.createElement("div"); d.className="debris-v3"; d.textContent=symbol;
+    d.style.left=(45+Math.random()*10)+"%"; d.style.top=(38+Math.random()*12)+"%";
+    d.style.fontSize=(10+Math.random()*25)+"px";
+    d.style.setProperty("--dx",(Math.random()*360-180)+"px");
+    d.style.setProperty("--dy",(60+Math.random()*250)+"px");
+    d.style.setProperty("--rot",(Math.random()*900-450)+"deg");
+    stage.appendChild(d); setTimeout(()=>d.remove(),950);
+  }
+}
+function finishMechanic(delay=650){ setTimeout(unlockClue,delay); }
+
+/* New global rotation: no horn, no punching bag. */
+function startChallenge(){
+  stopAllEffects();
+  const stage=document.getElementById("stage");
+  stage.innerHTML='<div id="flash" class="flash"></div>';
+  const type=globalChallengeIndex%8; globalChallengeIndex++;
+  [setupPlateV3,setupEggV3,setupWineGlassV3,setupCanV3,setupBalloonsV3,setupIceV3,setupWoodV3,setupGraffitiV3][type]();
+}
+
+function setupPlateV3(){
+  document.getElementById("challengeTitle").textContent="🍽️ SMASH THE PLATES";
+  document.getElementById("challengeInstruction").textContent="Smash three plates against the brick wall.";
+  const stage=document.getElementById("stage"); addTarget();
+  const row=document.createElement("div"); row.style.cssText="display:flex;gap:12px;z-index:6;align-items:center";
+  for(let i=0;i<3;i++){const p=document.createElement("div");p.className="rage-object";p.textContent="🍽️";p.style.fontSize="105px";row.appendChild(p);p.onclick=()=>{if(p.dataset.done)return;p.dataset.done=1;p.classList.add("throw-fly");setTimeout(()=>{playEffect(plateAudio);flashScreen();cameraShake(true);v3Debris("◻",12);p.style.visibility="hidden";if(++row.dataset.hits>=3)finishMechanic();},380)}}
+  row.dataset.hits=0;stage.appendChild(row);
+}
+
+function setupEggV3(){
+  document.getElementById("challengeTitle").textContent="🥚 EGG THE WALL";
+  document.getElementById("challengeInstruction").textContent="Throw three eggs at the target wall.";
+  const stage=document.getElementById("stage");addTarget();
+  const row=document.createElement("div");row.style.cssText="display:flex;gap:12px;z-index:6";let hits=0;
+  for(let i=0;i<3;i++){const e=document.createElement("div");e.className="rage-object egg-object";e.textContent="🥚";row.appendChild(e);e.onclick=()=>{if(e.dataset.done)return;e.dataset.done=1;e.classList.add("throw-fly");setTimeout(()=>{playEffect(eggAudioV3);cameraShake();const spl=document.createElement("div");spl.className="splat";spl.textContent="🍳";stage.appendChild(spl);e.style.visibility="hidden";if(++hits>=3){flashScreen();finishMechanic(700)}},380)}}stage.appendChild(row);
+}
+
+function setupWineGlassV3(){
+  document.getElementById("challengeTitle").textContent="🍷 THROW THE GLASSES";
+  document.getElementById("challengeInstruction").textContent="Throw three glasses against the brick wall.";
+  const stage=document.getElementById("stage");addTarget();
+  const row=document.createElement("div");row.style.cssText="display:flex;gap:20px;z-index:6";let hits=0;
+  for(let i=0;i<3;i++){const g=document.createElement("div");g.className="rage-object wine-object";g.textContent="🍷";row.appendChild(g);g.onclick=()=>{if(g.dataset.done)return;g.dataset.done=1;g.classList.add("throw-fly");setTimeout(()=>{playEffect(wineGlassAudioV3);flashScreen();cameraShake(true);v3Debris("◇",22);g.style.visibility="hidden";if(++hits>=3)finishMechanic(700)},380)}}stage.appendChild(row);
+}
+
+function setupCanV3(){
+  document.getElementById("challengeTitle").textContent="🥫 CRUSH THE CAN";
+  document.getElementById("challengeInstruction").textContent="Crush the can three times until it is flat.";
+  const stage=document.getElementById("stage");addTarget();const c=document.createElement("div");c.className="rage-object can-object";c.textContent="🥫";stage.appendChild(c);let hits=0;
+  c.onclick=()=>{if(hits>=3)return;hits++;playEffect(canAudioV3);cameraShake();c.style.transform=`scaleY(${1-hits*.22}) scaleX(${1+hits*.12}) rotate(${hits*4}deg)`;if(hits>=3){c.classList.add("crush-can");flashScreen();cameraShake(true);finishMechanic()}};
+}
+
+function setupBalloonsV3(){
+  document.getElementById("challengeTitle").textContent="🎈 POP THE BALLOONS";
+  document.getElementById("challengeInstruction").textContent="Pop every balloon to unlock the clue.";
+  const stage=document.getElementById("stage");addTarget();const row=document.createElement("div");row.style.cssText="display:flex;gap:4px;z-index:6;flex-wrap:wrap;justify-content:center";let pops=0;
+  ["🎈","🎈","🎈","🎈","🎈"].forEach((x,i)=>{const b=document.createElement("div");b.className="rage-object balloon-object";b.textContent=x;b.style.filter=`hue-rotate(${i*55}deg) drop-shadow(0 20px 16px rgba(0,0,0,.55))`;row.appendChild(b);b.onclick=()=>{if(b.dataset.done)return;b.dataset.done=1;playEffect(balloonAudioV3);cameraShake();b.classList.add("balloon-pop");if(++pops>=5){flashScreen();cameraShake(true);finishMechanic(500)}}});stage.appendChild(row);
+}
+
+function setupIceV3(){
+  document.getElementById("challengeTitle").textContent="🧊 BREAK THE ICE";
+  document.getElementById("challengeInstruction").textContent="Hammer the ice block until it shatters.";
+  const stage=document.getElementById("stage");addTarget();const ice=document.createElement("div");ice.className="rage-object ice-object";ice.textContent="🧊";stage.appendChild(ice);const ham=document.createElement("div");ham.className="hammer";ham.textContent="🔨";stage.appendChild(ham);let hits=0;
+  ice.onclick=()=>{if(hits>=3)return;hits++;ham.classList.remove("swing");void ham.offsetWidth;ham.classList.add("swing");cameraShake();if(hits>=3){playEffect(iceAudioV3);ice.classList.add("ice-cracked");flashScreen();cameraShake(true);v3Debris("❄",22);finishMechanic(750)}};
+}
+
+function setupWoodV3(){
+  document.getElementById("challengeTitle").textContent="🪵 BREAK THE BOARD";
+  document.getElementById("challengeInstruction").textContent="Strike the wooden board three times.";
+  const stage=document.getElementById("stage");addTarget();const wood=document.createElement("div");wood.className="rage-object wood-object";wood.textContent="🪵";stage.appendChild(wood);const ham=document.createElement("div");ham.className="hammer";ham.textContent="🔨";stage.appendChild(ham);let hits=0;
+  wood.onclick=()=>{if(hits>=3)return;hits++;ham.classList.remove("swing");void ham.offsetWidth;ham.classList.add("swing");cameraShake();if(hits>=3){playEffect(woodAudioV3);wood.classList.add("wood-broken");flashScreen();cameraShake(true);v3Debris("▰",18);finishMechanic(700)}};
+}
+
+function setupGraffitiV3(){ setupGraffiti(); }
+
+let finalWallActive=false;
+async function finishGame(){
+  if(finalWallActive)return;
+  finalWallActive=true;
+  stopAllEffects();
+  document.getElementById("clueBox").classList.remove("show");
+  document.getElementById("progressText").textContent="🔨 FINAL ESCAPE • BREAK THROUGH THE WALL";
+  document.getElementById("attemptsDisplay").textContent="One last smash stands between you and freedom.";
+  document.getElementById("challengeTitle").textContent="🧱 FINAL SMASH";
+  document.getElementById("challengeInstruction").textContent="Hammer the brick wall until it collapses!";
+  document.getElementById("challengeInstruction").classList.add("final-instruction");
+  const stage=document.getElementById("stage");
+  stage.innerHTML='<div id="flash" class="flash"></div><div class="escape-light"></div><div class="final-wall-wrap"><div id="finalWall" class="final-wall"></div><div id="wallCrack" class="wall-crack"></div><div id="finalHammer" class="final-hammer">🔨</div></div>';
+  const wall=document.getElementById("finalWall"), crack=document.getElementById("wallCrack"), hammer=document.getElementById("finalHammer");let hits=0,done=false;
+  wall.addEventListener("pointerdown",()=>{if(done)return;hits++;playEffect(brickAudioV3);cameraShake(hits>4);hammer.classList.remove("swing");void hammer.offsetWidth;hammer.classList.add("swing");crack.textContent=hits<3?"╱╲":hits<6?"✳":"💥";crack.style.fontSize=(100+hits*18)+"px";v3Debris("▪",5+hits*2);if(hits>=7){done=true;playEffect(wallCollapseAudioV3);flashScreen();cameraShake(true);wall.classList.add("wall-collapse");v3Debris("🧱",35);setTimeout(completeEscapeV3,1250)}});
+}
+
+async function completeEscapeV3(){
+  stopAllEffects();stopGameTimer();clock.pause();clock.currentTime=0;
+  const total=getMysteries().length;
+  document.getElementById("escapeMessage").textContent=solvedCount===total?"You smashed through the wall and solved every mystery!":`You smashed through the wall with ${solvedCount} of ${total} mysteries solved.`;
+  document.getElementById("finalSummary").innerHTML=`<div class="stat-pill">👤 ${escapeHtml(playerName)}</div><div class="stat-pill">🔑 ${solvedCount}/${total}</div><div class="stat-pill">🏆 ${score.toLocaleString()} pts</div><div class="stat-pill">⏱️ ${formatTime(finalTimeSeconds)}</div>`;
+  showScreen("escapeScreen");finalWallActive=false;
+  if(navigator.vibrate)navigator.vibrate([100,50,100,50,220]);
+  await saveResultAndLoadLeaderboard();
+}
+console.log("Smash2Learn v3 Rage Room Brick Wall Edition loaded");
 
 </script>
 
