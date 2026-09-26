@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Smash2Learn v6 • One prepared wall, movable hand, break one thing at a time • 2026-09-25 -->
+<!-- Smash2Learn v7 • Multiple-choice answers (4 options, 3 attempts) • 2026-09-26 -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -926,6 +926,24 @@ footer{
   color:rgba(255,255,255,.88);text-shadow:0 4px 18px #000;pointer-events:none;transition:opacity .3s}
 @media(prefers-reduced-motion:reduce){.v6-balloon svg,.v6-item.active{animation:none}.v5-scene{transition:none}}
 
+
+/* ===== MULTIPLE-CHOICE ANSWERS ===== */
+.options-label{font-weight:900;color:#aab4c5;margin-bottom:10px}
+.options-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.option-btn{display:flex;align-items:center;gap:12px;min-height:58px;padding:12px 16px;text-align:left;border-radius:12px;border:1px solid #3b4658;background:#101826;color:#fff;font-weight:800;font-size:17px;cursor:pointer;transition:background .15s,border-color .15s,transform .1s,opacity .2s}
+.option-btn:hover:not(:disabled){background:#182234;border-color:#ff3b30}
+.option-btn:active:not(:disabled){transform:scale(.98)}
+.option-btn:focus-visible{outline:2px solid #ffd36b;outline-offset:2px}
+.option-btn:disabled{cursor:default}
+.option-letter{flex:none;width:30px;height:30px;border-radius:8px;display:grid;place-items:center;background:#1f2a3c;color:#ff655d;font-weight:900}
+.option-text{overflow-wrap:anywhere}
+.option-btn.eliminated{opacity:.35;text-decoration:line-through}
+.option-btn.wrong-pick{background:#3a1518;border-color:#ff5a52;opacity:1;animation:optShake .3s}
+.option-btn.wrong-pick .option-letter{background:#ff5a52;color:#fff}
+.option-btn.correct-pick{background:#123522;border-color:#62e899;opacity:1}
+.option-btn.correct-pick .option-letter{background:#62e899;color:#07170e}
+@keyframes optShake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+@media(max-width:600px){.options-grid{grid-template-columns:1fr}}
 </style>
 </head>
 
@@ -988,7 +1006,7 @@ footer{
 
 <p class="small">
 Create as many mysteries as you want.
-Each mystery has one answer and at least 3 clues. Players get a maximum of 3 attempts.
+Each mystery has one correct answer, 3 wrong options and at least 3 clues. Players choose the answer from 4 options and get a maximum of 3 attempts.
 </p>
 
 <div id="mysteries"></div>
@@ -1084,15 +1102,9 @@ Enter Room
 
 <div id="answerArea" class="answer-area">
 
-<input
-  id="answerInput"
-  placeholder="What is the answer?"
-  onkeydown="if(event.key==='Enter'){submitAnswer()}"
->
+<div class="options-label">Choose the answer</div>
 
-<button class="primary" onclick="submitAnswer()">
-Unlock 🔑
-</button>
+<div id="optionsGrid" class="options-grid"></div>
 
 <div id="answerMessage" class="message"></div>
 
@@ -1458,6 +1470,18 @@ function addMystery(){
       onclick="addClue(this)">
       + Add clue
     </button>
+
+    <br><br>
+
+    <label>Wrong options</label>
+
+    <p class="small">
+      Players choose between the correct answer and these 3 options.
+    </p>
+
+    <input class="wrong-option" placeholder="Wrong option 1">
+    <input class="wrong-option" placeholder="Wrong option 2">
+    <input class="wrong-option" placeholder="Wrong option 3">
   `;
 
   document
@@ -1577,9 +1601,32 @@ async function saveRoom(){
 
     }
 
+    const wrongOptions =
+    Array.from(
+      mysteryElement.querySelectorAll(".wrong-option")
+    )
+    .map(input=>input.value.trim())
+    .filter(Boolean);
+
+    const optionKeys =
+    new Set([answer,...wrongOptions].map(normalize));
+
+    if(wrongOptions.length < 3 || optionKeys.size < 4){
+
+      message.textContent =
+      "Every mystery needs 3 wrong options, all different from each other and from the answer.";
+
+      message.className =
+      "message wrong";
+
+      return;
+
+    }
+
     mysteries.push({
       answer,
-      clues
+      clues,
+      wrongOptions
     });
 
   }
@@ -1889,9 +1936,7 @@ function loadMystery(){
   .getElementById("answerMessage")
   .textContent = "";
 
-  document
-  .getElementById("answerInput")
-  .value = "";
+  buildOptions();
 
   updateProgress();
 
@@ -2730,17 +2775,7 @@ function unlockClue(){
   .getElementById("answerMessage")
   .textContent = "";
 
-  document
-  .getElementById("answerInput")
-  .value = "";
-
-  setTimeout(()=>{
-
-    document
-    .getElementById("answerInput")
-    .focus();
-
-  },250);
+  renderOptions();
 
 }
 
@@ -2758,21 +2793,77 @@ function normalize(text){
 }
 
 
-function submitAnswer(){
+/* MULTIPLE CHOICE: the correct answer + 3 wrong options, shuffled once per mystery */
+let currentOptions = [];
+let eliminatedOptions = new Set();
+let answerLocked = false;
 
-  const mystery = getMysteries()[currentMysteryIndex];
-  const input = document.getElementById("answerInput").value;
-  const message = document.getElementById("answerMessage");
+function shuffle(list){
+  const a = list.slice();
+  for(let i=a.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]] = [a[j],a[i]];
+  }
+  return a;
+}
 
-  if(!input.trim()){
-    message.textContent = "Type an answer first.";
-    message.className = "message wrong";
+function buildOptions(){
+  const mysteries = getMysteries();
+  const mystery = mysteries[currentMysteryIndex];
+  const seen = new Set([normalize(mystery.answer)]);
+  const wrongs = [];
+  const addWrong = option=>{
+    const key = normalize(String(option||""));
+    if(key && !seen.has(key) && wrongs.length < 3){
+      seen.add(key);
+      wrongs.push(String(option).trim());
+    }
+  };
+  (mystery.wrongOptions || []).forEach(addWrong);
+  /* Rooms created before wrong options existed borrow answers from their other mysteries */
+  shuffle(mysteries.map(m=>m.answer)).forEach(addWrong);
+  currentOptions = shuffle([mystery.answer, ...wrongs]);
+  eliminatedOptions = new Set();
+  answerLocked = false;
+}
+
+function renderOptions(){
+  const grid = document.getElementById("optionsGrid");
+  grid.innerHTML = "";
+  answerLocked = false;
+  currentOptions.forEach((option,index)=>{
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "option-btn";
+    button.innerHTML = `<span class="option-letter">${"ABCD"[index]}</span><span class="option-text">${escapeHtml(option)}</span>`;
+    if(eliminatedOptions.has(option)){
+      button.disabled = true;
+      button.classList.add("eliminated");
+    }
+    button.onclick = ()=>submitAnswer(option,button);
+    grid.appendChild(button);
+  });
+  setTimeout(()=>{
+    grid.scrollIntoView({behavior:"smooth",block:"nearest"});
+  },300);
+}
+
+function submitAnswer(choice,button){
+
+  if(answerLocked || choice == null){
     return;
   }
+  answerLocked = true;
+
+  const mystery = getMysteries()[currentMysteryIndex];
+  const message = document.getElementById("answerMessage");
+  const buttons = Array.from(document.querySelectorAll("#optionsGrid .option-btn"));
+  buttons.forEach(b=>b.disabled = true);
 
   attemptsThisMystery++;
 
-  if(normalize(input) === normalize(mystery.answer)){
+  if(normalize(choice) === normalize(mystery.answer)){
+    button.classList.add("correct-pick");
     const pointsByAttempt = [1000,750,500];
     const earned = pointsByAttempt[Math.min(attemptsThisMystery-1,2)];
     score += earned;
@@ -2792,17 +2883,25 @@ function submitAnswer(){
     return;
   }
 
+  button.classList.add("wrong-pick");
+  eliminatedOptions.add(choice);
+
   if(attemptsThisMystery >= 3){
+    buttons.forEach(b=>{
+      if(normalize(b.querySelector(".option-text").textContent) === normalize(mystery.answer)){
+        b.classList.add("correct-pick");
+      }
+    });
     message.innerHTML = `Third attempt. The answer was:<div class="reveal-answer"><strong>${escapeHtml(mystery.answer)}</strong></div>Moving to the next mystery...`;
     message.className = "message wrong";
     currentMysteryIndex++;
 
     if(currentMysteryIndex >= getMysteries().length){
-      setTimeout(finishGame,1800);
+      setTimeout(finishGame,2200);
       return;
     }
 
-    setTimeout(loadMystery,1800);
+    setTimeout(loadMystery,2200);
     return;
   }
 
@@ -2815,7 +2914,7 @@ function submitAnswer(){
     document.getElementById("clueBox").classList.remove("show");
     document.getElementById("answerArea").classList.remove("show");
     startChallenge();
-  },900);
+  },1100);
 }
 
 function escapeHtml(value){
