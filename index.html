@@ -842,37 +842,30 @@ footer{
 .projector-title{font-size:clamp(24px,3.4vw,38px);font-weight:900}
 .projector-code{color:#aab4c5;font-size:18px;letter-spacing:2px}
 
-.projector-wall{
+.projector-wall-outer{width:min(1150px,96%);margin:0 auto}
+.projector-wall-stage{
   position:relative;
-  width:min(1150px,96%);
-  aspect-ratio:16/8;
-  margin:0 auto;
-  display:grid;
-  grid-template-columns:repeat(12,1fr);
-  grid-template-rows:repeat(6,1fr);
-  gap:2px;
-  padding:6px;
-  background:radial-gradient(circle at 50% 45%,#2a3a52 0,#0a0e16 75%);
-  border:5px solid #2b1712;
+  width:100%;
+  aspect-ratio:1000/480;
   border-radius:20px;
   overflow:hidden;
+  border:5px solid #2b1712;
+  background:#1a1006;
   box-shadow:inset 0 0 120px #000,0 24px 60px rgba(0,0,0,.5);
 }
-.wall-brick{
-  background:
-    linear-gradient(180deg,rgba(255,255,255,.08),rgba(0,0,0,.18)),
-    #8e4633;
-  border-radius:2px;
-  transform:scale(1) rotate(0deg);
-  opacity:1;
+.projector-wall-stage canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.projector-items-layer{position:absolute;inset:0}
+.pw-item{
+  position:absolute;
   transition:opacity .5s ease,transform .6s cubic-bezier(.4,0,.6,1);
+  filter:drop-shadow(0 10px 10px rgba(0,0,0,.45));
 }
-.wall-brick:nth-child(3n){background-color:#7a3b2b}
-.wall-brick:nth-child(5n){background-color:#96503a}
-.wall-brick.broken{
-  opacity:0;
-  transform:scale(.3) rotate(25deg);
-}
+.pw-item svg{width:100%;height:100%;display:block;overflow:visible}
+.pw-item.broken{opacity:.06;transform:scale(.5);filter:none}
+.pw-decor{position:absolute}
+.pw-escape-glow{position:absolute;inset:0;background:radial-gradient(circle at 50% 55%,rgba(255,220,140,.9),rgba(255,150,60,.5) 40%,transparent 70%);opacity:0;transition:opacity .8s ease;pointer-events:none}
+.pw-escape-glow.show{opacity:1}
+.pw-chunk{position:absolute;background-size:1000px 480px}
 
 .projector-leader{font-size:clamp(20px,2.6vw,28px);font-weight:900;color:#ffd36b}
 .projector-winner-overlay{position:fixed;inset:0;z-index:2000;background:rgba(5,8,14,.96);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;text-align:center;animation:winnerFade .5s ease}
@@ -1161,7 +1154,13 @@ Start Class Mode
   <div class="projector-title" id="projectorRoomTitle"></div>
   <div class="projector-code">Code: <span id="projectorCodeDisplay"></span></div>
 
-  <div id="projectorWall" class="projector-wall"></div>
+  <div id="projectorWall" class="projector-wall-outer">
+    <div id="projectorWallStage" class="projector-wall-stage">
+      <canvas id="projectorBrickCanvas"></canvas>
+      <canvas id="projectorDamageCanvas"></canvas>
+      <div id="projectorItemsLayer" class="projector-items-layer"></div>
+    </div>
+  </div>
 
   <div id="projectorLeader" class="projector-leader">Waiting for players...</div>
 
@@ -1723,9 +1722,10 @@ function openJoin(){
 /* ===== CLASS MODE (projector) ===== */
 
 const PROJECTOR_ICONS = ["🎈","🍽️","🪵","🍷","🥚","🧊","🥫"]; // kept only as the default mystery-count fallback below
-const WALL_COLS = 12;
-const WALL_ROWS = 6;
-const WALL_CHUNK_COUNT = WALL_COLS * WALL_ROWS;
+const PW_W = 1000, PW_H = 480;
+const PW_WINDOW = {x:40,y:70,w:210,h:250};
+const PW_HOLE = {x:400,y:330,rx:74,ry:60};
+let pwItems = [];
 let wallBreakOrder = [];
 let projectorProgressChannel = null;
 let projectorProgressTimer = null;
@@ -1808,14 +1808,12 @@ function startNewProjectorRound(){
   projectorWinnerLocked = false;
   projectorRoundStart = new Date().toISOString();
 
-  wallBreakOrder = shuffleWallOrder();
-
   document.getElementById("projectorWinnerOverlay").style.display = "none";
   document.getElementById("projectorPodium").style.display = "none";
   document.getElementById("projectorPlayArea").style.display = "flex";
   document.getElementById("projectorLeader").textContent = "Waiting for players...";
 
-  renderProjectorWall(0);
+  pwInit();
 
   stopProjectorResults();
 
@@ -1825,8 +1823,8 @@ function startNewProjectorRound(){
 
 }
 
-function shuffleWallOrder(){
-  const order = Array.from({length:WALL_CHUNK_COUNT},(_,i)=>i);
+function shuffleWallOrder(count){
+  const order = Array.from({length:count},(_,i)=>i);
   for(let i=order.length-1;i>0;i--){
     const j = Math.floor(Math.random()*(i+1));
     [order[i],order[j]] = [order[j],order[i]];
@@ -1834,35 +1832,217 @@ function shuffleWallOrder(){
   return order;
 }
 
-function ensureWallChunks(){
+/* ---------- PROJECTOR WALL: the exact same art (bricks, balloons, plates,
+   glasses, eggs, boards, ice, can) that students see in their own room,
+   laid out once and then broken piece by piece as the class progresses. ---------- */
 
-  const wall = document.getElementById("projectorWall");
+function pwPct(v,total){
+  return (v/total*100).toFixed(3)+"%";
+}
 
-  if(wall.childElementCount === WALL_CHUNK_COUNT){
-    return;
-  }
+function pwBuildLayout(){
 
-  wall.innerHTML = "";
+  pwItems = [];
 
-  for(let i=0;i<WALL_CHUNK_COUNT;i++){
-    const cell = document.createElement("div");
-    cell.className = "wall-brick";
-    wall.appendChild(cell);
-  }
+  const colors = ["#e53935","#fb8c00","#fdd835","#43a047","#1e88e5"];
+
+  colors.forEach((c,i)=>{
+    const t = (i+.5)/5;
+    const rx = (1-t)*(1-t)*10 + 2*(1-t)*t*165 + t*t*320;
+    const ry = (1-t)*(1-t)*20 + 2*(1-t)*t*72 + t*t*20;
+    pwItems.push({kind:"balloon",svg:ITEM_SVG.balloon(c),x:270+rx-26,y:150+ry-103,w:52,h:104});
+  });
+
+  [665,775,885].forEach(x=>pwItems.push({kind:"plate",svg:ITEM_SVG.plateFront(),x:x-42,y:118,w:84,h:84}));
+  [642,690,738].forEach(x=>pwItems.push({kind:"glass",svg:ITEM_SVG.glass(),x:x-21,y:278,w:42,h:76}));
+  [825,865,905].forEach(x=>pwItems.push({kind:"egg",svg:ITEM_SVG.egg(),x:x-15,y:299,w:30,h:39}));
+
+  [[120,-9],[200,7],[278,-5]].forEach(([y,r])=>{
+    pwItems.push({kind:"board",svg:ITEM_SVG.plank(),x:PW_WINDOW.x+PW_WINDOW.w/2-125,y:y-18,w:250,h:36,rot:r});
+  });
+
+  pwItems.push({kind:"ice",svg:ITEM_SVG.ice(),x:PW_HOLE.x-59,y:PW_HOLE.y+PW_HOLE.ry-106,w:118,h:112});
+  pwItems.push({kind:"can",svg:ITEM_SVG.can(),x:528,y:392,w:46,h:78});
 
 }
 
-/* brokenCount: how many bricks (0..WALL_CHUNK_COUNT) should currently be broken through */
-function renderProjectorWall(brokenCount){
+/* (Re)builds the whole wall from scratch: real brick texture, real props, all intact. */
+function pwInit(){
 
-  ensureWallChunks();
+  const stage = document.getElementById("projectorWallStage");
 
-  const wall = document.getElementById("projectorWall");
-  const cells = wall.children;
+  stage.querySelectorAll(".pw-chunk").forEach(el=>el.remove());
+
+  const oldGlow = document.getElementById("projectorEscapeGlow");
+  if(oldGlow){
+    oldGlow.remove();
+  }
+
+  document.getElementById("projectorBrickCanvas").style.visibility = "";
+  document.getElementById("projectorDamageCanvas").style.visibility = "";
+  document.getElementById("projectorItemsLayer").style.visibility = "";
+
+  pwBuildLayout();
+
+  const brick = buildBrickWall(PW_W,PW_H,1);
+  const brickCanvas = document.getElementById("projectorBrickCanvas");
+  brickCanvas.width = PW_W;
+  brickCanvas.height = PW_H;
+  brickCanvas.getContext("2d").drawImage(brick,0,0);
+
+  const damageCanvas = document.getElementById("projectorDamageCanvas");
+  damageCanvas.width = PW_W;
+  damageCanvas.height = PW_H;
+  damageCanvas.getContext("2d").clearRect(0,0,PW_W,PW_H);
+
+  const layer = document.getElementById("projectorItemsLayer");
+  layer.innerHTML = "";
+
+  const rope = document.createElement("div");
+  rope.className = "pw-decor";
+  rope.innerHTML = ITEM_SVG.rope();
+  Object.assign(rope.style,{left:pwPct(270,PW_W),top:pwPct(150,PW_H),width:pwPct(330,PW_W),height:pwPct(80,PW_H),zIndex:4});
+  layer.appendChild(rope);
+
+  [[615,200],[615,352]].forEach(([x,y])=>{
+    const shelf = document.createElement("div");
+    shelf.className = "v6-shelf pw-decor";
+    Object.assign(shelf.style,{left:pwPct(x,PW_W),top:pwPct(y,PW_H),width:pwPct(330,PW_W),height:pwPct(14,PW_H)});
+    layer.appendChild(shelf);
+  });
+
+  const cartonBack = document.createElement("div");
+  cartonBack.className = "pw-decor";
+  cartonBack.innerHTML = ITEM_SVG.cartonBack();
+  Object.assign(cartonBack.style,{left:pwPct(800,PW_W),top:pwPct(314,PW_H),width:pwPct(140,PW_W),height:pwPct(40,PW_H),zIndex:4});
+  layer.appendChild(cartonBack);
+
+  pwItems.forEach(it=>{
+    const el = document.createElement("div");
+    el.className = "pw-item";
+    el.innerHTML = it.svg;
+    Object.assign(el.style,{
+      left:pwPct(it.x,PW_W),
+      top:pwPct(it.y,PW_H),
+      width:pwPct(it.w,PW_W),
+      height:pwPct(it.h,PW_H),
+      transform:it.rot ? `rotate(${it.rot}deg)` : "",
+      zIndex:6
+    });
+    layer.appendChild(el);
+    it.el = el;
+  });
+
+  const cartonFront = document.createElement("div");
+  cartonFront.className = "pw-decor";
+  cartonFront.innerHTML = ITEM_SVG.cartonFront();
+  Object.assign(cartonFront.style,{left:pwPct(800,PW_W),top:pwPct(314,PW_H),width:pwPct(140,PW_W),height:pwPct(40,PW_H),zIndex:7});
+  layer.appendChild(cartonFront);
+
+  const glow = document.createElement("div");
+  glow.id = "projectorEscapeGlow";
+  glow.className = "pw-escape-glow";
+  stage.appendChild(glow);
+
+  wallBreakOrder = shuffleWallOrder(pwItems.length);
+
+  pwRenderProgress(0);
+
+}
+
+/* Marks `brokenCount` items (out of the shuffled order) as broken, and paints
+   the matching crack/crater damage on the wall behind them. */
+function pwRenderProgress(brokenCount){
+
   const brokenSet = new Set(wallBreakOrder.slice(0,brokenCount));
 
-  for(let i=0;i<WALL_CHUNK_COUNT;i++){
-    cells[i].classList.toggle("broken",brokenSet.has(i));
+  pwItems.forEach((it,i)=>{
+    if(it.el){
+      it.el.classList.toggle("broken",brokenSet.has(i));
+    }
+  });
+
+  const damageCanvas = document.getElementById("projectorDamageCanvas");
+  const ctx = damageCanvas.getContext("2d");
+  ctx.clearRect(0,0,PW_W,PW_H);
+
+  brokenSet.forEach(i=>{
+    const it = pwItems[i];
+    if(!it){
+      return;
+    }
+    const R = rng(9000+i*137);
+    const cx = it.x+it.w/2, cy = it.y+it.h/2;
+    const size = Math.min(60,Math.sqrt(it.w*it.h)*.6);
+    crater(ctx,R,cx,cy,size*.3,1);
+    crackLines(ctx,R,cx,cy,1,4,size*.55,2);
+    powder(ctx,R,cx,cy,size*.4,1,"40,20,10",12);
+  });
+
+}
+
+/* The dramatic finale: the whole wall crumbles and flies apart, like the
+   individual final-smash screen, revealing a warm glow where the wall was. */
+function pwCollapse(){
+
+  const stage = document.getElementById("projectorWallStage");
+  const brickCanvas = document.getElementById("projectorBrickCanvas");
+  const damageCanvas = document.getElementById("projectorDamageCanvas");
+  const itemsLayer = document.getElementById("projectorItemsLayer");
+
+  const rect = stage.getBoundingClientRect();
+  const w = rect.width || PW_W, h = rect.height || PW_H;
+
+  const comp = document.createElement("canvas");
+  comp.width = PW_W;
+  comp.height = PW_H;
+  const cctx = comp.getContext("2d");
+  cctx.drawImage(brickCanvas,0,0);
+  cctx.drawImage(damageCanvas,0,0);
+  const url = comp.toDataURL("image/jpeg",.85);
+
+  const cols = 10, rows = 5;
+  const cw = w/cols, ch = h/rows;
+
+  for(let r=0;r<rows;r++){
+    for(let c=0;c<cols;c++){
+
+      const chunk = document.createElement("div");
+      chunk.className = "pw-chunk";
+
+      Object.assign(chunk.style,{
+        left:(c*cw)+"px",
+        top:(r*ch)+"px",
+        width:cw+"px",
+        height:ch+"px",
+        backgroundImage:`url(${url})`,
+        backgroundSize:`${w}px ${h}px`,
+        backgroundPosition:`${-(c*cw)}px ${-(r*ch)}px`,
+        zIndex:20
+      });
+
+      stage.appendChild(chunk);
+
+      const dist = Math.hypot(c-(cols-1)/2,r-(rows-1)/2);
+
+      chunk.animate(
+        [
+          {transform:"none",opacity:1},
+          {transform:`translate(${(Math.random()-.5)*220}px,${h*.9}px) rotate(${(Math.random()-.5)*140}deg)`,opacity:0}
+        ],
+        {duration:750+Math.random()*400,delay:dist*70+Math.random()*120,easing:"cubic-bezier(.5,0,.9,.5)",fill:"forwards"}
+      );
+
+    }
+  }
+
+  brickCanvas.style.visibility = "hidden";
+  damageCanvas.style.visibility = "hidden";
+  itemsLayer.style.visibility = "hidden";
+
+  const glow = document.getElementById("projectorEscapeGlow");
+  if(glow){
+    glow.classList.add("show");
   }
 
 }
@@ -1893,23 +2073,24 @@ async function refreshProjectorProgress(code){
 
   if(winner){
     projectorWinnerLocked = true;
-    renderProjectorWall(WALL_CHUNK_COUNT);
+    pwRenderProgress(pwItems.length);
+    pwCollapse();
     announceProjectorWinner(winner.player_name);
     return;
   }
 
   if(!rows.length){
     document.getElementById("projectorLeader").textContent = "Waiting for players...";
-    renderProjectorWall(0);
+    pwRenderProgress(0);
     return;
   }
 
   const solvedTotal = rows.reduce((sum,row)=>sum+(row.progress||0),0);
   const possibleTotal = rows.length * (projectorMysteryTotal || 1);
   const fraction = possibleTotal > 0 ? solvedTotal / possibleTotal : 0;
-  const brokenChunks = Math.round(fraction * WALL_CHUNK_COUNT);
+  const brokenChunks = Math.round(fraction * pwItems.length);
 
-  renderProjectorWall(brokenChunks);
+  pwRenderProgress(brokenChunks);
 
   document.getElementById("projectorLeader").textContent =
   `${solvedTotal} of ${possibleTotal} answered so far · ${rows.length} student${rows.length===1?"":"s"} playing`;
