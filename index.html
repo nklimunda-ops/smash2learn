@@ -1185,6 +1185,7 @@ Start Class Mode
     </div>
   </div>
 
+  <button class="primary" onclick="startNewProjectorRound()" style="margin-top:18px">🔄 New Round (same code)</button>
   <button class="secondary" onclick="goHome()" style="margin-top:18px">Exit Class Mode</button>
 
 </div>
@@ -1193,6 +1194,7 @@ Start Class Mode
   <div class="projector-winner-name" id="projectorWinnerName"></div>
   <div class="projector-winner-sub">escaped first! 🎉</div>
   <button class="primary" onclick="showProjectorPodium()">See full results →</button>
+  <button class="secondary" onclick="startNewProjectorRound()">🔄 New Round (same code)</button>
 </div>
 
 </section>
@@ -1732,6 +1734,7 @@ let projectorResultsTimer = null;
 let projectorWinnerLocked = false;
 let projectorRoomCode = null;
 let projectorMysteryTotal = PROJECTOR_ICONS.length;
+let projectorRoundStart = null;
 
 function openProjectorEntry(){
 
@@ -1784,24 +1787,41 @@ async function openProjector(){
   }
 
   projectorRoomCode = data.code;
-  projectorWinnerLocked = false;
 
   projectorMysteryTotal =
   ((data.questions && data.questions.mysteries) || []).length || PROJECTOR_ICONS.length;
 
   document.getElementById("projectorRoomTitle").textContent = data.title;
   document.getElementById("projectorCodeDisplay").textContent = data.code;
+
+  showScreen("projectorScreen");
+
+  startNewProjectorRound();
+
+}
+
+/* Resets the wall and the winner lock, without changing the room code, so the
+   same class can play again right away (or a new class can use the same code later)
+   without the projector showing whoever won the last round. */
+function startNewProjectorRound(){
+
+  projectorWinnerLocked = false;
+  projectorRoundStart = new Date().toISOString();
+
+  wallBreakOrder = shuffleWallOrder();
+
   document.getElementById("projectorWinnerOverlay").style.display = "none";
   document.getElementById("projectorPodium").style.display = "none";
   document.getElementById("projectorPlayArea").style.display = "flex";
   document.getElementById("projectorLeader").textContent = "Waiting for players...";
 
-  wallBreakOrder = shuffleWallOrder();
   renderProjectorWall(0);
 
-  showScreen("projectorScreen");
+  stopProjectorResults();
 
-  subscribeProjectorProgress(data.code);
+  if(projectorRoomCode){
+    subscribeProjectorProgress(projectorRoomCode);
+  }
 
 }
 
@@ -1860,6 +1880,7 @@ async function refreshProjectorProgress(code){
   .from("live_progress")
   .select("player_name,progress,total,finished")
   .eq("game_code",code)
+  .gte("updated_at",projectorRoundStart || "1970-01-01")
   .limit(200);
 
   if(error){
@@ -1985,6 +2006,7 @@ async function refreshProjectorResults(code){
   .from("results")
   .select("player_name,solved,total_mysteries,score,time_seconds,created_at")
   .eq("game_code",code)
+  .gte("created_at",projectorRoundStart || "1970-01-01")
   .order("solved",{ascending:false})
   .order("score",{ascending:false})
   .order("time_seconds",{ascending:true})
