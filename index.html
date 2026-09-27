@@ -140,6 +140,19 @@ input{
 
 input:focus{outline:2px solid rgba(255,59,48,.45)}
 
+select{
+  width:100%;
+  padding:14px;
+  margin:7px 0;
+  border-radius:10px;
+  border:1px solid #3b4658;
+  background:#0a101a;
+  color:white;
+  font-size:16px;
+}
+
+select:focus{outline:2px solid rgba(255,59,48,.45)}
+
 label{font-weight:bold}
 
 .small{
@@ -818,6 +831,44 @@ footer{
 .leaderboard tr.me{background:rgba(255,59,48,.12)}
 .reveal-answer{margin-top:12px;padding:12px;border:1px solid #6a3b3b;border-radius:10px;background:#261315;color:#ffd0cd}
 
+/* QUESTION TIMER */
+.question-timer{position:relative;height:28px;margin:4px 0 16px;background:#0b111b;border:1px solid #354156;border-radius:999px;overflow:hidden}
+.question-timer-bar{position:absolute;left:0;top:0;bottom:0;width:100%;background:linear-gradient(90deg,#ff8a30,#ff3b30);border-radius:999px;transition:width 1s linear,background .3s}
+.question-timer-bar.low{background:linear-gradient(90deg,#ff3b30,#ff3b30)}
+.question-timer-text{position:relative;z-index:2;display:flex;height:100%;align-items:center;justify-content:center;font-weight:900;font-size:13px;letter-spacing:.5px}
+
+/* CLASS MODE / PROJECTOR */
+.projector-wrap{min-height:70vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:18px}
+.projector-title{font-size:clamp(24px,3.4vw,38px);font-weight:900}
+.projector-code{color:#aab4c5;font-size:18px;letter-spacing:2px}
+.projector-wall{display:flex;flex-wrap:wrap;justify-content:center;gap:14px;max-width:760px;padding:26px;background:
+  repeating-linear-gradient(0deg,transparent 0 43px,rgba(30,10,5,.5) 44px 48px),
+  repeating-linear-gradient(90deg,#743628 0 86px,#8e4633 86px 170px,#5d2b22 170px 174px);
+  border:4px solid #2b1712;border-radius:20px;box-shadow:inset 0 0 90px #000}
+.projector-item{font-size:56px;filter:drop-shadow(0 12px 10px rgba(0,0,0,.5));transition:opacity .4s,filter .4s}
+.projector-item.broken{opacity:.2;filter:grayscale(1) drop-shadow(0 6px 6px rgba(0,0,0,.4))}
+.projector-leader{font-size:clamp(20px,2.6vw,28px);font-weight:900;color:#ffd36b}
+.projector-winner-overlay{position:fixed;inset:0;z-index:2000;background:rgba(5,8,14,.96);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;text-align:center;animation:winnerFade .5s ease}
+.projector-winner-name{font-size:clamp(40px,8vw,90px);font-weight:900;color:#ff3b30}
+.projector-winner-sub{font-size:clamp(20px,3vw,30px);color:#ffd36b;font-weight:800}
+@keyframes winnerFade{from{opacity:0}to{opacity:1}}
+
+.projector-podium{min-height:70vh;padding:20px 0;text-align:center}
+.podium-bars{display:flex;align-items:flex-end;justify-content:center;gap:14px;max-width:640px;margin:26px auto 0}
+.podium-place{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;border-radius:14px 14px 0 0;padding:14px 10px 0;color:#1a1206}
+.podium-medal{font-size:34px}
+.podium-name{font-weight:900;font-size:15px;color:white;margin:6px 0 2px}
+.podium-score{font-weight:900;font-size:13px;color:#ffe9a8;margin-bottom:8px}
+.podium-bar{width:100%;border-radius:10px 10px 0 0}
+.podium-place.first .podium-bar{height:150px;background:linear-gradient(180deg,#ffd75e,#c9971d)}
+.podium-place.second .podium-bar{height:105px;background:linear-gradient(180deg,#d7dbe4,#98a0ad)}
+.podium-place.third .podium-bar{height:75px;background:linear-gradient(180deg,#e2a06b,#a6673a)}
+.podium-place.first{order:2}
+.podium-place.second{order:1}
+.podium-place.third{order:3}
+.podium-place.empty .podium-bar{background:#1c2431;opacity:.5}
+.podium-place.empty .podium-name{color:#5c6779}
+
 @media(max-width:600px){
   nav{padding:0 15px}
   main{padding-top:25px}
@@ -965,7 +1016,7 @@ footer{
 .room-title{font-size:19px;font-weight:900}
 .room-meta{color:#98a5b8;font-size:14px;margin-top:4px}
 .room-code-chip{font-weight:900;letter-spacing:3px;color:#ff4a41;background:#0b111b;border:1px dashed #5a2a2a;border-radius:10px;padding:8px 12px;cursor:pointer;min-width:104px;text-align:center}
-.room-actions{display:flex;gap:6px}
+.room-actions{display:flex;gap:6px;flex-wrap:wrap}
 .room-actions .secondary,.room-actions .danger-button{margin:0;padding:10px 13px}
 .danger-button{border:1px solid #673137;background:#31191c;color:#ff9993;border-radius:13px;padding:12px 16px;font-weight:800;cursor:pointer}
 .danger-button:hover{background:#3d1d21}
@@ -1030,7 +1081,92 @@ footer{
       </button>
     </div>
 
+    <div style="margin-top:14px">
+      <button class="secondary" onclick="openProjectorEntry()">
+        📽️ Class Mode (Projector)
+      </button>
+    </div>
+
   </div>
+
+</section>
+
+
+<section id="projectorEntry">
+
+<h2>📽️ Class Mode</h2>
+
+<div class="card">
+
+<p class="small">
+Project this screen for your whole class. Each student still plays their own room on their own device — this screen just shows who's in the lead, and celebrates whoever escapes first.
+</p>
+
+<label>Room code</label>
+
+<input
+  id="projectorCode"
+  maxlength="6"
+  placeholder="ABC123"
+  style="
+  text-transform:uppercase;
+  font-size:28px;
+  letter-spacing:5px;
+  text-align:center;
+  "
+>
+
+<button class="primary" onclick="openProjector()">
+Start Class Mode
+</button>
+
+<div id="projectorEntryMessage" class="message"></div>
+
+</div>
+
+</section>
+
+
+<section id="projectorScreen">
+
+<div class="projector-wrap" id="projectorPlayArea">
+
+  <div class="projector-title" id="projectorRoomTitle"></div>
+  <div class="projector-code">Code: <span id="projectorCodeDisplay"></span></div>
+
+  <div id="projectorWall" class="projector-wall"></div>
+
+  <div id="projectorLeader" class="projector-leader">Waiting for players...</div>
+
+  <button class="secondary" onclick="goHome()">Exit Class Mode</button>
+
+</div>
+
+<div id="projectorPodium" class="projector-podium" style="display:none">
+
+  <div class="projector-title">🏆 Results</div>
+  <div class="projector-code" id="projectorPodiumSubtitle"></div>
+
+  <div id="podiumBars" class="podium-bars"></div>
+
+  <div class="card" style="width:min(640px,100%);margin:22px auto 0">
+    <div class="table-scroll">
+      <table class="leaderboard results-table">
+        <thead><tr><th>#</th><th>Player</th><th>Solved</th><th>Score</th><th>Time</th></tr></thead>
+        <tbody id="podiumBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <button class="secondary" onclick="goHome()" style="margin-top:18px">Exit Class Mode</button>
+
+</div>
+
+<div id="projectorWinnerOverlay" class="projector-winner-overlay" style="display:none">
+  <div class="projector-winner-name" id="projectorWinnerName"></div>
+  <div class="projector-winner-sub">escaped first! 🎉</div>
+  <button class="primary" onclick="showProjectorPodium()">See full results →</button>
+</div>
 
 </section>
 
@@ -1047,6 +1183,23 @@ footer{
   id="roomTitle"
   placeholder="Example: The Human Body Escape Room"
 >
+
+<br><br>
+
+<label>Time per question (optional)</label>
+
+<select id="roomTimeLimit">
+  <option value="">No limit</option>
+  <option value="15">15 seconds</option>
+  <option value="30" selected>30 seconds</option>
+  <option value="45">45 seconds</option>
+  <option value="60">60 seconds</option>
+  <option value="90">90 seconds</option>
+</select>
+
+<p class="small">
+If a student runs out of time, the answer is revealed and the game moves on to the next mystery automatically.
+</p>
 
 <p class="small">
 Create as many mysteries as you want.
@@ -1211,6 +1364,11 @@ Enter Room
 <div id="clueText" class="clue-text"></div>
 
 <div id="answerArea" class="answer-area">
+
+<div id="questionTimerWrap" class="question-timer" style="display:none">
+  <div id="questionTimerBar" class="question-timer-bar"></div>
+  <div id="questionTimerText" class="question-timer-text"></div>
+</div>
 
 <div class="options-label">Choose the answer</div>
 
@@ -1418,6 +1576,8 @@ function stopAllEffects(){
 
   hornAudio.loop = false;
 
+  stopQuestionTimer();
+
 }
 
 
@@ -1499,6 +1659,7 @@ function showScreen(id){
 function goHome(){
 
   stopAllEffects();
+  stopProjector();
 
   showScreen("home");
 
@@ -1527,6 +1688,318 @@ function openJoin(){
 
   showScreen("joinScreen");
 
+}
+
+
+/* ===== CLASS MODE (projector) ===== */
+
+const PROJECTOR_ICONS = ["🎈","🍽️","🪵","🍷","🥚","🧊","🥫"];
+let projectorProgressChannel = null;
+let projectorProgressTimer = null;
+let projectorResultsChannel = null;
+let projectorResultsTimer = null;
+let projectorWinnerLocked = false;
+let projectorRoomCode = null;
+let projectorMysteryTotal = PROJECTOR_ICONS.length;
+
+function openProjectorEntry(){
+
+  document.getElementById("projectorCode").value = "";
+  document.getElementById("projectorEntryMessage").textContent = "";
+
+  showScreen("projectorEntry");
+
+}
+
+function openProjectorForCode(code){
+
+  document.getElementById("projectorCode").value = code;
+
+  openProjector();
+
+}
+
+async function openProjector(){
+
+  const codeInput =
+  document.getElementById("projectorCode");
+
+  const code =
+  codeInput.value.trim().toUpperCase();
+
+  const message =
+  document.getElementById("projectorEntryMessage");
+
+  if(!code){
+    message.textContent = "Enter a room code.";
+    message.className = "message wrong";
+    return;
+  }
+
+  message.textContent = "Loading room...";
+  message.className = "message";
+
+  const {data,error} =
+  await db
+  .from("games")
+  .select("code,title,questions")
+  .eq("code",code)
+  .maybeSingle();
+
+  if(error || !data){
+    message.textContent = "Room not found.";
+    message.className = "message wrong";
+    return;
+  }
+
+  projectorRoomCode = data.code;
+  projectorWinnerLocked = false;
+
+  projectorMysteryTotal =
+  ((data.questions && data.questions.mysteries) || []).length || PROJECTOR_ICONS.length;
+
+  document.getElementById("projectorRoomTitle").textContent = data.title;
+  document.getElementById("projectorCodeDisplay").textContent = data.code;
+  document.getElementById("projectorWinnerOverlay").style.display = "none";
+  document.getElementById("projectorPodium").style.display = "none";
+  document.getElementById("projectorPlayArea").style.display = "flex";
+  document.getElementById("projectorLeader").textContent = "Waiting for players...";
+
+  renderProjectorWall(0,PROJECTOR_ICONS.length);
+
+  showScreen("projectorScreen");
+
+  subscribeProjectorProgress(data.code);
+
+}
+
+function renderProjectorWall(brokenSlots,totalSlots){
+
+  const wall = document.getElementById("projectorWall");
+  wall.innerHTML = "";
+
+  const slots = Math.max(totalSlots,1);
+
+  for(let i=0;i<slots;i++){
+
+    const el = document.createElement("div");
+    el.className = "projector-item" + (i < brokenSlots ? " broken" : "");
+    el.textContent = PROJECTOR_ICONS[i % PROJECTOR_ICONS.length];
+
+    wall.appendChild(el);
+
+  }
+
+}
+
+/* The wall reflects the WHOLE CLASS together: every mystery answered by anyone
+   chips away at the same shared wall, not just whoever is ahead. */
+async function refreshProjectorProgress(code){
+
+  if(projectorWinnerLocked){
+    return;
+  }
+
+  const {data,error} =
+  await db
+  .from("live_progress")
+  .select("player_name,progress,total,finished")
+  .eq("game_code",code)
+  .limit(200);
+
+  if(error){
+    return;
+  }
+
+  const rows = data || [];
+
+  const winner = rows.find(row=>row.finished);
+
+  if(winner){
+    projectorWinnerLocked = true;
+    renderProjectorWall(PROJECTOR_ICONS.length,PROJECTOR_ICONS.length);
+    announceProjectorWinner(winner.player_name);
+    return;
+  }
+
+  if(!rows.length){
+    document.getElementById("projectorLeader").textContent = "Waiting for players...";
+    renderProjectorWall(0,PROJECTOR_ICONS.length);
+    return;
+  }
+
+  const solvedTotal = rows.reduce((sum,row)=>sum+(row.progress||0),0);
+  const possibleTotal = rows.length * (projectorMysteryTotal || 1);
+  const fraction = possibleTotal > 0 ? solvedTotal / possibleTotal : 0;
+  const brokenSlots = Math.round(fraction * PROJECTOR_ICONS.length);
+
+  renderProjectorWall(brokenSlots,PROJECTOR_ICONS.length);
+
+  document.getElementById("projectorLeader").textContent =
+  `${solvedTotal} of ${possibleTotal} answered so far · ${rows.length} student${rows.length===1?"":"s"} playing`;
+
+}
+
+function announceProjectorWinner(name){
+
+  document.getElementById("projectorWinnerName").textContent = name;
+  document.getElementById("projectorWinnerOverlay").style.display = "flex";
+
+  if(navigator.vibrate){
+    navigator.vibrate([100,50,100,50,220]);
+  }
+
+  stopProjectorProgress();
+
+}
+
+function subscribeProjectorProgress(code){
+
+  stopProjectorProgress();
+
+  refreshProjectorProgress(code);
+
+  /* Realtime push, with a slow poll as a safety net in case a browser misses an event */
+  projectorProgressChannel =
+  db
+  .channel(`live-progress-${code}`)
+  .on(
+    "postgres_changes",
+    {event:"*",schema:"public",table:"live_progress",filter:`game_code=eq.${code}`},
+    ()=>refreshProjectorProgress(code)
+  )
+  .subscribe();
+
+  projectorProgressTimer =
+  setInterval(()=>refreshProjectorProgress(code),4000);
+
+}
+
+function stopProjectorProgress(){
+
+  if(projectorProgressChannel){
+    db.removeChannel(projectorProgressChannel);
+    projectorProgressChannel = null;
+  }
+
+  if(projectorProgressTimer){
+    clearInterval(projectorProgressTimer);
+    projectorProgressTimer = null;
+  }
+
+}
+
+/* ===== PODIUM: 1st/2nd/3rd + everyone's score, same ranking as the room's leaderboard ===== */
+
+function showProjectorPodium(){
+
+  document.getElementById("projectorWinnerOverlay").style.display = "none";
+  document.getElementById("projectorPlayArea").style.display = "none";
+  document.getElementById("projectorPodium").style.display = "block";
+
+  if(projectorRoomCode){
+    subscribeProjectorResults(projectorRoomCode);
+  }
+
+}
+
+function podiumPlace(rank,row){
+
+  const place = document.createElement("div");
+
+  const labels = ["first","second","third"];
+  place.className = "podium-place " + (row ? labels[rank] : labels[rank] + " empty");
+
+  const medal = ["🥇","🥈","🥉"][rank];
+
+  place.innerHTML = `
+    <div class="podium-medal">${medal}</div>
+    <div class="podium-name">${row ? escapeHtml(row.player_name) : "—"}</div>
+    <div class="podium-score">${row ? Number(row.score).toLocaleString()+" pts" : ""}</div>
+    <div class="podium-bar"></div>
+  `;
+
+  return place;
+
+}
+
+async function refreshProjectorResults(code){
+
+  const {data,error} =
+  await db
+  .from("results")
+  .select("player_name,solved,total_mysteries,score,time_seconds,created_at")
+  .eq("game_code",code)
+  .order("solved",{ascending:false})
+  .order("score",{ascending:false})
+  .order("time_seconds",{ascending:true})
+  .limit(50);
+
+  if(error){
+    return;
+  }
+
+  const rows = data || [];
+
+  document.getElementById("projectorPodiumSubtitle").textContent =
+  rows.length ? `${rows.length} student${rows.length===1?"":"s"} finished so far` : "Waiting for the first student to finish...";
+
+  const bars = document.getElementById("podiumBars");
+  bars.innerHTML = "";
+  /* visual order left-to-right: silver, gold, bronze */
+  [1,0,2].forEach(rank=>{
+    bars.appendChild(podiumPlace(rank,rows[rank]));
+  });
+
+  const body = document.getElementById("podiumBody");
+  body.innerHTML = "";
+
+  rows.forEach((row,index)=>{
+    const tr = document.createElement("tr");
+    tr.innerHTML = `<td>${index+1}</td><td>${escapeHtml(row.player_name)}</td><td>${row.solved}/${row.total_mysteries}</td><td>${Number(row.score).toLocaleString()}</td><td>${formatTime(Number(row.time_seconds)||0)}</td>`;
+    body.appendChild(tr);
+  });
+
+}
+
+function subscribeProjectorResults(code){
+
+  stopProjectorResults();
+
+  refreshProjectorResults(code);
+
+  projectorResultsChannel =
+  db
+  .channel(`live-results-${code}`)
+  .on(
+    "postgres_changes",
+    {event:"*",schema:"public",table:"results",filter:`game_code=eq.${code}`},
+    ()=>refreshProjectorResults(code)
+  )
+  .subscribe();
+
+  projectorResultsTimer =
+  setInterval(()=>refreshProjectorResults(code),5000);
+
+}
+
+function stopProjectorResults(){
+
+  if(projectorResultsChannel){
+    db.removeChannel(projectorResultsChannel);
+    projectorResultsChannel = null;
+  }
+
+  if(projectorResultsTimer){
+    clearInterval(projectorResultsTimer);
+    projectorResultsTimer = null;
+  }
+
+}
+
+function stopProjector(){
+  stopProjectorProgress();
+  stopProjectorResults();
 }
 
 
@@ -1771,6 +2244,12 @@ async function saveRoom(){
     mysteries
   };
 
+  const timeLimitRaw =
+  document.getElementById("roomTimeLimit").value;
+
+  const time_limit =
+  timeLimitRaw ? parseInt(timeLimitRaw,10) : null;
+
   /* EDITING AN EXISTING ROOM: same code, new content */
   if(editingGame){
 
@@ -1780,7 +2259,7 @@ async function saveRoom(){
     const {error} =
     await db
     .from("games")
-    .update({title,questions})
+    .update({title,questions,time_limit})
     .eq("id",editingGame.id);
 
     if(error){
@@ -1848,7 +2327,8 @@ async function saveRoom(){
     code,
     title,
     questions,
-    owner_id: currentUser.id
+    owner_id: currentUser.id,
+    time_limit
   });
 
 
@@ -1985,6 +2465,7 @@ function resetCreator(){
   mysteryCount = 0;
   document.getElementById("mysteries").innerHTML = "";
   document.getElementById("roomTitle").value = "";
+  document.getElementById("roomTimeLimit").value = "30";
   document.getElementById("creatorMessage").textContent = "";
   document.getElementById("creatorHeading").textContent = "🔐 Create an Escape Room";
   document.getElementById("saveRoomButton").textContent = "🔐 Create Escape Room";
@@ -2024,6 +2505,7 @@ function editRoom(game){
   document.getElementById("mysteries").innerHTML = "";
   mysteryCount = 0;
   document.getElementById("roomTitle").value = game.title || "";
+  document.getElementById("roomTimeLimit").value = game.time_limit ? String(game.time_limit) : "";
   const mysteries = (game.questions && game.questions.mysteries) || [];
   (mysteries.length ? mysteries : [{}]).forEach(m=>fillMystery(addMystery(),m));
   document.getElementById("creatorHeading").textContent = `✏️ Edit room ${game.code}`;
@@ -2057,7 +2539,7 @@ async function loadMyRooms(){
 
   const {data,error} = await db
     .from("games")
-    .select("id,code,title,questions,created_at")
+    .select("id,code,title,questions,created_at,time_limit")
     .eq("owner_id",currentUser.id)
     .order("created_at",{ascending:false});
 
@@ -2100,10 +2582,12 @@ async function loadMyRooms(){
       </div>
       <div class="room-code-chip" title="Copy code">${escapeHtml(room.code)}</div>
       <div class="room-actions">
+        <button class="secondary" data-act="projector">📽️ Projector</button>
         <button class="secondary" data-act="results">Results</button>
         <button class="secondary" data-act="edit">Edit</button>
         <button class="danger-button" data-act="delete">Delete</button>
       </div>`;
+    card.querySelector('[data-act="projector"]').onclick = ()=>openProjectorForCode(room.code);
     card.querySelector('[data-act="results"]').onclick = ()=>openRoomResults(room);
     card.querySelector('[data-act="edit"]').onclick = ()=>editRoom(room);
     card.querySelector('[data-act="delete"]').onclick = ()=>deleteRoom(room);
@@ -2212,6 +2696,9 @@ let gameStartTime = 0;
 let timerInterval = null;
 let finalTimeSeconds = 0;
 let resultSaved = false;
+let sessionId = null;
+let questionTimerInterval = null;
+let questionDeadline = 0;
 
 
 async function joinRoom(){
@@ -2259,7 +2746,7 @@ async function joinRoom(){
   const {data,error} =
   await db
   .from("games")
-  .select("code,title,questions")
+  .select("code,title,questions,time_limit")
   .eq("code",code)
   .maybeSingle();
 
@@ -2318,10 +2805,15 @@ async function joinRoom(){
   solvedCount = 0;
   attemptsThisMystery = 0;
   resultSaved = false;
+  sessionId =
+  (window.crypto && crypto.randomUUID)
+  ? crypto.randomUUID()
+  : `${Date.now()}-${Math.random().toString(36).slice(2)}`;
   resetScene();
   document.getElementById("playerDisplay").textContent = playerName;
   updateScore();
   startGameTimer();
+  updateLiveProgress(false);
 
   document
   .getElementById("gameTitle")
@@ -2356,6 +2848,131 @@ function stopGameTimer(){
   timerInterval = null;
   finalTimeSeconds = Math.max(0,Math.floor((Date.now()-gameStartTime)/1000));
   document.getElementById("timerDisplay").textContent = formatTime(finalTimeSeconds);
+}
+
+/* PER-QUESTION TIMER (optional, set by the teacher per room) */
+
+function startQuestionTimer(){
+
+  stopQuestionTimer();
+
+  const limit =
+  currentGame && currentGame.time_limit;
+
+  const wrap =
+  document.getElementById("questionTimerWrap");
+
+  if(!limit){
+    wrap.style.display = "none";
+    return;
+  }
+
+  wrap.style.display = "block";
+  questionDeadline = Date.now() + limit*1000;
+  renderQuestionTimer(limit,limit);
+
+  questionTimerInterval = setInterval(()=>{
+
+    const msLeft = questionDeadline - Date.now();
+    const secLeft = Math.max(0,Math.ceil(msLeft/1000));
+
+    renderQuestionTimer(secLeft,limit);
+
+    if(msLeft <= 0){
+      stopQuestionTimer();
+      timeUp();
+    }
+
+  },200);
+
+}
+
+function renderQuestionTimer(secLeft,limit){
+
+  const bar = document.getElementById("questionTimerBar");
+  const text = document.getElementById("questionTimerText");
+
+  if(!bar || !text){
+    return;
+  }
+
+  const pct = Math.max(0,Math.min(100,(secLeft/limit)*100));
+  bar.style.width = pct + "%";
+  bar.classList.toggle("low",secLeft <= 5);
+  text.textContent = `⏱ ${secLeft}s`;
+
+}
+
+function stopQuestionTimer(){
+  clearInterval(questionTimerInterval);
+  questionTimerInterval = null;
+}
+
+function timeUp(){
+
+  if(answerLocked){
+    return;
+  }
+
+  answerLocked = true;
+
+  const mystery = getMysteries()[currentMysteryIndex];
+  const message = document.getElementById("answerMessage");
+
+  const buttons =
+  Array.from(document.querySelectorAll("#optionsGrid .option-btn"));
+
+  buttons.forEach(button=>{
+
+    button.disabled = true;
+
+    if(normalize(button.querySelector(".option-text").textContent) === normalize(mystery.answer)){
+      button.classList.add("correct-pick");
+    }
+
+  });
+
+  message.innerHTML =
+  `⏰ Time's up! The answer was:<div class="reveal-answer"><strong>${escapeHtml(mystery.answer)}</strong></div>Moving to the next mystery...`;
+
+  message.className = "message wrong";
+
+  currentMysteryIndex++;
+  updateLiveProgress(false);
+
+  if(currentMysteryIndex >= getMysteries().length){
+    setTimeout(finishGame,2200);
+    return;
+  }
+
+  setTimeout(loadMystery,2200);
+
+}
+
+/* LIVE PROGRESS (feeds the Class Mode / projector screen) */
+
+async function updateLiveProgress(finished){
+
+  if(!currentGame || !sessionId){
+    return;
+  }
+
+  try{
+
+    await db.from("live_progress").upsert({
+      game_code: currentGame.code,
+      session_id: sessionId,
+      player_name: playerName,
+      progress: Math.min(currentMysteryIndex,getMysteries().length),
+      total: getMysteries().length,
+      finished: !!finished,
+      updated_at: new Date().toISOString()
+    },{onConflict:"game_code,session_id"});
+
+  }catch(error){
+    console.error(error);
+  }
+
 }
 
 function updateScore(){
@@ -3237,6 +3854,7 @@ function unlockClue(){
   .textContent = "";
 
   renderOptions();
+  startQuestionTimer();
 
 }
 
@@ -3315,6 +3933,7 @@ function submitAnswer(choice,button){
     return;
   }
   answerLocked = true;
+  stopQuestionTimer();
 
   const mystery = getMysteries()[currentMysteryIndex];
   const message = document.getElementById("answerMessage");
@@ -3334,6 +3953,7 @@ function submitAnswer(choice,button){
     message.innerHTML = `<span class="key-pop">🔑</span><br>CORRECT! +${earned} POINTS`;
     message.className = "message correct";
     currentMysteryIndex++;
+    updateLiveProgress(false);
 
     if(currentMysteryIndex >= getMysteries().length){
       setTimeout(finishGame,1200);
@@ -3356,6 +3976,7 @@ function submitAnswer(choice,button){
     message.innerHTML = `Third attempt. The answer was:<div class="reveal-answer"><strong>${escapeHtml(mystery.answer)}</strong></div>Moving to the next mystery...`;
     message.className = "message wrong";
     currentMysteryIndex++;
+    updateLiveProgress(false);
 
     if(currentMysteryIndex >= getMysteries().length){
       setTimeout(finishGame,2200);
@@ -4278,7 +4899,7 @@ function collapseWall(){
       {duration:900,delay:150+Math.random()*300,easing:'cubic-bezier(.5,0,.9,.5)',fill:'forwards'});
   });
 }
-async function completeEscapeV4(){stopAllEffects();stopGameTimer();clock.pause();clock.currentTime=0;const total=getMysteries().length;document.getElementById('escapeMessage').textContent=solvedCount===total?'You smashed through the wall and solved every mystery!':`You smashed through the wall with ${solvedCount} of ${total} mysteries solved.`;document.getElementById('finalSummary').innerHTML=`<div class="stat-pill">👤 ${escapeHtml(playerName)}</div><div class="stat-pill">🔑 ${solvedCount}/${total}</div><div class="stat-pill">🏆 ${score.toLocaleString()} pts</div><div class="stat-pill">⏱️ ${formatTime(finalTimeSeconds)}</div>`;showScreen('escapeScreen');finalWallActive=false;scene.built=false;if(navigator.vibrate)navigator.vibrate([100,50,100,50,220]);await saveResultAndLoadLeaderboard()}
+async function completeEscapeV4(){stopAllEffects();stopGameTimer();updateLiveProgress(true);clock.pause();clock.currentTime=0;const total=getMysteries().length;document.getElementById('escapeMessage').textContent=solvedCount===total?'You smashed through the wall and solved every mystery!':`You smashed through the wall with ${solvedCount} of ${total} mysteries solved.`;document.getElementById('finalSummary').innerHTML=`<div class="stat-pill">👤 ${escapeHtml(playerName)}</div><div class="stat-pill">🔑 ${solvedCount}/${total}</div><div class="stat-pill">🏆 ${score.toLocaleString()} pts</div><div class="stat-pill">⏱️ ${formatTime(finalTimeSeconds)}</div>`;showScreen('escapeScreen');finalWallActive=false;scene.built=false;if(navigator.vibrate)navigator.vibrate([100,50,100,50,220]);await saveResultAndLoadLeaderboard()}
 console.log('Smash2Learn v6 loaded: one prepared wall, movable hand, one thing at a time');
 
 </script>
